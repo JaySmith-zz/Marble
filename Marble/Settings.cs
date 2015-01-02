@@ -29,11 +29,19 @@ namespace Marble
 			}
 		}
 		
-		public static string DataStoreFolderName
+		public static string DataStoreFolderNameCalendar
 		{
 			get
 			{
-				return Properties.Settings.Default.DataStoreFolderName;
+				return Properties.Settings.Default.DataStoreFolderNameCalendar;
+			}
+		}
+		
+		public static string DataStoreFolderNameTasks
+		{
+			get
+			{
+				return Properties.Settings.Default.DataStoreFolderNameTasks;
 			}
 		}
 		

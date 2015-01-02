@@ -24,7 +24,7 @@ namespace Marble
 		public FormSettings()
 		{
 			InitializeComponent();
-			googleClient = new GoogleClient();
+			googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar, "Calendar");
 			calendarService = new GoogleCalendarService(googleClient);
 		}
 		

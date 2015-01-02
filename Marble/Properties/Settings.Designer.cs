@@ -59,9 +59,18 @@ namespace Marble.Properties {
 		[global::System.Configuration.ApplicationScopedSettingAttribute()]
 		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
 		[global::System.Configuration.DefaultSettingValueAttribute("Marble.Google.Auth.Store")]
-		public string DataStoreFolderName {
+		public string DataStoreFolderNameCalendar {
 			get {
-				return ((string)(this["DataStoreFolderName"]));
+				return ((string)(this["DataStoreFolderNameCalendar"]));
+			}
+		}
+		
+		[global::System.Configuration.ApplicationScopedSettingAttribute()]
+		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+		[global::System.Configuration.DefaultSettingValueAttribute("Marble.Tasks.Auth.Store")]
+		public string DataStoreFolderNameTasks {
+			get {
+				return ((string)(this["DataStoreFolderNameTasks"]));
 			}
 		}
 	}

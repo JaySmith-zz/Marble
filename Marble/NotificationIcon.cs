@@ -20,31 +20,29 @@ namespace Marble
 		private NotifyIcon notifyIcon;
 		private ContextMenu notificationMenu;
 		
-		#region Initialize icon and menu
 		public NotificationIcon()
 		{
 			notifyIcon = new NotifyIcon();
 			notificationMenu = new ContextMenu(InitializeMenu());
 			
 			notifyIcon.DoubleClick += IconDoubleClick;
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotificationIcon));
+			var resources = new System.ComponentModel.ComponentResourceManager(typeof(NotificationIcon));
 			notifyIcon.Icon = (Icon)resources.GetObject("$this.Icon");
 			notifyIcon.ContextMenu = notificationMenu;
 		}
 		
 		private MenuItem[] InitializeMenu()
 		{
-			MenuItem[] menu = new MenuItem[] {
+			var menu = new MenuItem[] {
 				new MenuItem("Run", menuRunClick),
 				new MenuItem("Settings...", menuSettingsClick),
 				new MenuItem("About", menuAboutClick),
 				new MenuItem("Exit", menuExitClick)
 			};
+			
 			return menu;
 		}
-		#endregion
 		
-		#region Main - Program entry point
 		/// <summary>Program entry point.</summary>
 		/// <param name="args">Command Line Arguments</param>
 		[STAThread]
@@ -67,9 +65,7 @@ namespace Marble
 				}
 			} // releases the Mutex
 		}
-		#endregion
-		
-		#region Event Handlers
+
 		private void menuAboutClick(object sender, EventArgs e)
 		{
 			new FormAbout().ShowDialog();
@@ -87,7 +83,7 @@ namespace Marble
 		
 		private void menuRunClick(object sender, EventArgs e)
 		{
-			var googleClient = new GoogleClient();
+			var googleClient = new GoogleClient(Settings.DataStoreFolderNameTasks, "Tasks");
 			var taskService = new GoogleTaskService(googleClient);
 			taskService.GetTasks();
 		}
@@ -96,6 +92,6 @@ namespace Marble
 		{
 			MessageBox.Show("The icon was double clicked");
 		}
-		#endregion
+
 	}
 }

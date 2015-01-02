@@ -13,8 +13,11 @@
     <Setting Name="CalendarName" Type="System.String" Scope="User" Roaming="false">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="DataStoreFolderName" Type="System.String" Scope="Application">
+    <Setting Name="DataStoreFolderNameCalendar" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Marble.Google.Auth.Store</Value>
+    </Setting>
+    <Setting Name="DataStoreFolderNameTasks" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Marble.Tasks.Auth.Store</Value>
     </Setting>
   </Settings>
 </SettingsFile>
