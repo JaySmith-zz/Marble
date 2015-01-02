@@ -124,6 +124,7 @@
     <Compile Include="Google\GoogleClient.cs" />
     <Compile Include="Google\GoogleTaskService.cs" />
     <Compile Include="NotificationIcon.cs" />
+    <Compile Include="Outlook\OutlookService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
