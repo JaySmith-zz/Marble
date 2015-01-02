@@ -17,7 +17,7 @@ using Google.Apis.Services;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Util.Store;
 
-namespace Marble
+namespace Marble.Google
 {
 	/// <summary>
 	/// Description of GoogleClient.

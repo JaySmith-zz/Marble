@@ -10,7 +10,7 @@ using System;
 using Google.Apis.Calendar.v3.Data;
 
 
-namespace Marble
+namespace Marble.Google
 {
 	/// <summary>
 	/// Description of GoogleCalendarInfo.

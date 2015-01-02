@@ -8,14 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Threading;
 
-using Google.Apis.Services;
 using Google.Apis.Tasks.v1;
-using Google.Apis.Tasks.v1.Data;
 
-namespace Marble
+namespace Marble.Google
 {
 	/// <summary>
 	/// Description of GoogleTaskService.

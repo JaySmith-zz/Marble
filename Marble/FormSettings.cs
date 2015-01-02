@@ -9,6 +9,8 @@
 using System;
 using System.Windows.Forms;
 
+using Marble.Google;
+
 namespace Marble
 {
 	/// <summary>
