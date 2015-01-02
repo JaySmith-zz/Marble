@@ -34,6 +34,30 @@ namespace Marble.Properties {
 		
 		[global::System.Configuration.UserScopedSettingAttribute()]
 		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+		[global::System.Configuration.DefaultSettingValueAttribute("1")]
+		public int CalendarDaysInPast {
+			get {
+				return ((int)(this["CalendarDaysInPast"]));
+			}
+			set {
+				this["CalendarDaysInPast"] = value;
+			}
+		}
+		
+		[global::System.Configuration.UserScopedSettingAttribute()]
+		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+		[global::System.Configuration.DefaultSettingValueAttribute("30")]
+		public int CalendarDaysInTheFuture {
+			get {
+				return ((int)(this["CalendarDaysInTheFuture"]));
+			}
+			set {
+				this["CalendarDaysInTheFuture"] = value;
+			}
+		}
+		
+		[global::System.Configuration.UserScopedSettingAttribute()]
+		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
 		[global::System.Configuration.DefaultSettingValueAttribute("")]
 		public string CalendarId {
 			get {

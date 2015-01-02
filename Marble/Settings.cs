@@ -85,6 +85,30 @@ namespace Marble
 			}
 		}
 		
+		public static int CalendarDaysInThePast
+		{
+			get
+			{
+				return Properties.Settings.Default.CalendarDaysInPast;
+			}
+			set
+			{
+				Properties.Settings.Default.CalendarDaysInPast = value;
+			}
+		}
+		
+		public static int CalendarDaysInTheFuture
+		{
+			get
+			{
+				return Properties.Settings.Default.CalendarDaysInTheFuture;
+			}
+			set
+			{
+				Properties.Settings.Default.CalendarDaysInTheFuture = value;
+			}
+		}
+		
 		public static void Save()
 		{
 			Properties.Settings.Default.Save();
