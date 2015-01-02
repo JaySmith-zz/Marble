@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SettingsFile CurrentProfile="(Default)" GeneratedClassNamespace="Marble.Properties" GeneratedClassName="Settings" xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings>
+    <Setting Name="ApplicationName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Marble</Value>
+    </Setting>
+    <Setting Name="CalendarId" Type="System.String" Scope="User" Roaming="false">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CalendarName" Type="System.String" Scope="User" Roaming="false">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DataStoreFolderName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Marble.Google.Auth.Store</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
