@@ -45,6 +45,22 @@ namespace Marble
 			}
 		}
 		
+		public static string ScopeCalendar
+		{
+			get
+			{
+				return Properties.Settings.Default.ScopeCalendar;
+			}
+		}
+
+		public static string ScopeTasks
+		{
+			get
+			{
+				return Properties.Settings.Default.ScopeTasks;
+			}
+		}
+		
 		public static string UserName 
 		{ 
 			get

@@ -41,17 +41,7 @@ namespace Marble.Google
 			UserCredential credential;
 			
 			var scopes = new List<string>();
-			var user = String.IsNullOrEmpty(Settings.UserName) ? "@gmail.com" : Settings.UserName;
-
-			if (ClientScope.Equals("Tasks"))
-		    {
-				scopes.Add(TasksService.Scope.Tasks);
-			}
-			
-			if (ClientScope.Equals("Calendar"))
-			{
-				scopes.Add(CalendarService.Scope.Calendar);
-			}
+			scopes.Add(ClientScope);
 			
 			using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
             {
@@ -59,7 +49,7 @@ namespace Marble.Google
                 	.AuthorizeAsync(
                     	GoogleClientSecrets.Load(stream).Secrets,
                     	scopes, 
-                    	"@gmail.com", 
+                    	"user", 
                     	CancellationToken.None,
                     	FileDataStore
                    ).Result;
@@ -69,7 +59,6 @@ namespace Marble.Google
 				HttpClientInitializer = credential,
 				ApplicationName = Settings.ApplicationName
 			};
-			
 		}
 		
 		public void ClearDataStore()

@@ -34,7 +34,9 @@ namespace Marble
 		private MenuItem[] InitializeMenu()
 		{
 			var menu = new MenuItem[] {
-				new MenuItem("Run", menuRunClick),
+				new MenuItem("Sync All", menuSyncAllClick),
+				new MenuItem("Sync Calendar", menuSyncCalendarClick),
+				new MenuItem("Sync Tasks", menuTasksClick),
 				new MenuItem("Settings...", menuSettingsClick),
 				new MenuItem("About", menuAboutClick),
 				new MenuItem("Exit", menuExitClick)
@@ -81,11 +83,22 @@ namespace Marble
 			new FormSettings().ShowDialog();
 		}
 		
-		private void menuRunClick(object sender, EventArgs e)
+		private void menuSyncAllClick(object sender, EventArgs e)
 		{
-			var googleClient = new GoogleClient(Settings.DataStoreFolderNameTasks, "Tasks");
-			var taskService = new GoogleTaskService(googleClient);
-			taskService.GetTasks();
+			var sync = new MarbleSync();
+			sync.SyncAll();
+		}
+		
+		private void menuTasksClick(object sender, EventArgs e)
+		{
+			var sync = new MarbleSync();
+			sync.SyncTask();
+		}
+		
+		private void menuSyncCalendarClick(object sender, EventArgs e)
+		{
+			var sync = new MarbleSync();
+			sync.SyncCalendar();
 		}
 		
 		private void IconDoubleClick(object sender, EventArgs e)

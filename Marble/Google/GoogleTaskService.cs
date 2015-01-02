@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 
 using Google.Apis.Tasks.v1;
+using Google.Apis.Tasks.v1.Data;
 
 namespace Marble.Google
 {
@@ -19,18 +20,17 @@ namespace Marble.Google
 	public class GoogleTaskService
 	{
 		readonly GoogleClient client;
-		readonly TasksService Service;
+		readonly TasksService service;
 		
 		public GoogleTaskService(GoogleClient googleClient)
 		{
 			client = googleClient;
-			Service = new TasksService(googleClient.Initializer);
+			service = new TasksService(googleClient.Initializer);
 		}
 		
-		public void GetTasks()
+		public List<TaskList> GetTaskLists()
 		{
-			var taskList = Service.Tasklists.List().Execute().Items;
-		//	var task = Service.Tasks.List(
+			return service.Tasklists.List().Execute().Items as List<TaskList>;
 		}
 	}
 }
