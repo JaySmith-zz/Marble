@@ -33,7 +33,9 @@ namespace Marble
 		
 		public void Sync()
 		{
-			var items = googleCalendarService.GetCalendars();
+			var outlookItems = outlookClient.GetCalendarEntriesInRange();
+			var googleItems = googleCalendarService.GetCalendarEntriesInRange();
+			
 		}
 	}
 }

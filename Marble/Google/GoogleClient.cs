@@ -64,8 +64,8 @@ namespace Marble.Google
 		public void ClearDataStore()
 		{
 			FileDataStore.ClearAsync();
-			Settings.UserCalendar = string.Empty;
-			Settings.UserName = string.Empty;
+			Settings.CalendarId = string.Empty;
+			Settings.CalendarAccount = string.Empty;
 		}
 	}
 }

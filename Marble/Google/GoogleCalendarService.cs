@@ -36,5 +36,47 @@ namespace Marble.Google
 			
 			return items;
 		}
+		
+		public List<Event> GetCalendarEntriesInRange()
+        {
+            var results = new List<Event>();
+            if (string.IsNullOrEmpty(Settings.CalendarId)) 
+            {
+            	throw new ApplicationException("User Calendar Not Specified");
+            }
+            
+            var eventRequest = service.Events.List(Settings.CalendarAccount);
+            
+            eventRequest.TimeMin = DateTime.Now.AddDays(-Settings.CalendarDaysInThePast);
+            eventRequest.TimeMax = DateTime.Now.AddDays(+Settings.CalendarDaysInTheFuture + 1);
+
+            results.AddRange(eventRequest.Execute().Items);
+            	
+            return results;
+        }
+		
+		public void DeleteCalendarEntry(Event e)
+        {
+//            try
+//            {
+//                if (service != null) service.Events.Delete(Settings.UserCalendar, e.Id).Fetch();
+//            }
+//            catch (Exception ex)
+//            {
+//                FormMain.Instance.HandleException(ex);
+//            }       
+        }		
+		
+		public void AddEntry(Event e)
+		{
+//            try
+//            {
+//                if (service != null) service.Events.Insert(e, Settings.UserCalendar).Fetch();
+//            }
+//            catch (Exception ex)
+//            {
+//                //FormMain.Instance.HandleException(ex);
+//            }   
+		}
 	}
 }

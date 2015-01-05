@@ -34,6 +34,18 @@ namespace Marble.Properties {
 		
 		[global::System.Configuration.UserScopedSettingAttribute()]
 		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+		[global::System.Configuration.DefaultSettingValueAttribute("")]
+		public string CalendarAccount {
+			get {
+				return ((string)(this["CalendarAccount"]));
+			}
+			set {
+				this["CalendarAccount"] = value;
+			}
+		}
+		
+		[global::System.Configuration.UserScopedSettingAttribute()]
+		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
 		[global::System.Configuration.DefaultSettingValueAttribute("1")]
 		public int CalendarDaysInPast {
 			get {
@@ -65,18 +77,6 @@ namespace Marble.Properties {
 			}
 			set {
 				this["CalendarId"] = value;
-			}
-		}
-		
-		[global::System.Configuration.UserScopedSettingAttribute()]
-		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-		[global::System.Configuration.DefaultSettingValueAttribute("")]
-		public string CalendarName {
-			get {
-				return ((string)(this["CalendarName"]));
-			}
-			set {
-				this["CalendarName"] = value;
 			}
 		}
 		

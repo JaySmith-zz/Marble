@@ -11,8 +11,6 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
-using Marble.Google;
-
 namespace Marble
 {
 	public sealed class NotificationIcon

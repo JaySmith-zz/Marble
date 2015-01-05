@@ -133,7 +133,7 @@
     <Compile Include="Google\GoogleTaskService.cs" />
     <Compile Include="MarbleSync.cs" />
     <Compile Include="NotificationIcon.cs" />
-    <Compile Include="Outlook\OutlookAppointment.cs" />
+    <Compile Include="Outlook\MarbleAppointment.cs" />
     <Compile Include="Outlook\OutlookClient.cs" />
     <Compile Include="Outlook\OutlookService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

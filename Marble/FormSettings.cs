@@ -36,7 +36,7 @@ namespace Marble
 		void InitializeForm()
 		{
 			GetCalendars();
-			labelSelectedAccountName.Text = Settings.UserName;
+			labelSelectedAccountName.Text = Settings.CalendarAccount;
 		}
 		
 		void ButtonGetCalendarsClick(object sender, EventArgs e)
@@ -48,8 +48,8 @@ namespace Marble
 		{
 			var selectedItem =  (GoogleCalendarInfo) comboBoxCalendars.SelectedItem;
 			
-			Settings.UserCalendar = selectedItem.Name;
-			Settings.UserName = selectedItem.Id;
+			Settings.CalendarAccount = selectedItem.Id;
+			Settings.CalendarId = selectedItem.Name;
 			
 			Settings.Save();
 			
@@ -81,7 +81,7 @@ namespace Marble
 			comboBoxCalendars.Enabled = true;
 			
 			GoogleCalendarInfo selectedItem = comboBoxCalendars.SelectedItem as GoogleCalendarInfo;
-			Settings.UserName = selectedItem.Id;
+			Settings.CalendarId = selectedItem.Id;
 			Settings.Save();
 			
 		}
@@ -89,8 +89,8 @@ namespace Marble
 		void ButtonClearDataStoreClick(object sender, EventArgs e)
 		{
 			googleClient.ClearDataStore();
-			Settings.UserCalendar = string.Empty;
-			Settings.UserName = string.Empty;
+			Settings.CalendarId = string.Empty;
+			Settings.CalendarAccount = string.Empty;
 			Settings.Save();
 			
 			googleClient.GetAuthorization();

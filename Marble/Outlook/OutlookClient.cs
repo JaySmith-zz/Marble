@@ -38,11 +38,11 @@ namespace Marble.Outlook
             oNS.Logoff();
 		}
 		
-		public List<OutlookAppointment> GetCalendarEntries()
+		public List<MarbleAppointment> GetCalendarEntries()
         {
             Items OutlookItems = UseOutlookCalendar.Items;
 
-            var result = new List<OutlookAppointment>();
+            var result = new List<MarbleAppointment>();
 
             if (OutlookItems != null)
             {
@@ -54,9 +54,9 @@ namespace Marble.Outlook
             return result;
         }
 
-        public List<OutlookAppointment> GetCalendarEntriesInRange()
+        public List<MarbleAppointment> GetCalendarEntriesInRange()
         {
-            var result = new List<OutlookAppointment>();
+            var result = new List<MarbleAppointment>();
 
             Items OutlookItems = UseOutlookCalendar.Items;
             OutlookItems.Sort("[Start]", Type.Missing);
@@ -78,9 +78,9 @@ namespace Marble.Outlook
             return result;
         }
         
-        private static OutlookAppointment GetOutlookAppointment(AppointmentItem appointment)
+        private static MarbleAppointment GetOutlookAppointment(AppointmentItem appointment)
         {
-            var newAppointment = new OutlookAppointment
+            var newAppointment = new MarbleAppointment
                 {
                     Body = appointment.Body,
                     Subject = appointment.Subject,

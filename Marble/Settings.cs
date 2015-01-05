@@ -17,8 +17,8 @@ namespace Marble
 	{
 		static Settings()
 		{
-			UserName = Properties.Settings.Default.CalendarId;
-			UserCalendar = Properties.Settings.Default.CalendarName;
+			CalendarAccount = Properties.Settings.Default.CalendarAccount;
+			CalendarId = Properties.Settings.Default.CalendarId;
 		}
 		
 		public static string ApplicationName
@@ -61,7 +61,7 @@ namespace Marble
 			}
 		}
 		
-		public static string UserName 
+		public static string CalendarId 
 		{ 
 			get
 			{
@@ -73,15 +73,15 @@ namespace Marble
 			}
 		}
 		
-		public static string UserCalendar
+		public static string CalendarAccount
 		{ 
 			get
 			{
-				return Properties.Settings.Default.CalendarName;
+				return Properties.Settings.Default.CalendarAccount;
 			}
 			set
 			{
-				Properties.Settings.Default.CalendarName = value;
+				Properties.Settings.Default.CalendarAccount = value;
 			}
 		}
 		
