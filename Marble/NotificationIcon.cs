@@ -61,7 +61,8 @@ namespace Marble
 					notificationIcon.notifyIcon.Dispose();
 				} else {
 					// The application is already running
-					// TODO: Display message box or change focus to existing application instance
+					// TODO: change focus to existing application instance
+					
 				}
 			} // releases the Mutex
 		}

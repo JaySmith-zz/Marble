@@ -21,14 +21,14 @@ namespace Marble
 		readonly GoogleClient googleClient;
 		readonly GoogleTaskService service;
 		
-		readonly OutlookClient outlookClient;
+		readonly OutlookCalendarService outlookClient;
 		
 		public TaskSync()
 		{
 			googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar, Settings.ScopeTasks);
 			service = new GoogleTaskService(googleClient);
 			
-			outlookClient = new OutlookClient();
+			outlookClient = new OutlookCalendarService();
 		}
 		
 		public void Sync()

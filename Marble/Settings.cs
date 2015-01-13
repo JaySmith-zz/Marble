@@ -108,7 +108,10 @@ namespace Marble
 				Properties.Settings.Default.CalendarDaysInTheFuture = value;
 			}
 		}
-		
+
+		public static bool AddDescription { get; set; }
+		public static bool AddReminders { get; set; }
+
 		public static void Save()
 		{
 			Properties.Settings.Default.Save();

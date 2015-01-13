@@ -15,7 +15,7 @@ namespace Marble.Outlook
 	/// <summary>
 	/// Description of OutlookAppointment.
 	/// </summary>
-	public class MarbleAppointment
+	public class OutlookAppointment
 	{
 
 		public ExchangeService Service { get; set; }

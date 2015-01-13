@@ -15,11 +15,11 @@ namespace Marble.Outlook
 	/// <summary>
 	/// Description of OutlookClient.
 	/// </summary>
-	public class OutlookClient
+	public class OutlookCalendarService
 	{
-		public MAPIFolder UseOutlookCalendar;
+		public MAPIFolder outlookCalendar;
 		
-		public OutlookClient()
+		public OutlookCalendarService()
 		{
 			// Create the Outlook application.
             var oApp = new Application();
@@ -32,17 +32,17 @@ namespace Marble.Outlook
             oNS.Logon("", "", true, true);
 
             // Get the Calendar folder.
-            UseOutlookCalendar = oNS.GetDefaultFolder(OlDefaultFolders.olFolderCalendar);
+            outlookCalendar = oNS.GetDefaultFolder(OlDefaultFolders.olFolderCalendar);
 
             // Done. Log off.
             oNS.Logoff();
 		}
 		
-		public List<MarbleAppointment> GetCalendarEntries()
+		public List<OutlookAppointment> GetCalendarEntries()
         {
-            Items OutlookItems = UseOutlookCalendar.Items;
+            Items OutlookItems = outlookCalendar.Items;
 
-            var result = new List<MarbleAppointment>();
+            var result = new List<OutlookAppointment>();
 
             if (OutlookItems != null)
             {
@@ -54,11 +54,11 @@ namespace Marble.Outlook
             return result;
         }
 
-        public List<MarbleAppointment> GetCalendarEntriesInRange()
+        public List<OutlookAppointment> GetCalendarEntriesInRange()
         {
-            var result = new List<MarbleAppointment>();
+            var result = new List<OutlookAppointment>();
 
-            Items OutlookItems = UseOutlookCalendar.Items;
+            Items OutlookItems = outlookCalendar.Items;
             OutlookItems.Sort("[Start]", Type.Missing);
             OutlookItems.IncludeRecurrences = true;
 
@@ -78,9 +78,9 @@ namespace Marble.Outlook
             return result;
         }
         
-        private static MarbleAppointment GetOutlookAppointment(AppointmentItem appointment)
+        private static OutlookAppointment GetOutlookAppointment(AppointmentItem appointment)
         {
-            var newAppointment = new MarbleAppointment
+            var newAppointment = new OutlookAppointment
                 {
                     Body = appointment.Body,
                     Subject = appointment.Subject,
