@@ -1,14 +1,8 @@
-﻿/*
- * Created by SharpDevelop.
- * User: smithjay
- * Date: 1/2/2015
- * Time: 3:58 PM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.Office.Interop.Outlook;
+
+using Marble.Data;
 
 namespace Marble.Outlook
 {
@@ -37,26 +31,10 @@ namespace Marble.Outlook
             // Done. Log off.
             oNS.Logoff();
 		}
-		
-		public List<OutlookAppointment> GetCalendarEntries()
+
+        public List<Appointment> GetAppointmentsInRange()
         {
-            Items OutlookItems = outlookCalendar.Items;
-
-            var result = new List<OutlookAppointment>();
-
-            if (OutlookItems != null)
-            {
-                foreach (AppointmentItem ai in OutlookItems)
-                {
-                    result.Add(GetOutlookAppointment(ai));
-                }
-            }
-            return result;
-        }
-
-        public List<OutlookAppointment> GetCalendarEntriesInRange()
-        {
-            var result = new List<OutlookAppointment>();
+            var result = new List<Appointment>();
 
             Items OutlookItems = outlookCalendar.Items;
             OutlookItems.Sort("[Start]", Type.Missing);
@@ -77,24 +55,40 @@ namespace Marble.Outlook
 
             return result;
         }
-        
-        private static OutlookAppointment GetOutlookAppointment(AppointmentItem appointment)
+ 
+        static Appointment GetOutlookAppointment(AppointmentItem appointment)
         {
-            var newAppointment = new OutlookAppointment
+            var newAppointment = new Appointment
                 {
-                    Body = appointment.Body,
-                    Subject = appointment.Subject,
+                    Description = appointment.Body,
+                    Summary = appointment.Subject,
                     Start = appointment.Start,
                     End = appointment.End,
-                    AllDayEvent = appointment.AllDayEvent,
+                    IsAllDayEvent = appointment.AllDayEvent,
                     Location = appointment.Location,
-                    OptionalAttendees = appointment.OptionalAttendees,
-                    RequiredAttendees = appointment.RequiredAttendees,
+                    OptionalAttendees = GetAttendees(appointment.OptionalAttendees),
+                    RequiredAttendees = GetAttendees(appointment.RequiredAttendees),
                     Organizer = appointment.Organizer,
                     ReminderMinutesBeforeStart = appointment.ReminderMinutesBeforeStart,
-                    ReminderSet = appointment.ReminderSet
+                    IsReminderSet = appointment.ReminderSet
                 };
             return newAppointment;
         }
+
+		static List<string> GetAttendees(string attendees)
+		{
+			var attendeeList = new List<string>();
+			
+			if (attendees == null) return attendeeList;
+			
+            string[] tmp1 = attendees.Split(';');
+            
+            for (int i = 0; i < tmp1.Length; i++)
+            {
+            	attendeeList.Add(tmp1[i].Trim());
+            }
+            
+            return attendeeList;
+		}
 	}
 }

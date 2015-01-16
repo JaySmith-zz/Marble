@@ -1,16 +1,10 @@
-﻿/*
- * Created by SharpDevelop.
- * User: SMITHJAY
- * Date: 12/23/2014
- * Time: 11:14 AM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
+
+using Marble.Data;
 
 namespace Marble.Google
 {
@@ -37,7 +31,7 @@ namespace Marble.Google
 			return items;
 		}
 		
-		public List<Event> GetCalendarEntriesInRange()
+		List<Event> GetCalendarEntriesInRange()
         {
             var results = new List<Event>();
             if (string.IsNullOrEmpty(Settings.CalendarId)) 
@@ -55,28 +49,35 @@ namespace Marble.Google
             return results;
         }
 		
-		public void DeleteCalendarEntry(Event e)
+		public List<Appointment> GetAppointmentsInRange()
+		{
+			var googleEvents = GetCalendarEntriesInRange();
+			
+			var appointments = new List<Appointment>();
+			foreach (var googleEvent in googleEvents) 
+			{
+				var appointment = new Appointment() {
+					Id = googleEvent.Id,
+					Start = googleEvent.Start.DateTime,
+					End = googleEvent.End.DateTime,
+					Summary = googleEvent.Summary,
+					Location = googleEvent.Location
+				};
+				
+				appointments.Add(appointment);
+			}
+			
+			return appointments;
+		}
+		
+		public void DeleteCalendarEntry(string calenderId, string eventId)
         {
-//            try
-//            {
-//                if (service != null) service.Events.Delete(Settings.UserCalendar, e.Id).Fetch();
-//            }
-//            catch (Exception ex)
-//            {
-//                FormMain.Instance.HandleException(ex);
-//            }       
+			service.Events.Delete(calenderId, eventId);
         }		
 		
-		public void AddEntry(Event e)
+		public void AddEntry(Event googleEvent)
 		{
-//            try
-//            {
-//                if (service != null) service.Events.Insert(e, Settings.UserCalendar).Fetch();
-//            }
-//            catch (Exception ex)
-//            {
-//                //FormMain.Instance.HandleException(ex);
-//            }   
+			service.Events.Insert(googleEvent, Settings.CalendarId).Execute();
 		}
 	}
 }

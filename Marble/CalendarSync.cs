@@ -1,16 +1,9 @@
-﻿/*
- * Created by SharpDevelop.
- * User: smithjay
- * Date: 1/2/2015
- * Time: 3:54 PM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using Google.Apis.Calendar.v3.Data;
+using Marble.Data;
 using Marble.Google;
 using Marble.Outlook;
 
@@ -21,9 +14,9 @@ namespace Marble
 	/// </summary>
 	public class CalendarSync
 	{
-		readonly OutlookCalendarService outlookClient;
-		readonly GoogleClient googleClient;
+		readonly OutlookCalendarService outlookCalendarService;
 		
+		readonly GoogleClient googleClient;
 		readonly GoogleCalendarService googleCalendarService;
 		
 		public CalendarSync()
@@ -31,7 +24,7 @@ namespace Marble
 			googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar, Settings.ScopeCalendar);
 			googleCalendarService = new GoogleCalendarService(googleClient);
 			
-			outlookClient = new OutlookCalendarService();
+			outlookCalendarService = new OutlookCalendarService();
 		}
 		
 		public void Sync()
@@ -42,103 +35,21 @@ namespace Marble
                 return;
             }
 			
-			List<Event> googleItems = googleCalendarService.GetCalendarEntriesInRange();
-			List<OutlookAppointment> outlookItems = outlookClient.GetCalendarEntriesInRange();
+			List<Appointment> googleAppoinments = googleCalendarService.GetAppointmentsInRange();
+			List<Appointment> outlookAppoinments = outlookCalendarService.GetAppointmentsInRange();
 			
-			IdentifyGoogleAddDeletes(outlookItems, googleItems);
 			
-			if (googleItems.Count > 0)
-            {
-                foreach (var googleEvent in googleItems) googleCalendarService.DeleteCalendarEntry(googleEvent);
-            }
-
-            if (outlookItems.Count > 0)
-            {
-                foreach (OutlookAppointment outlookAppointment in outlookItems)
-                {
-                    var googleEvent = new Event
-                    {
-                        Start = new EventDateTime(),
-                        End = new EventDateTime()
-                    };
-
-                    if (outlookAppointment.AllDayEvent)
-                    {
-                        googleEvent.Start.Date = outlookAppointment.Start.ToString("yyyy-MM-dd");
-                        googleEvent.End.Date = outlookAppointment.End.ToString("yyyy-MM-dd");
-                    }
-                    else
-                    {
-                        //ev.Start.DateTime = ai.Start;
-                        //ev.End.DateTime = ai.End;
-                        googleEvent.Start.DateTime = outlookAppointment.Start;
-                        googleEvent.End.DateTime = outlookAppointment.End;
-                    }
-                    googleEvent.Summary = outlookAppointment.Subject;
-                    if ( Settings.AddDescription)
-                    {
-                        googleEvent.Description = outlookAppointment.Body;
-                    }
-                    googleEvent.Location = outlookAppointment.Location;
-
-
-                    //consider the reminder set in Outlook
-                    if (Settings.AddReminders && outlookAppointment.ReminderSet)
-                    {
-                        googleEvent.Reminders = new Event.RemindersData { UseDefault = false };
-                        var reminder = new EventReminder { Method = "popup", Minutes = outlookAppointment.ReminderMinutesBeforeStart };
-                        googleEvent.Reminders.Overrides = new List<EventReminder> { reminder };
-                    }
-
-                    googleEvent.Description = outlookAppointment.Body;
-
-                    var organizer = new Event.OrganizerData();
-                    organizer.DisplayName = outlookAppointment.Organizer;
-                    googleEvent.Organizer = organizer;
-                    
-                    var requiredAttendees = splitAttendees(outlookAppointment.RequiredAttendees).ToList();
-                    foreach (var attendee in requiredAttendees) {
-                    	
-                    	var eventAttendee = new EventAttendee();
-                    	
-                    	eventAttendee.DisplayName = attendee;
-                    	
-                    	if (googleEvent.Attendees == null)
-                    	{
-                    		googleEvent.Attendees = new List<EventAttendee>();
-                    	}
-                    	googleEvent.Attendees.Add(eventAttendee);
-                    }
-//                    
-//                    foreach (var attendee in outlookAppointment.OptionalAttendees.Split(';').ToArray())
-//                    {
-//                    	
-//                    }
-                    //googleEvent.Attendees = GetAttendeeList(outlookAppointment);
-                    
-                    
-                    // Set Attendees
-//                    if (Settings.Instance.AddAttendeesToDescription)
-//                    {
-//                        var footer = new StringBuilder();
-//                        footer.Append(Environment.NewLine);
-//                        footer.Append(Environment.NewLine + "==============================================");
-//                        footer.Append(Environment.NewLine + "Added by OutlookGoogleSync:" + Environment.NewLine);
-//                        footer.Append(Environment.NewLine + "ORGANIZER: " + Environment.NewLine + outlookAppointment.Organizer + Environment.NewLine);
-//                        footer.Append(Environment.NewLine + "REQUIRED: " + Environment.NewLine + splitAttendees(outlookAppointment.RequiredAttendees) + Environment.NewLine);
-//                        footer.Append(Environment.NewLine + "OPTIONAL: " + Environment.NewLine + splitAttendees(outlookAppointment.OptionalAttendees));
-//                        footer.Append(Environment.NewLine + "==============================================");
-//
-//                        googleEvent.Description = googleEvent.Description + footer;
-//                    }
-
-                    //GoogleCalendar.Instance.AddEntry(ev);
-                }
-            }
+			var comparer = new AppointmentComparer();
+			// Items in google that are not in outlook should be deleted
+			var googleItemsToDelete = googleAppoinments.Except(outlookAppoinments, comparer).ToList();
+			RemoveOldCalendarEventsFromGoogleCalendar(googleItemsToDelete);
 			
+			// items in outlook that are not in google should be created
+			var googleItemsToAdd = outlookAppoinments.Except(googleAppoinments, comparer).ToList();
+			AddOutLookEventsToGoogleCalendar(googleItemsToAdd);
 		}
 		
-		private string[] splitAttendees(string attendees)
+		string[] splitAttendees(string attendees)
         {
 			if (attendees == null) return new string[0];
             string[] tmp1 = attendees.Split(';');
@@ -146,33 +57,85 @@ namespace Marble
             //return String.Join(Environment.NewLine, tmp1);
             return tmp1;
         }
-		
-		public void IdentifyGoogleAddDeletes(List<OutlookAppointment> outlookItems, List<Event> googleItems)
+
+		void RemoveOldCalendarEventsFromGoogleCalendar(List<Appointment> items)
 		{
-			// Count backwards so that we can remove found items without affecting the order of remaining items
-            for (int i = outlookItems.Count - 1; i >= 0; i--)
+			if (items.Count > 0)
             {
-                for (int j = googleItems.Count - 1; j >= 0; j--)
-                {
-                    if (String.CompareOrdinal(Signature(outlookItems[i]), Signature(googleItems[j])) == 0)
-                    {
-                        outlookItems.Remove(outlookItems[i]);
-                        googleItems.Remove(googleItems[j]);
-                        break;
-                    }
-                }
+                foreach (var item in items) googleCalendarService.DeleteCalendarEntry(Settings.CalendarId, item.Id);
             }
 		}
 		
-		
-		string Signature(Event ev)
-        {
-			return (ev.Start + ";" + ev.End + ";" + ev.Summary + ";" + ev.Location).Trim();
-        }
-		
-		string Signature(OutlookAppointment appointment)
+		void AddOutLookEventsToGoogleCalendar(List<Appointment> items)
 		{
-			return (appointment.Start + ";" + appointment.End + ";" + appointment.Subject + ";" + appointment.Location).Trim();
+			if (items.Count > 0)
+            {
+                foreach (Appointment item in items)
+                {
+                    var googleEvent = new Event
+                    {
+                        Start = new EventDateTime(),
+                        End = new EventDateTime(),
+                        Summary = item.Summary,
+                        Location = item.Location,
+                        Description = item.Description,
+                    };
+
+                    if (item.IsAllDayEvent)
+                    {
+                        //googleEvent.Start.Date = item.Start.ToString("yyyy-MM-dd");
+                        //googleEvent.End.Date = item.End.ToString("yyyy-MM-dd");
+                        
+                        googleEvent.Start.Date = item.Start.ToString();
+                        googleEvent.End.Date = item.End.ToString();
+                    }
+                    else
+                    {
+                        googleEvent.Start.DateTime = item.Start;
+                        googleEvent.End.DateTime = item.End;
+                    }
+
+                    //consider the reminder set in Outlook
+                    if (item.IsReminderSet)
+                    {
+                        googleEvent.Reminders = new Event.RemindersData { UseDefault = false };
+                        var reminder = new EventReminder { Method = "popup", Minutes = item.ReminderMinutesBeforeStart };
+                        googleEvent.Reminders.Overrides = new List<EventReminder> { reminder };
+                    }
+
+                    
+
+                    var organizer = new Event.OrganizerData();
+                    organizer.DisplayName = item.Organizer;
+                    googleEvent.Organizer = organizer;
+                    
+                    if (googleEvent.Attendees == null)
+                    {
+                    	googleEvent.Attendees = new List<EventAttendee>();
+                    }
+                    
+                    foreach (var attendee in item.RequiredAttendees) {
+                    	
+                    	var eventAttendee = new EventAttendee();
+                    	
+                    	eventAttendee.DisplayName = attendee;
+                    
+                    	googleEvent.Attendees.Add(eventAttendee);
+                    }
+                    
+                    foreach (var attendee in item.OptionalAttendees) {
+                    	
+                    	var eventAttendee = new EventAttendee();
+                    	
+                    	eventAttendee.DisplayName = attendee;
+
+                    	googleEvent.Attendees.Add(eventAttendee);
+                    }
+
+                    googleCalendarService.AddEntry(googleEvent);
+                    
+                }
+            }
 		}
 	}
 }

@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalendarSync.cs" />
+    <Compile Include="Data\Appointment.cs" />
     <Compile Include="FormAbout.cs" />
     <Compile Include="FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
@@ -167,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Google" />
+    <Folder Include="Data" />
     <Folder Include="Outlook" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
