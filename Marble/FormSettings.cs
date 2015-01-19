@@ -42,6 +42,8 @@ namespace Marble
 			checkBoxSyncEveryHour.Checked = Settings.SyncEveryHour;
 			textBoxMinuteOffset.Text = Settings.SyncMinutesOffset.ToString();
 			checkBoxStartWithWindows.Checked = Settings.StartWithWindows;
+			textBoxSyncDaysInPast.Text = Settings.CalendarDaysInThePast.ToString();
+			textBoxSyncDaysInFuture.Text = Settings.CalendarDaysInTheFuture.ToString();
 		}
 		
 		void ButtonGetCalendarsClick(object sender, EventArgs e)
@@ -58,6 +60,8 @@ namespace Marble
 			Settings.SyncEveryHour = checkBoxSyncEveryHour.Checked;
 			Settings.SyncMinutesOffset = int.Parse(textBoxMinuteOffset.Text);
 			Settings.StartWithWindows = checkBoxStartWithWindows.Checked;
+			Settings.CalendarDaysInThePast = int.Parse(textBoxSyncDaysInPast.Text);
+			Settings.CalendarDaysInTheFuture = int.Parse(textBoxSyncDaysInFuture.Text);
 			
 			Settings.Save();
 			

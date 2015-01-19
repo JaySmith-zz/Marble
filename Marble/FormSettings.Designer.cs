@@ -23,8 +23,8 @@ namespace Marble
 		private System.Windows.Forms.Label labelCalendar;
 		private System.Windows.Forms.CheckBox checkBoxSyncEveryHour;
 		private System.Windows.Forms.TextBox textBoxMinuteOffset;
-		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox textBoxSyncDaysInFuture;
+		private System.Windows.Forms.TextBox textBoxSyncDaysInPast;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label labelSelectedAccountName;
@@ -55,9 +55,9 @@ namespace Marble
 		{
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.groupBoxGoogleCalendar = new System.Windows.Forms.GroupBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.textBoxSyncDaysInFuture = new System.Windows.Forms.TextBox();
 			this.buttonClearDataStore = new System.Windows.Forms.Button();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.textBoxSyncDaysInPast = new System.Windows.Forms.TextBox();
 			this.labelSelectedAccountName = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.labelSelectedAccount = new System.Windows.Forms.Label();
@@ -86,9 +86,9 @@ namespace Marble
 			// 
 			// groupBoxGoogleCalendar
 			// 
-			this.groupBoxGoogleCalendar.Controls.Add(this.textBox2);
+			this.groupBoxGoogleCalendar.Controls.Add(this.textBoxSyncDaysInFuture);
 			this.groupBoxGoogleCalendar.Controls.Add(this.buttonClearDataStore);
-			this.groupBoxGoogleCalendar.Controls.Add(this.textBox1);
+			this.groupBoxGoogleCalendar.Controls.Add(this.textBoxSyncDaysInPast);
 			this.groupBoxGoogleCalendar.Controls.Add(this.labelSelectedAccountName);
 			this.groupBoxGoogleCalendar.Controls.Add(this.label2);
 			this.groupBoxGoogleCalendar.Controls.Add(this.labelSelectedAccount);
@@ -105,12 +105,12 @@ namespace Marble
 			this.groupBoxGoogleCalendar.TabStop = false;
 			this.groupBoxGoogleCalendar.Text = "Google Calendar";
 			// 
-			// textBox2
+			// textBoxSyncDaysInFuture
 			// 
-			this.textBox2.Location = new System.Drawing.Point(112, 134);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(39, 20);
-			this.textBox2.TabIndex = 3;
+			this.textBoxSyncDaysInFuture.Location = new System.Drawing.Point(112, 134);
+			this.textBoxSyncDaysInFuture.Name = "textBoxSyncDaysInFuture";
+			this.textBoxSyncDaysInFuture.Size = new System.Drawing.Size(39, 20);
+			this.textBoxSyncDaysInFuture.TabIndex = 3;
 			// 
 			// buttonClearDataStore
 			// 
@@ -122,12 +122,12 @@ namespace Marble
 			this.buttonClearDataStore.UseVisualStyleBackColor = true;
 			this.buttonClearDataStore.Click += new System.EventHandler(this.ButtonClearDataStoreClick);
 			// 
-			// textBox1
+			// textBoxSyncDaysInPast
 			// 
-			this.textBox1.Location = new System.Drawing.Point(112, 108);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(39, 20);
-			this.textBox1.TabIndex = 2;
+			this.textBoxSyncDaysInPast.Location = new System.Drawing.Point(112, 108);
+			this.textBoxSyncDaysInPast.Name = "textBoxSyncDaysInPast";
+			this.textBoxSyncDaysInPast.Size = new System.Drawing.Size(39, 20);
+			this.textBoxSyncDaysInPast.TabIndex = 2;
 			// 
 			// labelSelectedAccountName
 			// 
