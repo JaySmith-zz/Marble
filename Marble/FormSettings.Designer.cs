@@ -16,15 +16,11 @@ namespace Marble
 		private System.ComponentModel.IContainer components = null;
 		private System.Windows.Forms.Button buttonCancel;
 		private System.Windows.Forms.GroupBox groupBoxGoogleCalendar;
-		private System.Windows.Forms.GroupBox groupBoxDateRange;
 		private System.Windows.Forms.Button buttonOk;
 		private System.Windows.Forms.GroupBox groupBoxOptions;
 		private System.Windows.Forms.Button buttonGetCalendars;
 		private System.Windows.Forms.ComboBox comboBoxCalendars;
 		private System.Windows.Forms.Label labelCalendar;
-		private System.Windows.Forms.CheckBox checkBoxAddReminders;
-		private System.Windows.Forms.CheckBox checkBoxAddAttendeeToDescription;
-		private System.Windows.Forms.CheckBox checkBoxAddDescription;
 		private System.Windows.Forms.CheckBox checkBoxSyncEveryHour;
 		private System.Windows.Forms.TextBox textBoxMinuteOffset;
 		private System.Windows.Forms.TextBox textBox2;
@@ -34,6 +30,7 @@ namespace Marble
 		private System.Windows.Forms.Label labelSelectedAccountName;
 		private System.Windows.Forms.Label labelSelectedAccount;
 		private System.Windows.Forms.Button buttonClearDataStore;
+		private System.Windows.Forms.CheckBox checkBoxStartWithWindows;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -58,26 +55,23 @@ namespace Marble
 		{
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.groupBoxGoogleCalendar = new System.Windows.Forms.GroupBox();
+			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.buttonClearDataStore = new System.Windows.Forms.Button();
+			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.labelSelectedAccountName = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
 			this.labelSelectedAccount = new System.Windows.Forms.Label();
-			this.checkBoxAddReminders = new System.Windows.Forms.CheckBox();
-			this.checkBoxAddAttendeeToDescription = new System.Windows.Forms.CheckBox();
-			this.checkBoxAddDescription = new System.Windows.Forms.CheckBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.checkBoxSyncEveryHour = new System.Windows.Forms.CheckBox();
 			this.textBoxMinuteOffset = new System.Windows.Forms.TextBox();
 			this.buttonGetCalendars = new System.Windows.Forms.Button();
 			this.comboBoxCalendars = new System.Windows.Forms.ComboBox();
 			this.labelCalendar = new System.Windows.Forms.Label();
-			this.groupBoxDateRange = new System.Windows.Forms.GroupBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
 			this.buttonOk = new System.Windows.Forms.Button();
 			this.groupBoxOptions = new System.Windows.Forms.GroupBox();
-			this.buttonClearDataStore = new System.Windows.Forms.Button();
+			this.checkBoxStartWithWindows = new System.Windows.Forms.CheckBox();
 			this.groupBoxGoogleCalendar.SuspendLayout();
-			this.groupBoxDateRange.SuspendLayout();
+			this.groupBoxOptions.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// buttonCancel
@@ -92,12 +86,13 @@ namespace Marble
 			// 
 			// groupBoxGoogleCalendar
 			// 
+			this.groupBoxGoogleCalendar.Controls.Add(this.textBox2);
 			this.groupBoxGoogleCalendar.Controls.Add(this.buttonClearDataStore);
+			this.groupBoxGoogleCalendar.Controls.Add(this.textBox1);
 			this.groupBoxGoogleCalendar.Controls.Add(this.labelSelectedAccountName);
+			this.groupBoxGoogleCalendar.Controls.Add(this.label2);
 			this.groupBoxGoogleCalendar.Controls.Add(this.labelSelectedAccount);
-			this.groupBoxGoogleCalendar.Controls.Add(this.checkBoxAddReminders);
-			this.groupBoxGoogleCalendar.Controls.Add(this.checkBoxAddAttendeeToDescription);
-			this.groupBoxGoogleCalendar.Controls.Add(this.checkBoxAddDescription);
+			this.groupBoxGoogleCalendar.Controls.Add(this.label1);
 			this.groupBoxGoogleCalendar.Controls.Add(this.checkBoxSyncEveryHour);
 			this.groupBoxGoogleCalendar.Controls.Add(this.textBoxMinuteOffset);
 			this.groupBoxGoogleCalendar.Controls.Add(this.buttonGetCalendars);
@@ -105,10 +100,34 @@ namespace Marble
 			this.groupBoxGoogleCalendar.Controls.Add(this.labelCalendar);
 			this.groupBoxGoogleCalendar.Location = new System.Drawing.Point(13, 13);
 			this.groupBoxGoogleCalendar.Name = "groupBoxGoogleCalendar";
-			this.groupBoxGoogleCalendar.Size = new System.Drawing.Size(481, 216);
+			this.groupBoxGoogleCalendar.Size = new System.Drawing.Size(481, 164);
 			this.groupBoxGoogleCalendar.TabIndex = 1;
 			this.groupBoxGoogleCalendar.TabStop = false;
 			this.groupBoxGoogleCalendar.Text = "Google Calendar";
+			// 
+			// textBox2
+			// 
+			this.textBox2.Location = new System.Drawing.Point(112, 134);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(39, 20);
+			this.textBox2.TabIndex = 3;
+			// 
+			// buttonClearDataStore
+			// 
+			this.buttonClearDataStore.Location = new System.Drawing.Point(374, 29);
+			this.buttonClearDataStore.Name = "buttonClearDataStore";
+			this.buttonClearDataStore.Size = new System.Drawing.Size(85, 23);
+			this.buttonClearDataStore.TabIndex = 10;
+			this.buttonClearDataStore.Text = "Clear";
+			this.buttonClearDataStore.UseVisualStyleBackColor = true;
+			this.buttonClearDataStore.Click += new System.EventHandler(this.ButtonClearDataStoreClick);
+			// 
+			// textBox1
+			// 
+			this.textBox1.Location = new System.Drawing.Point(112, 108);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(39, 20);
+			this.textBox1.TabIndex = 2;
 			// 
 			// labelSelectedAccountName
 			// 
@@ -116,6 +135,14 @@ namespace Marble
 			this.labelSelectedAccountName.Name = "labelSelectedAccountName";
 			this.labelSelectedAccountName.Size = new System.Drawing.Size(267, 23);
 			this.labelSelectedAccountName.TabIndex = 9;
+			// 
+			// label2
+			// 
+			this.label2.Location = new System.Drawing.Point(8, 137);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(100, 23);
+			this.label2.TabIndex = 1;
+			this.label2.Text = "Days in the future";
 			// 
 			// labelSelectedAccount
 			// 
@@ -125,32 +152,13 @@ namespace Marble
 			this.labelSelectedAccount.TabIndex = 8;
 			this.labelSelectedAccount.Text = "Selected Account";
 			// 
-			// checkBoxAddReminders
+			// label1
 			// 
-			this.checkBoxAddReminders.Location = new System.Drawing.Point(9, 176);
-			this.checkBoxAddReminders.Name = "checkBoxAddReminders";
-			this.checkBoxAddReminders.Size = new System.Drawing.Size(104, 24);
-			this.checkBoxAddReminders.TabIndex = 7;
-			this.checkBoxAddReminders.Text = "Add reminders";
-			this.checkBoxAddReminders.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxAddAttendeeToDescription
-			// 
-			this.checkBoxAddAttendeeToDescription.Location = new System.Drawing.Point(9, 145);
-			this.checkBoxAddAttendeeToDescription.Name = "checkBoxAddAttendeeToDescription";
-			this.checkBoxAddAttendeeToDescription.Size = new System.Drawing.Size(157, 24);
-			this.checkBoxAddAttendeeToDescription.TabIndex = 6;
-			this.checkBoxAddAttendeeToDescription.Text = "Add attendee to description";
-			this.checkBoxAddAttendeeToDescription.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxAddDescription
-			// 
-			this.checkBoxAddDescription.Location = new System.Drawing.Point(8, 114);
-			this.checkBoxAddDescription.Name = "checkBoxAddDescription";
-			this.checkBoxAddDescription.Size = new System.Drawing.Size(104, 24);
-			this.checkBoxAddDescription.TabIndex = 5;
-			this.checkBoxAddDescription.Text = "Add description";
-			this.checkBoxAddDescription.UseVisualStyleBackColor = true;
+			this.label1.Location = new System.Drawing.Point(6, 111);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(88, 23);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "Days in the past";
 			// 
 			// checkBoxSyncEveryHour
 			// 
@@ -194,49 +202,6 @@ namespace Marble
 			this.labelCalendar.TabIndex = 0;
 			this.labelCalendar.Text = "Calendar";
 			// 
-			// groupBoxDateRange
-			// 
-			this.groupBoxDateRange.Controls.Add(this.textBox2);
-			this.groupBoxDateRange.Controls.Add(this.textBox1);
-			this.groupBoxDateRange.Controls.Add(this.label2);
-			this.groupBoxDateRange.Controls.Add(this.label1);
-			this.groupBoxDateRange.Location = new System.Drawing.Point(13, 235);
-			this.groupBoxDateRange.Name = "groupBoxDateRange";
-			this.groupBoxDateRange.Size = new System.Drawing.Size(481, 46);
-			this.groupBoxDateRange.TabIndex = 2;
-			this.groupBoxDateRange.TabStop = false;
-			this.groupBoxDateRange.Text = "Date Range";
-			// 
-			// textBox2
-			// 
-			this.textBox2.Location = new System.Drawing.Point(330, 17);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(39, 20);
-			this.textBox2.TabIndex = 3;
-			// 
-			// textBox1
-			// 
-			this.textBox1.Location = new System.Drawing.Point(102, 17);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(39, 20);
-			this.textBox1.TabIndex = 2;
-			// 
-			// label2
-			// 
-			this.label2.Location = new System.Drawing.Point(224, 20);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(100, 23);
-			this.label2.TabIndex = 1;
-			this.label2.Text = "Days in the future";
-			// 
-			// label1
-			// 
-			this.label1.Location = new System.Drawing.Point(8, 20);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(88, 23);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Days in the past";
-			// 
 			// buttonOk
 			// 
 			this.buttonOk.Location = new System.Drawing.Point(343, 395);
@@ -249,22 +214,22 @@ namespace Marble
 			// 
 			// groupBoxOptions
 			// 
-			this.groupBoxOptions.Location = new System.Drawing.Point(14, 287);
+			this.groupBoxOptions.Controls.Add(this.checkBoxStartWithWindows);
+			this.groupBoxOptions.Location = new System.Drawing.Point(14, 264);
 			this.groupBoxOptions.Name = "groupBoxOptions";
-			this.groupBoxOptions.Size = new System.Drawing.Size(482, 100);
+			this.groupBoxOptions.Size = new System.Drawing.Size(482, 123);
 			this.groupBoxOptions.TabIndex = 3;
 			this.groupBoxOptions.TabStop = false;
 			this.groupBoxOptions.Text = "Options";
 			// 
-			// buttonClearDataStore
+			// checkBoxStartWithWindows
 			// 
-			this.buttonClearDataStore.Location = new System.Drawing.Point(374, 29);
-			this.buttonClearDataStore.Name = "buttonClearDataStore";
-			this.buttonClearDataStore.Size = new System.Drawing.Size(85, 23);
-			this.buttonClearDataStore.TabIndex = 10;
-			this.buttonClearDataStore.Text = "Clear";
-			this.buttonClearDataStore.UseVisualStyleBackColor = true;
-			this.buttonClearDataStore.Click += new System.EventHandler(this.ButtonClearDataStoreClick);
+			this.checkBoxStartWithWindows.Location = new System.Drawing.Point(7, 19);
+			this.checkBoxStartWithWindows.Name = "checkBoxStartWithWindows";
+			this.checkBoxStartWithWindows.Size = new System.Drawing.Size(229, 24);
+			this.checkBoxStartWithWindows.TabIndex = 4;
+			this.checkBoxStartWithWindows.Text = "Start with Windows";
+			this.checkBoxStartWithWindows.UseVisualStyleBackColor = true;
 			// 
 			// FormSettings
 			// 
@@ -274,7 +239,6 @@ namespace Marble
 			this.ControlBox = false;
 			this.Controls.Add(this.groupBoxOptions);
 			this.Controls.Add(this.buttonOk);
-			this.Controls.Add(this.groupBoxDateRange);
 			this.Controls.Add(this.groupBoxGoogleCalendar);
 			this.Controls.Add(this.buttonCancel);
 			this.MaximizeBox = false;
@@ -284,8 +248,7 @@ namespace Marble
 			this.Load += new System.EventHandler(this.FormSettingsLoad);
 			this.groupBoxGoogleCalendar.ResumeLayout(false);
 			this.groupBoxGoogleCalendar.PerformLayout();
-			this.groupBoxDateRange.ResumeLayout(false);
-			this.groupBoxDateRange.PerformLayout();
+			this.groupBoxOptions.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}

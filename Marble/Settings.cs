@@ -99,19 +99,28 @@ namespace Marble
 		
 		public static int CalendarDaysInTheFuture
 		{
-			get
-			{
-				return Properties.Settings.Default.CalendarDaysInTheFuture;
-			}
-			set
-			{
-				Properties.Settings.Default.CalendarDaysInTheFuture = value;
-			}
+			get { return Properties.Settings.Default.CalendarDaysInTheFuture;  }
+			set { Properties.Settings.Default.CalendarDaysInTheFuture = value; }
 		}
 
-		public static bool AddDescription { get; set; }
-		public static bool AddReminders { get; set; }
-
+		public static bool SyncEveryHour		
+		{
+			get { return Properties.Settings.Default.SyncEveryHour;  }
+			set { Properties.Settings.Default.SyncEveryHour = value; }
+		}
+		
+		public static int SyncMinutesOffset		
+		{
+			get { return Properties.Settings.Default.SyncMinutesOffset;  }
+			set { Properties.Settings.Default.SyncMinutesOffset = value; }
+		}
+		
+		public static bool StartWithWindows		
+		{
+			get { return Properties.Settings.Default.StartWithWindows;  }
+			set { Properties.Settings.Default.StartWithWindows = value; }
+		}
+		
 		public static void Save()
 		{
 			Properties.Settings.Default.Save();

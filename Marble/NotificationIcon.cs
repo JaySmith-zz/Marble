@@ -1,12 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: smithjay
- * Date: 12/16/2014
- * Time: 8:40 AM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
+﻿using System;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -18,8 +10,16 @@ namespace Marble
 		private NotifyIcon notifyIcon;
 		private ContextMenu notificationMenu;
 		
+		private DateTime lastSyncTime;
+		private System.Windows.Forms.Timer syncTimer;
+		
 		public NotificationIcon()
 		{
+			syncTimer = new System.Windows.Forms.Timer { Interval = 30000 };
+			syncTimer.Tick += syncTimerTick;
+			lastSyncTime = DateTime.Now;
+			syncTimer.Start();
+			
 			notifyIcon = new NotifyIcon();
 			notificationMenu = new ContextMenu(InitializeMenu());
 			
@@ -28,15 +28,31 @@ namespace Marble
 			notifyIcon.Icon = (Icon)resources.GetObject("$this.Icon");
 			notifyIcon.ContextMenu = notificationMenu;
 		}
+
+		void syncTimerTick(object sender, EventArgs e)
+		{
+			if (!Settings.SyncEveryHour) return;
+            DateTime newtime = DateTime.Now;
+            if (newtime.Minute != lastSyncTime.Minute)
+            {
+                lastSyncTime = newtime;
+                if (newtime.Minute == Settings.SyncMinutesOffset)
+                {
+                	Sync();
+                }
+            }
+		}
 		
-		private MenuItem[] InitializeMenu()
+		MenuItem[] InitializeMenu()
 		{
 			var menu = new MenuItem[] {
-				new MenuItem("Sync All", menuSyncAllClick),
+				//new MenuItem("Sync All", menuSyncAllClick),
 				new MenuItem("Sync Calendar", menuSyncCalendarClick),
-				new MenuItem("Sync Tasks", menuTasksClick),
+				//new MenuItem("Sync Tasks", menuTasksClick),
+				new MenuItem("-"),
 				new MenuItem("Settings...", menuSettingsClick),
 				new MenuItem("About", menuAboutClick),
+				new MenuItem("-"),
 				new MenuItem("Exit", menuExitClick)
 			};
 			
@@ -105,5 +121,10 @@ namespace Marble
 			MessageBox.Show("The icon was double clicked");
 		}
 
+		private void Sync()
+		{
+			var sync = new MarbleSync();
+			sync.SyncCalendar();
+		}
 	}
 }

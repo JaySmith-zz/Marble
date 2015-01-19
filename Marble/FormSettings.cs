@@ -9,6 +9,8 @@
 using System;
 using System.Windows.Forms;
 
+using Microsoft.Win32;
+
 using Marble.Google;
 
 namespace Marble
@@ -18,7 +20,7 @@ namespace Marble
 	/// </summary>
 	public partial class FormSettings : Form
 	{
-		GoogleClient googleClient;
+		readonly GoogleClient googleClient;
 		readonly GoogleCalendarService calendarService;
 		
 		public FormSettings()
@@ -37,6 +39,9 @@ namespace Marble
 		{
 			GetCalendars();
 			labelSelectedAccountName.Text = Settings.CalendarAccount;
+			checkBoxSyncEveryHour.Checked = Settings.SyncEveryHour;
+			textBoxMinuteOffset.Text = Settings.SyncMinutesOffset.ToString();
+			checkBoxStartWithWindows.Checked = Settings.StartWithWindows;
 		}
 		
 		void ButtonGetCalendarsClick(object sender, EventArgs e)
@@ -50,8 +55,13 @@ namespace Marble
 			
 			Settings.CalendarAccount = selectedItem.Id;
 			Settings.CalendarId = selectedItem.Name;
+			Settings.SyncEveryHour = checkBoxSyncEveryHour.Checked;
+			Settings.SyncMinutesOffset = int.Parse(textBoxMinuteOffset.Text);
+			Settings.StartWithWindows = checkBoxStartWithWindows.Checked;
 			
 			Settings.Save();
+			
+			ConfigureWindowsStartUp();
 			
 			DialogResult = DialogResult.OK;
 			Close();
@@ -76,7 +86,6 @@ namespace Marble
 			}
 			
 			comboBoxCalendars.SelectedIndex = 0;
-			
 			buttonGetCalendars.Enabled = true;
 			comboBoxCalendars.Enabled = true;
 			
@@ -96,6 +105,23 @@ namespace Marble
 			googleClient.GetAuthorization();
 			
 			InitializeForm();
+		}
+		
+		void ConfigureWindowsStartUp()
+		{
+            const string path = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+            var key = Registry.CurrentUser.OpenSubKey(path, true);
+
+            if (Settings.StartWithWindows)
+            {
+                // set value in registry
+                if (key != null) key.SetValue(Application.ProductName, Application.ExecutablePath);
+            }
+            else
+            {
+                // remove value from registry
+                if (key != null) key.DeleteValue(Application.ProductName, false);
+            }
 		}
 	}
 }

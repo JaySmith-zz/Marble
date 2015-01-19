@@ -115,5 +115,41 @@ namespace Marble.Properties {
 				return ((string)(this["ScopeTasks"]));
 			}
 		}
+		
+		[global::System.Configuration.UserScopedSettingAttribute()]
+		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+		[global::System.Configuration.DefaultSettingValueAttribute("False")]
+		public bool StartWithWindows {
+			get {
+				return ((bool)(this["StartWithWindows"]));
+			}
+			set {
+				this["StartWithWindows"] = value;
+			}
+		}
+		
+		[global::System.Configuration.UserScopedSettingAttribute()]
+		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+		[global::System.Configuration.DefaultSettingValueAttribute("False")]
+		public bool SyncEveryHour {
+			get {
+				return ((bool)(this["SyncEveryHour"]));
+			}
+			set {
+				this["SyncEveryHour"] = value;
+			}
+		}
+		
+		[global::System.Configuration.UserScopedSettingAttribute()]
+		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+		[global::System.Configuration.DefaultSettingValueAttribute("10")]
+		public int SyncMinutesOffset {
+			get {
+				return ((int)(this["SyncMinutesOffset"]));
+			}
+			set {
+				this["SyncMinutesOffset"] = value;
+			}
+		}
 	}
 }

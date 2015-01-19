@@ -31,5 +31,14 @@
     <Setting Name="ScopeTasks" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://www.googleapis.com/auth/tasks</Value>
     </Setting>
+    <Setting Name="StartWithWindows" Type="System.Boolean" Scope="User" Roaming="false">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SyncEveryHour" Type="System.Boolean" Scope="User" Roaming="false">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SyncMinutesOffset" Type="System.Int32" Scope="User" Roaming="false">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

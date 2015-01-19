@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Google.Apis.Calendar.v3.Data;
+using Newtonsoft.Json;
 using Marble.Data;
 using Marble.Google;
 using Marble.Outlook;
@@ -38,7 +39,6 @@ namespace Marble
 			List<Appointment> googleAppoinments = googleCalendarService.GetAppointmentsInRange();
 			List<Appointment> outlookAppoinments = outlookCalendarService.GetAppointmentsInRange();
 			
-			
 			var comparer = new AppointmentComparer();
 			// Items in google that are not in outlook should be deleted
 			var googleItemsToDelete = googleAppoinments.Except(outlookAppoinments, comparer).ToList();
@@ -62,7 +62,7 @@ namespace Marble
 		{
 			if (items.Count > 0)
             {
-                foreach (var item in items) googleCalendarService.DeleteCalendarEntry(Settings.CalendarId, item.Id);
+                foreach (var item in items) googleCalendarService.DeleteCalendarEntry(Settings.CalendarAccount, item.Id);
             }
 		}
 		
@@ -81,18 +81,31 @@ namespace Marble
                         Description = item.Description
                     };
 
-                    var timezone = TimeZone.CurrentTimeZone;
-                   	
-                    var startDateTime = new DateTimeOffset(item.Start, timezone.GetUtcOffset(item.Start));
+                    var currentTimeZone = TimeZone.CurrentTimeZone;
+                                  
+                    var startDateTime = new DateTimeOffset(item.Start, currentTimeZone.GetUtcOffset(item.Start));
                     var startDate = new EventDateTime();
-                    startDate.Date = startDateTime.ToString("o");
+                    //startDate.DateTime = startDateTime.ToString("o");
+                    if (item.IsAllDayEvent) 
+                    {
+                    	startDate.Date = startDateTime.ToString("yyy-MM-dd");
+                    } else {
+                    	startDate.DateTime = startDateTime.DateTime;
+                    }
+           
 					//startDate.Date = item.IsAllDayEvent ? item.Start.ToString("yyyy-MM-dd") : item.Start.ToString();
                 	googleEvent.Start = startDate;
                 	                    	
-                	var endDateTime = new DateTimeOffset(item.End, timezone.GetUtcOffset(item.End));
+                	var endDateTime = new DateTimeOffset(item.End, currentTimeZone.GetUtcOffset(item.End));
                 	var endDate = new EventDateTime();
 					//endDate.Date = item.IsAllDayEvent ? item.End.ToString("yyyy-MM-dd") : item.End.ToString();
-                	endDate.Date = endDateTime.ToString("o");
+					if (item.IsAllDayEvent) 
+                    {
+                    	endDate.Date = endDateTime.ToString("yyy-MM-dd");
+                    } else {
+                    	endDate.DateTime = endDateTime.DateTime;
+                    }
+                	//endDate.Date = endDateTime.ToString("o");
                 	googleEvent.End = endDate;
                
                     //consider the reminder set in Outlook
@@ -112,25 +125,33 @@ namespace Marble
                     	googleEvent.Attendees = new List<EventAttendee>();
                     }
                     
-                    foreach (var attendee in item.RequiredAttendees) {
-                    	
-                    	var eventAttendee = new EventAttendee();
-                    	
-                    	eventAttendee.DisplayName = attendee;
+//                    foreach (var attendee in item.RequiredAttendees) {
+//                    	
+//                    	var eventAttendee = new EventAttendee();
+//                    	
+//                    	eventAttendee.DisplayName = attendee;
+//                    	eventAttendee.Email = 
+//                    
+//                    	googleEvent.Attendees.Add(eventAttendee);
+//                    }
+//                    
+//                    foreach (var attendee in item.OptionalAttendees) {
+//                    	
+//                    	var eventAttendee = new EventAttendee();
+//                    	
+//                    	eventAttendee.DisplayName = attendee;
+//                    	eventAttendee.
+//
+//                    	googleEvent.Attendees.Add(eventAttendee);
+//                    }
                     
-                    	googleEvent.Attendees.Add(eventAttendee);
-                    }
-                    
-                    foreach (var attendee in item.OptionalAttendees) {
-                    	
-                    	var eventAttendee = new EventAttendee();
-                    	
-                    	eventAttendee.DisplayName = attendee;
-
-                    	googleEvent.Attendees.Add(eventAttendee);
-                    }
-                    
-                    googleEvent.Attendees.Add(new EventAttendee { Email = Settings.CalendarAccount });
+					var me = new EventAttendee();
+					me.Email = Settings.CalendarAccount;
+					me.DisplayName = "Jay Smith";
+					me.Organizer = false;
+					me.Self = true;
+					
+                    googleEvent.Attendees.Add(me);
                     googleCalendarService.AddEntry(googleEvent);
                     
                 }
