@@ -1,4 +1,4 @@
 Marble
 ======
 
-Google Calendar and Task Sync for Outlook
+Google Calendar Sync for Outlook
