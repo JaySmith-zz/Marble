@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using Google.Apis.Calendar.v3;
@@ -58,8 +59,8 @@ namespace Marble.Google
 			{
 				var appointment = new Appointment() {
 					Id = googleEvent.Id,
-					Start = googleEvent.Start.DateTime,
-					End = googleEvent.End.DateTime,
+					Start = (DateTime) googleEvent.Start.DateTime,
+					End = (DateTime) googleEvent.End.DateTime,
 					Summary = googleEvent.Summary,
 					Location = googleEvent.Location
 				};
@@ -77,7 +78,7 @@ namespace Marble.Google
 		
 		public void AddEntry(Event googleEvent)
 		{
-			service.Events.Insert(googleEvent, Settings.CalendarId).Execute();
+			service.Events.Insert(googleEvent, Settings.CalendarAccount).Execute();
 		}
 	}
 }

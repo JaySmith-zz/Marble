@@ -78,23 +78,22 @@ namespace Marble
                         End = new EventDateTime(),
                         Summary = item.Summary,
                         Location = item.Location,
-                        Description = item.Description,
+                        Description = item.Description
                     };
 
-                    if (item.IsAllDayEvent)
-                    {
-                        //googleEvent.Start.Date = item.Start.ToString("yyyy-MM-dd");
-                        //googleEvent.End.Date = item.End.ToString("yyyy-MM-dd");
-                        
-                        googleEvent.Start.Date = item.Start.ToString();
-                        googleEvent.End.Date = item.End.ToString();
-                    }
-                    else
-                    {
-                        googleEvent.Start.DateTime = item.Start;
-                        googleEvent.End.DateTime = item.End;
-                    }
-
+                    string timezone = System.TimeZone.CurrentTimeZone.StandardName;
+                   	var startDate = new EventDateTime();
+                	
+					startDate.Date = item.IsAllDayEvent ? item.Start.ToString("yyyy-MM-dd") : item.Start.ToString();
+                	startDate.TimeZone = timezone;
+                	googleEvent.Start = startDate;
+                	                    	
+                	var endDate = new EventDateTime();
+					endDate.Date = item.IsAllDayEvent ? item.End.ToString("yyyy-MM-dd") : item.End.ToString();
+                	endDate.Date = item.Start.ToString("yyyy-MM-dd");
+                	endDate.TimeZone = timezone;
+                	googleEvent.End = endDate;
+               
                     //consider the reminder set in Outlook
                     if (item.IsReminderSet)
                     {
@@ -102,8 +101,6 @@ namespace Marble
                         var reminder = new EventReminder { Method = "popup", Minutes = item.ReminderMinutesBeforeStart };
                         googleEvent.Reminders.Overrides = new List<EventReminder> { reminder };
                     }
-
-                    
 
                     var organizer = new Event.OrganizerData();
                     organizer.DisplayName = item.Organizer;
@@ -131,7 +128,6 @@ namespace Marble
 
                     	googleEvent.Attendees.Add(eventAttendee);
                     }
-
                     googleCalendarService.AddEntry(googleEvent);
                     
                 }
