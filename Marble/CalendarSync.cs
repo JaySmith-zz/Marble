@@ -22,7 +22,7 @@ namespace Marble
 		
 		public CalendarSync()
 		{
-			googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar, Settings.ScopeCalendar);
+			googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
 			googleCalendarService = new GoogleCalendarService(googleClient);
 			
 			outlookCalendarService = new OutlookCalendarService();

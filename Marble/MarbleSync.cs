@@ -21,19 +21,12 @@ namespace Marble
 		public void SyncAll()
 		{
 			SyncCalendar();
-			SyncTask();
 		}
 		
 		public void SyncCalendar()
 		{
 			var calendarSync = new CalendarSync();
 			calendarSync.Sync();
-		}
-		
-		public void SyncTask()
-		{
-			var taskSync = new TaskSync();
-			taskSync.Sync();
 		}
 	}
 }

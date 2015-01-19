@@ -125,7 +125,6 @@
     <Compile Include="Google\GoogleCalendarInfo.cs" />
     <Compile Include="Google\GoogleCalendarService.cs" />
     <Compile Include="Google\GoogleClient.cs" />
-    <Compile Include="Google\GoogleTaskService.cs" />
     <Compile Include="MarbleSync.cs" />
     <Compile Include="NotificationIcon.cs" />
     <Compile Include="Outlook\OutlookAppointment.cs" />
@@ -136,7 +135,6 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="TaskSync.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FormAbout.resx">

@@ -25,23 +25,22 @@ namespace Marble.Google
 	public class GoogleClient
 	{
 		FileDataStore FileDataStore { get; set; }
-		string ClientScope { get; set; }
+		//string ClientScope { get; set; }
 		
 		public BaseClientService.Initializer Initializer { get; set; }
 		
-		public GoogleClient(string dataStoreFolderName, string clientScope)
+		public GoogleClient(string dataStoreFolderName)
 		{
 			FileDataStore = new FileDataStore(dataStoreFolderName);
-			ClientScope = clientScope;
+			//ClientScope = clientScope;
 			GetAuthorization();
-		}
-		
+		}		
 		public void GetAuthorization()
 		{
 			UserCredential credential;
 			
 			var scopes = new List<string>();
-			scopes.Add(ClientScope);
+			scopes.Add(Settings.ScopeCalendar);
 			
 			using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
             {
@@ -67,5 +66,6 @@ namespace Marble.Google
 			Settings.CalendarId = string.Empty;
 			Settings.CalendarAccount = string.Empty;
 		}
+		
 	}
 }

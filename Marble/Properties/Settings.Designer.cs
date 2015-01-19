@@ -107,15 +107,6 @@ namespace Marble.Properties {
 			}
 		}
 		
-		[global::System.Configuration.ApplicationScopedSettingAttribute()]
-		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-		[global::System.Configuration.DefaultSettingValueAttribute("https://www.googleapis.com/auth/tasks")]
-		public string ScopeTasks {
-			get {
-				return ((string)(this["ScopeTasks"]));
-			}
-		}
-		
 		[global::System.Configuration.UserScopedSettingAttribute()]
 		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
 		[global::System.Configuration.DefaultSettingValueAttribute("False")]
