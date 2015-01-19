@@ -78,7 +78,7 @@ namespace Marble.Google
 		
 		public void AddEntry(Event googleEvent)
 		{
-			service.Events.Insert(googleEvent, Settings.CalendarAccount).Execute();
+			var myEvent = service.Events.Insert(googleEvent, Settings.CalendarAccount).Execute();
 		}
 	}
 }

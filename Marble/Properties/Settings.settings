@@ -8,7 +8,7 @@
       <Value Profile="(Default)">Marble</Value>
     </Setting>
     <Setting Name="CalendarAccount" Type="System.String" Scope="User" Roaming="false">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">tenanji@gmail.com</Value>
     </Setting>
     <Setting Name="CalendarDaysInPast" Type="System.Int32" Scope="User" Roaming="false">
       <Value Profile="(Default)">1</Value>
@@ -17,7 +17,7 @@
       <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="CalendarId" Type="System.String" Scope="User" Roaming="false">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Work</Value>
     </Setting>
     <Setting Name="DataStoreFolderNameCalendar" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Marble.Calendar.Auth.Store</Value>

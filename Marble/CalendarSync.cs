@@ -81,17 +81,18 @@ namespace Marble
                         Description = item.Description
                     };
 
-                    string timezone = System.TimeZone.CurrentTimeZone.StandardName;
-                   	var startDate = new EventDateTime();
-                	
-					startDate.Date = item.IsAllDayEvent ? item.Start.ToString("yyyy-MM-dd") : item.Start.ToString();
-                	startDate.TimeZone = timezone;
+                    var timezone = TimeZone.CurrentTimeZone;
+                   	
+                    var startDateTime = new DateTimeOffset(item.Start, timezone.GetUtcOffset(item.Start));
+                    var startDate = new EventDateTime();
+                    startDate.Date = startDateTime.ToString("o");
+					//startDate.Date = item.IsAllDayEvent ? item.Start.ToString("yyyy-MM-dd") : item.Start.ToString();
                 	googleEvent.Start = startDate;
                 	                    	
+                	var endDateTime = new DateTimeOffset(item.End, timezone.GetUtcOffset(item.End));
                 	var endDate = new EventDateTime();
-					endDate.Date = item.IsAllDayEvent ? item.End.ToString("yyyy-MM-dd") : item.End.ToString();
-                	endDate.Date = item.Start.ToString("yyyy-MM-dd");
-                	endDate.TimeZone = timezone;
+					//endDate.Date = item.IsAllDayEvent ? item.End.ToString("yyyy-MM-dd") : item.End.ToString();
+                	endDate.Date = endDateTime.ToString("o");
                 	googleEvent.End = endDate;
                
                     //consider the reminder set in Outlook
@@ -128,6 +129,8 @@ namespace Marble
 
                     	googleEvent.Attendees.Add(eventAttendee);
                     }
+                    
+                    googleEvent.Attendees.Add(new EventAttendee { Email = Settings.CalendarAccount });
                     googleCalendarService.AddEntry(googleEvent);
                     
                 }

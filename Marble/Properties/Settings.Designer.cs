@@ -34,7 +34,7 @@ namespace Marble.Properties {
 		
 		[global::System.Configuration.UserScopedSettingAttribute()]
 		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-		[global::System.Configuration.DefaultSettingValueAttribute("")]
+		[global::System.Configuration.DefaultSettingValueAttribute("tenanji@gmail.com")]
 		public string CalendarAccount {
 			get {
 				return ((string)(this["CalendarAccount"]));
@@ -70,7 +70,7 @@ namespace Marble.Properties {
 		
 		[global::System.Configuration.UserScopedSettingAttribute()]
 		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-		[global::System.Configuration.DefaultSettingValueAttribute("")]
+		[global::System.Configuration.DefaultSettingValueAttribute("Work")]
 		public string CalendarId {
 			get {
 				return ((string)(this["CalendarId"]));
