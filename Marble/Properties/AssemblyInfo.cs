@@ -23,4 +23,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Following Symantic Version http://semver.org/
-[assembly: AssemblyVersion("0.1.1")]
+[assembly: AssemblyVersion("0.1.2")]
