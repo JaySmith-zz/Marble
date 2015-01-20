@@ -53,14 +53,6 @@ namespace Marble
 			}
 		}
 
-		public static string ScopeTasks
-		{
-			get
-			{
-				return Properties.Settings.Default.ScopeTasks;
-			}
-		}
-		
 		public static string CalendarId 
 		{ 
 			get

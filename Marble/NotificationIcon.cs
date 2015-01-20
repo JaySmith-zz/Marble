@@ -104,12 +104,6 @@ namespace Marble
 			sync.SyncAll();
 		}
 		
-		private void menuTasksClick(object sender, EventArgs e)
-		{
-			var sync = new MarbleSync();
-			sync.SyncTask();
-		}
-		
 		private void menuSyncCalendarClick(object sender, EventArgs e)
 		{
 			var sync = new MarbleSync();

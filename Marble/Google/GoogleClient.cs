@@ -42,7 +42,9 @@ namespace Marble.Google
 			var scopes = new List<string>();
 			scopes.Add(Settings.ScopeCalendar);
 			
-			using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
+			var secretsPath = Path.Combine(Environment.CurrentDirectory, "client_secrets.json");
+			
+			using (var stream = new FileStream(secretsPath, FileMode.Open, FileAccess.Read))
             {
                 credential = GoogleWebAuthorizationBroker
                 	.AuthorizeAsync(
