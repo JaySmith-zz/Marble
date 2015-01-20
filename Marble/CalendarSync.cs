@@ -147,7 +147,7 @@ namespace Marble
                     
 					var me = new EventAttendee();
 					me.Email = Settings.CalendarAccount;
-					me.DisplayName = "Jay Smith";
+					me.DisplayName = Settings.CalendarAccount;
 					me.Organizer = false;
 					me.Self = true;
 					

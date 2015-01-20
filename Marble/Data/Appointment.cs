@@ -59,7 +59,7 @@ namespace Marble.Data
 			//Check whether the object is null
 			if (Object.ReferenceEquals(appointment, null)) return 0;
 			
-			int hashStart = appointment.Start == null ? 0 : appointment.Start == null ? 0 : appointment.Start.GetHashCode();
+			int hashStart = appointment.Start == null ? 0 : appointment.Start.GetHashCode();
 			int hashEnd = appointment.End == null ? 0 : appointment.End.GetHashCode();
 			int hashSummary = appointment.Summary == null ? 0 : appointment.Summary.GetHashCode();
 			int hashLocation = appointment.Location == null ? 0 : appointment.Location.GetHashCode();
