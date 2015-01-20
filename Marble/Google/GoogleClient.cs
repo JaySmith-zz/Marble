@@ -11,8 +11,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
-using Google.Apis.Calendar.v3;
-using Google.Apis.Tasks.v1;
 using Google.Apis.Services;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Util.Store;
