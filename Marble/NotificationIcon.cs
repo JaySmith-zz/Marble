@@ -23,7 +23,7 @@ namespace Marble
 			notifyIcon = new NotifyIcon();
 			notificationMenu = new ContextMenu(InitializeMenu());
 			
-			notifyIcon.DoubleClick += IconDoubleClick;
+			//notifyIcon.DoubleClick += IconDoubleClick;
 			var resources = new System.ComponentModel.ComponentResourceManager(typeof(NotificationIcon));
 			notifyIcon.Icon = (Icon)resources.GetObject("$this.Icon");
 			notifyIcon.ContextMenu = notificationMenu;
@@ -110,10 +110,10 @@ namespace Marble
 			sync.SyncCalendar();
 		}
 		
-		private void IconDoubleClick(object sender, EventArgs e)
-		{
-			MessageBox.Show("The icon was double clicked");
-		}
+//		private void IconDoubleClick(object sender, EventArgs e)
+//		{
+//			MessageBox.Show("The icon was double clicked");
+//		}
 
 		private void Sync()
 		{
