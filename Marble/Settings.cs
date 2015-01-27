@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Reflection;
 
 namespace Marble
 {
@@ -15,8 +16,12 @@ namespace Marble
 	/// </summary>
 	public static class Settings
 	{
+		static readonly AssemblyInfo assemblyInfo;
+		
 		static Settings()
 		{
+			assemblyInfo = new AssemblyInfo();
+			
 			CalendarAccount = Properties.Settings.Default.CalendarAccount;
 			CalendarId = Properties.Settings.Default.CalendarId;
 		}
@@ -133,5 +138,54 @@ namespace Marble
 		{
 			Properties.Settings.Default.Save();
 		}
+		
+		public static string Description
+		{
+			get
+			{
+				return assemblyInfo.Description;
+			}
+		}
+		
+		public static string ProductTitle
+		{
+			get
+			{
+				return assemblyInfo.ProductTitle;
+			}
+		}
+		
+		public static string Version
+		{
+			get
+			{
+				return assemblyInfo.Version;
+			}
+		}
+		
+		public static string Product
+		{
+			get
+			{
+				return assemblyInfo.Product;
+			}
+		}
+		
+		public static string Copyright
+		{
+			get
+			{
+				return assemblyInfo.Copyright;
+			}
+		}
+		
+		public static string Company
+		{
+			get
+			{
+				return assemblyInfo.Company;
+			}
+		}
+		
 	}
 }

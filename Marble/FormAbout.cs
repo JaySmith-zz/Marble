@@ -31,7 +31,9 @@ namespace Marble
 				
 		void FormAboutLoad(object sender, EventArgs e)
 		{
-			labelAbout.Text = labelAbout.Text.Replace("{version}", Application.ProductVersion);
+			labelAbout.Text = labelAbout.Text.Replace("{AppName}", Settings.Product);
+			labelAbout.Text = labelAbout.Text.Replace("{AppTitle}", Settings.Description);
+			labelAbout.Text = labelAbout.Text.Replace("{version}", Settings.Version);
 		}
 	
 		void LinkLabelMarbleProjectLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

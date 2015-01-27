@@ -60,8 +60,8 @@ namespace Marble
 			this.labelAbout.Name = "labelAbout";
 			this.labelAbout.Size = new System.Drawing.Size(265, 66);
 			this.labelAbout.TabIndex = 5;
-			this.labelAbout.Text = "Marble - Google Calendar Sync for Outlook {version}\r\n\r\nBased on Outlook Google Sy" +
-	"nc by Rantsi\r\nFork by JaySmith 2014\r\n\r\n";
+			this.labelAbout.Text = "{AppName} - {AppTitle} v{version}\r\n\r\nBased on Outlook Google Sync by Rantsi\r\nFork" +
+	" by JaySmith 2014\r\n\r\n";
 			this.labelAbout.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// linkLabelMarbleProject
