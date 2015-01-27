@@ -52,6 +52,22 @@ namespace Marble
 				return Properties.Settings.Default.ScopeCalendar;
 			}
 		}
+		
+		public static string ClientSecret
+		{
+			get
+			{
+				return Properties.Settings.Default.ClientSecret;
+			}
+		}
+		
+		public static string ClientId
+		{
+			get
+			{
+				return Properties.Settings.Default.ClientId;
+			}
+		}
 
 		public static string CalendarId 
 		{ 

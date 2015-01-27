@@ -82,6 +82,24 @@ namespace Marble.Properties {
 		
 		[global::System.Configuration.ApplicationScopedSettingAttribute()]
 		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+		[global::System.Configuration.DefaultSettingValueAttribute("1032384851384-6gv06rktf1o8cqrplv9ljpa0u29i5iog.apps.googleusercontent.com")]
+		public string ClientId {
+			get {
+				return ((string)(this["ClientId"]));
+			}
+		}
+		
+		[global::System.Configuration.ApplicationScopedSettingAttribute()]
+		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+		[global::System.Configuration.DefaultSettingValueAttribute("swyGLjZpRMoe-E73JpHmNEub")]
+		public string ClientSecret {
+			get {
+				return ((string)(this["ClientSecret"]));
+			}
+		}
+		
+		[global::System.Configuration.ApplicationScopedSettingAttribute()]
+		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
 		[global::System.Configuration.DefaultSettingValueAttribute("Marble.Calendar.Auth.Store")]
 		public string DataStoreFolderNameCalendar {
 			get {
