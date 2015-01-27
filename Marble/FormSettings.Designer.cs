@@ -76,7 +76,7 @@ namespace Marble
 			// 
 			// buttonCancel
 			// 
-			this.buttonCancel.Location = new System.Drawing.Point(424, 395);
+			this.buttonCancel.Location = new System.Drawing.Point(419, 242);
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.Size = new System.Drawing.Size(75, 23);
 			this.buttonCancel.TabIndex = 0;
@@ -204,7 +204,7 @@ namespace Marble
 			// 
 			// buttonOk
 			// 
-			this.buttonOk.Location = new System.Drawing.Point(343, 395);
+			this.buttonOk.Location = new System.Drawing.Point(338, 242);
 			this.buttonOk.Name = "buttonOk";
 			this.buttonOk.Size = new System.Drawing.Size(75, 23);
 			this.buttonOk.TabIndex = 3;
@@ -215,9 +215,9 @@ namespace Marble
 			// groupBoxOptions
 			// 
 			this.groupBoxOptions.Controls.Add(this.checkBoxStartWithWindows);
-			this.groupBoxOptions.Location = new System.Drawing.Point(14, 264);
+			this.groupBoxOptions.Location = new System.Drawing.Point(12, 183);
 			this.groupBoxOptions.Name = "groupBoxOptions";
-			this.groupBoxOptions.Size = new System.Drawing.Size(482, 123);
+			this.groupBoxOptions.Size = new System.Drawing.Size(482, 53);
 			this.groupBoxOptions.TabIndex = 3;
 			this.groupBoxOptions.TabStop = false;
 			this.groupBoxOptions.Text = "Options";
@@ -235,7 +235,7 @@ namespace Marble
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(506, 428);
+			this.ClientSize = new System.Drawing.Size(501, 274);
 			this.ControlBox = false;
 			this.Controls.Add(this.groupBoxOptions);
 			this.Controls.Add(this.buttonOk);
@@ -244,6 +244,7 @@ namespace Marble
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "FormSettings";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Settings";
 			this.Load += new System.EventHandler(this.FormSettingsLoad);
 			this.groupBoxGoogleCalendar.ResumeLayout(false);
