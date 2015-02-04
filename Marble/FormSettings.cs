@@ -37,13 +37,16 @@ namespace Marble
 		
 		void InitializeForm()
 		{
-			//GetCalendars();
+			GetCalendars();
 			labelSelectedAccountName.Text = Settings.CalendarAccount;
+			comboBoxCalendars.SelectedText = Settings.CalendarId;
+						
 			checkBoxSyncEveryHour.Checked = Settings.SyncEveryHour;
 			textBoxMinuteOffset.Text = Settings.SyncMinutesOffset.ToString();
 			checkBoxStartWithWindows.Checked = Settings.StartWithWindows;
 			textBoxSyncDaysInPast.Text = Settings.CalendarDaysInThePast.ToString();
 			textBoxSyncDaysInFuture.Text = Settings.CalendarDaysInTheFuture.ToString();
+			
 		}
 		
 		void ButtonGetCalendarsClick(object sender, EventArgs e)
@@ -89,13 +92,9 @@ namespace Marble
 				comboBoxCalendars.Items.Add(item);
 			}
 			
-			comboBoxCalendars.SelectedIndex = 0;
+			comboBoxCalendars.SelectedIndex = -1;
 			buttonGetCalendars.Enabled = true;
 			comboBoxCalendars.Enabled = true;
-			
-			GoogleCalendarInfo selectedItem = comboBoxCalendars.SelectedItem as GoogleCalendarInfo;
-			Settings.CalendarId = selectedItem.Id;
-			Settings.Save();
 			
 		}
 		
@@ -107,7 +106,7 @@ namespace Marble
 			Settings.CalendarAccount = string.Empty;
 			Settings.Save();
 			
-			googleClient.GetAuthorization();
+			//googleClient.GetAuthorization();
 			
 			InitializeForm();
 		}
