@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Google.Apis.Calendar.v3.Data;
-using Newtonsoft.Json;
 using Marble.Data;
 using Marble.Google;
 using Marble.Outlook;

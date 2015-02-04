@@ -7,7 +7,6 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace Marble
@@ -28,9 +27,24 @@ namespace Marble
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
+		
+				
+		void FormAboutLoad(object sender, EventArgs e)
+		{
+			labelAbout.Text = labelAbout.Text.Replace("{AppName}", Settings.Product);
+			labelAbout.Text = labelAbout.Text.Replace("{AppTitle}", Settings.Description);
+			labelAbout.Text = labelAbout.Text.Replace("{version}", Settings.Version);
+		}
+	
+		void LinkLabelMarbleProjectLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			System.Diagnostics.Process.Start("https://github.com/JaySmith/Marble");
+		}
+
 		void ButtonCloseClick(object sender, EventArgs e)
 		{
 			this.Close();
 		}
+		
 	}
 }

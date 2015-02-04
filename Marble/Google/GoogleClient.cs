@@ -40,20 +40,17 @@ namespace Marble.Google
 			var scopes = new List<string>();
 			scopes.Add(Settings.ScopeCalendar);
 			
-			var secretsPath = Path.Combine(Environment.CurrentDirectory, "client_secrets.json");
+			var clientSecrets = new ClientSecrets() { ClientId = Settings.ClientId, ClientSecret = Settings.ClientSecret };
 			
-			using (var stream = new FileStream(secretsPath, FileMode.Open, FileAccess.Read))
-            {
-                credential = GoogleWebAuthorizationBroker
-                	.AuthorizeAsync(
-                    	GoogleClientSecrets.Load(stream).Secrets,
-                    	scopes, 
-                    	"user", 
-                    	CancellationToken.None,
-                    	FileDataStore
-                   ).Result;
-            }
-			
+			credential = GoogleWebAuthorizationBroker
+	        	.AuthorizeAsync(
+	            	clientSecrets,
+	            	scopes, 
+	            	"user", 
+	            	CancellationToken.None,
+	            	FileDataStore
+	           ).Result;
+
 			Initializer = new BaseClientService.Initializer{
 				HttpClientInitializer = credential,
 				ApplicationName = Settings.ApplicationName

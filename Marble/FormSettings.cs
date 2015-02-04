@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 using Microsoft.Win32;
@@ -39,11 +40,14 @@ namespace Marble
 		{
 			GetCalendars();
 			labelSelectedAccountName.Text = Settings.CalendarAccount;
+			comboBoxCalendars.SelectedIndex = comboBoxCalendars.FindStringExact(Settings.CalendarId);
+						
 			checkBoxSyncEveryHour.Checked = Settings.SyncEveryHour;
 			textBoxMinuteOffset.Text = Settings.SyncMinutesOffset.ToString();
 			checkBoxStartWithWindows.Checked = Settings.StartWithWindows;
 			textBoxSyncDaysInPast.Text = Settings.CalendarDaysInThePast.ToString();
 			textBoxSyncDaysInFuture.Text = Settings.CalendarDaysInTheFuture.ToString();
+			
 		}
 		
 		void ButtonGetCalendarsClick(object sender, EventArgs e)
@@ -89,24 +93,21 @@ namespace Marble
 				comboBoxCalendars.Items.Add(item);
 			}
 			
-			comboBoxCalendars.SelectedIndex = 0;
+			comboBoxCalendars.SelectedIndex = -1;
 			buttonGetCalendars.Enabled = true;
 			comboBoxCalendars.Enabled = true;
-			
-			GoogleCalendarInfo selectedItem = comboBoxCalendars.SelectedItem as GoogleCalendarInfo;
-			Settings.CalendarId = selectedItem.Id;
-			Settings.Save();
 			
 		}
 		
 		void ButtonClearDataStoreClick(object sender, EventArgs e)
 		{
 			googleClient.ClearDataStore();
+			comboBoxCalendars.Items.Clear();
 			Settings.CalendarId = string.Empty;
 			Settings.CalendarAccount = string.Empty;
 			Settings.Save();
 			
-			googleClient.GetAuthorization();
+			//googleClient.GetAuthorization();
 			
 			InitializeForm();
 		}
