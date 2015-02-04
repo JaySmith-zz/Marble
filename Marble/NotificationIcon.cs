@@ -64,6 +64,8 @@ namespace Marble
 		[STAThread]
 		public static void Main(string[] args)
 		{
+			LogFactory.GetLoggerFor(typeof(NotificationIcon)).Information("Marble Started");
+			
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			

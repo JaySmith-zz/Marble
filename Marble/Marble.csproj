@@ -113,6 +113,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\CalendarSync.cs" />
+    <Compile Include="Core\LogFactory.cs" />
+    <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\MarbleSync.cs" />
     <Compile Include="Core\Settings.cs" />
     <Compile Include="Data\Appointment.cs" />

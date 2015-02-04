@@ -37,7 +37,7 @@ namespace Marble
 		
 		void InitializeForm()
 		{
-			GetCalendars();
+			//GetCalendars();
 			labelSelectedAccountName.Text = Settings.CalendarAccount;
 			checkBoxSyncEveryHour.Checked = Settings.SyncEveryHour;
 			textBoxMinuteOffset.Text = Settings.SyncMinutesOffset.ToString();
@@ -102,6 +102,7 @@ namespace Marble
 		void ButtonClearDataStoreClick(object sender, EventArgs e)
 		{
 			googleClient.ClearDataStore();
+			comboBoxCalendars.Items.Clear();
 			Settings.CalendarId = string.Empty;
 			Settings.CalendarAccount = string.Empty;
 			Settings.Save();
