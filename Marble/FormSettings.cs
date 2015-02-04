@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 using Microsoft.Win32;
@@ -39,7 +40,7 @@ namespace Marble
 		{
 			GetCalendars();
 			labelSelectedAccountName.Text = Settings.CalendarAccount;
-			comboBoxCalendars.SelectedText = Settings.CalendarId;
+			comboBoxCalendars.SelectedIndex = comboBoxCalendars.FindStringExact(Settings.CalendarId);
 						
 			checkBoxSyncEveryHour.Checked = Settings.SyncEveryHour;
 			textBoxMinuteOffset.Text = Settings.SyncMinutesOffset.ToString();
