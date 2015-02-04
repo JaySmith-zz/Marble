@@ -112,7 +112,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CalendarSync.cs" />
+    <Compile Include="Core\CalendarSync.cs" />
+    <Compile Include="Core\LogFactory.cs" />
+    <Compile Include="Core\Logger.cs" />
+    <Compile Include="Core\MarbleSync.cs" />
+    <Compile Include="Core\Settings.cs" />
     <Compile Include="Data\Appointment.cs" />
     <Compile Include="FormAbout.cs" />
     <Compile Include="FormAbout.Designer.cs">
@@ -125,7 +129,6 @@
     <Compile Include="Google\GoogleCalendarInfo.cs" />
     <Compile Include="Google\GoogleCalendarService.cs" />
     <Compile Include="Google\GoogleClient.cs" />
-    <Compile Include="MarbleSync.cs" />
     <Compile Include="NotificationIcon.cs" />
     <Compile Include="Outlook\OutlookAppointment.cs" />
     <Compile Include="Outlook\OutlookCalendarService.cs" />
@@ -134,7 +137,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FormAbout.resx">
@@ -149,8 +151,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Content Include="client_secrets.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -161,6 +163,7 @@
   <ItemGroup>
     <Folder Include="Google" />
     <Folder Include="Data" />
+    <Folder Include="Core" />
     <Folder Include="Outlook" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

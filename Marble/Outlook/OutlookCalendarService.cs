@@ -37,8 +37,8 @@ namespace Marble.Outlook
             var result = new List<Appointment>();
 
             Items OutlookItems = outlookCalendar.Items;
-            OutlookItems.Sort("[Start]", Type.Missing);
             OutlookItems.IncludeRecurrences = true;
+            OutlookItems.Sort("[Start]", Type.Missing);
 
             if (OutlookItems != null)
             {
@@ -47,7 +47,8 @@ namespace Marble.Outlook
 
                 string filter = "[End] >= '" + min.ToString("g") + "' AND [Start] < '" + max.ToString("g") + "'";
 
-                foreach (AppointmentItem ai in OutlookItems.Restrict(filter))
+                var filteredAppoinments = OutlookItems.Restrict(filter);
+                foreach (AppointmentItem ai in filteredAppoinments)
                 {
                     result.Add(GetOutlookAppointment(ai));
                 }
