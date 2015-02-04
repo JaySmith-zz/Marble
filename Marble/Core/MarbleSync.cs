@@ -20,6 +20,7 @@ namespace Marble
 	{
 		public void SyncAll()
 		{
+            //This syncs calendar
 			SyncCalendar();
 		}
 		
