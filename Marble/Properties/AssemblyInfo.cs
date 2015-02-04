@@ -25,7 +25,7 @@ using System.IO;
 [assembly: ComVisible(false)]
 
 // Following Symantic Version http://semver.org/
-[assembly: AssemblyVersion("0.0.1.5")]
+[assembly: AssemblyVersion("0.0.1.6")]
 
 public class AssemblyInfo
 {
@@ -55,10 +55,8 @@ public class AssemblyInfo
 		get {
 			string result = string.Empty;
 			Version version = assembly.GetName().Version;
-			if (version != null)
-				return version.ToString();
-			else
-				return "1.0.0.0";
+			
+			return version.ToString();
 		}
 	}
 
