@@ -66,9 +66,9 @@ namespace Marble.Outlook
                                 break;
 
                             case OlRecurrenceType.olRecursMonthly:
-                            case OlRecurrenceType.olRecursMonthNth:
-                            case OlRecurrenceType.olRecursYearly:
-                            case OlRecurrenceType.olRecursYearNth:
+                                case OlRecurrenceType.olRecursMonthNth:
+                                    case OlRecurrenceType.olRecursYearly:
+                                        case OlRecurrenceType.olRecursYearNth:
                                 CreateMonthlyOccurences(result, ai, pattern, daysOfWeekList);
                                 break;
                         }
@@ -101,14 +101,14 @@ namespace Marble.Outlook
 
         static void CreateWeeklyOccurences(List<Appointment> result, _AppointmentItem ai, RecurrencePattern pattern, List<DayOfWeek> daysOfWeekList)
         {
-            DateTime dateRange = min;
-            while (dateRange <= max && pattern.PatternEndDate > dateRange)
+            DateTime incrementDate = min;
+            while (incrementDate <= max && pattern.PatternEndDate > incrementDate)
             {
-                if (daysOfWeekList.Contains(dateRange.DayOfWeek))
+                if (daysOfWeekList.Contains(incrementDate.DayOfWeek))
                 {
-                    result.Add(GetOutlookAppointment(ai, dateRange));
+                    result.Add(GetOutlookAppointment(ai, incrementDate));
                 }
-                dateRange = dateRange.AddDays(1);
+                incrementDate = incrementDate.AddDays(1);
             }
         }
 
@@ -156,17 +156,14 @@ namespace Marble.Outlook
             return (DayOfWeek)Enum.Parse(typeof(DayOfWeek), dayOfWeek.ToString().Replace("ol", ""));
         }
 
-        static Appointment GetOutlookAppointment(_AppointmentItem appointment, DateTime startDate)
+        static Appointment GetOutlookAppointment(_AppointmentItem appointment)
         {
-            DateTime newStartDate = DateTime.Parse(startDate.ToShortDateString() + " " + appointment.Start.ToShortTimeString());
-            DateTime newEndDate = newStartDate.AddMinutes(appointment.Duration);
-
             var newAppointment = new Appointment
             {
                 Description = appointment.Body,
                 Summary = appointment.Subject,
-                Start = newStartDate,
-                End = newEndDate,
+                Start = appointment.Start,
+                End = appointment.End,
                 IsAllDayEvent = appointment.AllDayEvent,
                 Location = appointment.Location,
                 OptionalAttendees = GetAttendees(appointment.OptionalAttendees),
@@ -178,14 +175,17 @@ namespace Marble.Outlook
             return newAppointment;
         }
 
-        static Appointment GetOutlookAppointment(_AppointmentItem appointment)
+        static Appointment GetOutlookAppointment(_AppointmentItem appointment, DateTime startDate)
         {
+            DateTime newStartDate = DateTime.Parse(startDate.ToShortDateString() + " " + appointment.Start.ToShortTimeString());
+            DateTime newEndDate = newStartDate.AddMinutes(appointment.Duration);
+
             var newAppointment = new Appointment
             {
                 Description = appointment.Body,
                 Summary = appointment.Subject,
-                Start = appointment.Start,
-                End = appointment.End,
+                Start = newStartDate,
+                End = newEndDate,
                 IsAllDayEvent = appointment.AllDayEvent,
                 Location = appointment.Location,
                 OptionalAttendees = GetAttendees(appointment.OptionalAttendees),
