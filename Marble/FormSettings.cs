@@ -102,31 +102,41 @@ namespace Marble
 		void ButtonClearDataStoreClick(object sender, EventArgs e)
 		{
 			googleClient.ClearDataStore();
-			comboBoxCalendars.Items.Clear();
+            comboBoxCalendars.Items.Clear();
+            comboBoxCalendars.Text = string.Empty;
+            labelSelectedAccountName.Text = string.Empty;
 			Settings.CalendarId = string.Empty;
 			Settings.CalendarAccount = string.Empty;
 			Settings.Save();
 			
-			//googleClient.GetAuthorization();
+			googleClient.GetAuthorization();
 			
 			InitializeForm();
 		}
+
+        void ComboBoxCalendarSelectedIndexChange(object sender, EventArgs e)
+        {
+            var selectedItem = ((GoogleCalendarInfo)comboBoxCalendars.SelectedItem);
+            Settings.CalendarAccount = selectedItem.Id;
+            Settings.CalendarId = selectedItem.Name;
+            labelSelectedAccountName.Text = Settings.CalendarAccount;
+        }
 		
 		void ConfigureWindowsStartUp()
 		{
-            const string path = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
-            var key = Registry.CurrentUser.OpenSubKey(path, true);
+			const string path = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+			var key = Registry.CurrentUser.OpenSubKey(path, true);
 
-            if (Settings.StartWithWindows)
-            {
-                // set value in registry
-                if (key != null) key.SetValue(Application.ProductName, Application.ExecutablePath);
-            }
-            else
-            {
-                // remove value from registry
-                if (key != null) key.DeleteValue(Application.ProductName, false);
-            }
+			if (Settings.StartWithWindows)
+			{
+				// set value in registry
+				if (key != null) key.SetValue(Application.ProductName, Application.ExecutablePath);
+			}
+			else
+			{
+				// remove value from registry
+				if (key != null) key.DeleteValue(Application.ProductName, false);
+			}
 		}
 	}
 }
