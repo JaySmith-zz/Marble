@@ -13,8 +13,8 @@ namespace Marble.Outlook
     public class OutlookCalendarService
     {
         public MAPIFolder outlookCalendar;
-        static DateTime min = DateTime.Now.AddDays(-Settings.CalendarDaysInThePast);
-        static DateTime max = DateTime.Now.AddDays(+Settings.CalendarDaysInTheFuture + 1);
+        static DateTime min = Convert.ToDateTime(DateTime.Now.AddDays(-Settings.CalendarDaysInThePast).ToShortDateString());
+        static DateTime max = Convert.ToDateTime(DateTime.Now.AddDays(+Settings.CalendarDaysInTheFuture + 1).ToShortDateString());
 
         public OutlookCalendarService()
         {
@@ -44,38 +44,45 @@ namespace Marble.Outlook
 
             if (OutlookItems != null)
             {
-                string filter = "[End] >= '" + min.ToString("g") + "' AND [Start] <= '" + max.ToString("g") + "'";
+                string filter = "[Start] >= '" + min.ToString("g") + "' AND [End] <= '" + max.ToString("g") + "'";
                 var filteredAppoinments = OutlookItems.Restrict(filter);
 
                 foreach (_AppointmentItem ai in filteredAppoinments)
                 {
-                    if (ai.IsRecurring == true)
+                    if (ai.MeetingStatus != OlMeetingStatus.olMeetingCanceled && ai.MeetingStatus != OlMeetingStatus.olMeetingReceivedAndCanceled)
                     {
-                        RecurrencePattern pattern = ai.GetRecurrencePattern();
-                        List<DayOfWeek> daysOfWeekList = new List<DayOfWeek>();
-
-                        switch (pattern.RecurrenceType)
+                        if (ai.IsRecurring == true)
                         {
-                            case OlRecurrenceType.olRecursWeekly:
-                                if (pattern.DayOfWeekMask.ToString().Length < 4)
-                                    daysOfWeekList = FindDaysOfWeekFromMask(pattern, daysOfWeekList);
+                            RecurrencePattern pattern = ai.GetRecurrencePattern();
+                            List<DayOfWeek> daysOfWeekList = new List<DayOfWeek>();
 
-                                else daysOfWeekList.Add(GetDayOfWeekFromOlDaysOfWeek(pattern.DayOfWeekMask));
+                            switch (pattern.RecurrenceType)
+                            {
+                                case OlRecurrenceType.olRecursDaily:
+                                    CreateDailyOccurences(result, ai, pattern);
+                                    break;
 
-                                CreateWeeklyOccurences(result, ai, pattern, daysOfWeekList);
-                                break;
+                                case OlRecurrenceType.olRecursWeekly:
+                                    if (pattern.DayOfWeekMask.ToString().Length < 4)
+                                        daysOfWeekList = FindDaysOfWeekFromMask(pattern, daysOfWeekList);
 
-                            case OlRecurrenceType.olRecursMonthly:
-                                case OlRecurrenceType.olRecursMonthNth:
-                                    case OlRecurrenceType.olRecursYearly:
-                                        case OlRecurrenceType.olRecursYearNth:
-                                CreateMonthlyOccurences(result, ai, pattern, daysOfWeekList);
-                                break;
+                                    else daysOfWeekList.Add(GetDayOfWeekFromOlDaysOfWeek(pattern.DayOfWeekMask));
+
+                                    CreateWeeklyOccurences(result, ai, pattern, daysOfWeekList);
+                                    break;
+
+                                case OlRecurrenceType.olRecursMonthly:
+                                    case OlRecurrenceType.olRecursMonthNth:
+                                        case OlRecurrenceType.olRecursYearly:
+                                            case OlRecurrenceType.olRecursYearNth:
+                                    CreateMonthlyOccurences(result, ai, pattern, daysOfWeekList);
+                                    break;
+                            }
                         }
-                    }
-                    else
-                    {
-                        result.Add(GetOutlookAppointment(ai));
+                        else
+                        {
+                            result.Add(GetOutlookAppointment(ai));
+                        }
                     }
                 }
             }
@@ -99,16 +106,32 @@ namespace Marble.Outlook
             return daysOfWeekList;
         }
 
+        static void CreateDailyOccurences(List<Appointment> result, _AppointmentItem ai, RecurrencePattern pattern)
+        {
+            DateTime incrementDate = ai.Start;
+            while (incrementDate <= max && incrementDate <= pattern.PatternEndDate)
+            {
+                if (incrementDate >= min)
+                {
+                    result.Add(GetOutlookAppointment(ai, incrementDate));
+                }
+                incrementDate = incrementDate.AddDays(pattern.Interval);
+            }
+        }
+
         static void CreateWeeklyOccurences(List<Appointment> result, _AppointmentItem ai, RecurrencePattern pattern, List<DayOfWeek> daysOfWeekList)
         {
+            int interval = pattern.Interval == 0 ? 1 : pattern.Interval;
+            int weekCount = interval;
             DateTime incrementDate = min;
-            while (incrementDate <= max && pattern.PatternEndDate > incrementDate)
+            while (incrementDate <= max && incrementDate <= pattern.PatternEndDate)
             {
-                if (daysOfWeekList.Contains(incrementDate.DayOfWeek))
+                if (daysOfWeekList.Contains(incrementDate.DayOfWeek) && (weekCount % interval) == 0)
                 {
                     result.Add(GetOutlookAppointment(ai, incrementDate));
                 }
                 incrementDate = incrementDate.AddDays(1);
+                if (incrementDate.DayOfWeek == DayOfWeek.Sunday) weekCount++; 
             }
         }
 
@@ -117,7 +140,7 @@ namespace Marble.Outlook
             DateTime incrementDate = GetIncrementDate(pattern, pattern.PatternStartDate);
             while (incrementDate <= max)
             {
-                if (incrementDate >= min && pattern.PatternEndDate > incrementDate)
+                if (incrementDate >= min && incrementDate <= pattern.PatternEndDate)
                 {
                     result.Add(GetOutlookAppointment(ai, incrementDate));
                 }

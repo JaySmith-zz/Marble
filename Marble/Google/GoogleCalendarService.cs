@@ -22,7 +22,7 @@ namespace Marble.Google
 		
 		public List<GoogleCalendarInfo> GetCalendars()
 		{
-			var calendars = service.CalendarList.List().Execute().Items;		
+			var calendars = service.CalendarList.List().Execute().Items.Where(x => x.AccessRole == "owner");		
 			
 			var items = new List<GoogleCalendarInfo>();
 			foreach (var calendar in calendars) {
@@ -33,22 +33,22 @@ namespace Marble.Google
 		}
 		
 		List<Event> GetCalendarEntriesInRange()
-        {
-            var results = new List<Event>();
-            if (string.IsNullOrEmpty(Settings.CalendarId)) 
-            {
-            	throw new ApplicationException("User Calendar Not Specified");
-            }
-            
-            var eventRequest = service.Events.List(Settings.CalendarAccount);
-            
-            eventRequest.TimeMin = DateTime.Now.AddDays(-Settings.CalendarDaysInThePast);
-            eventRequest.TimeMax = DateTime.Now.AddDays(+Settings.CalendarDaysInTheFuture + 1);
+		{
+			var results = new List<Event>();
+			if (string.IsNullOrEmpty(Settings.CalendarId)) 
+			{
+				throw new ApplicationException("User Calendar Not Specified");
+			}
+			
+			var eventRequest = service.Events.List(Settings.CalendarAccount);
+			
+			eventRequest.TimeMin = DateTime.Now.AddDays(-Settings.CalendarDaysInThePast);
+			eventRequest.TimeMax = DateTime.Now.AddDays(+Settings.CalendarDaysInTheFuture + 1);
 
-            results.AddRange(eventRequest.Execute().Items);
-            	
-            return results;
-        }
+			results.AddRange(eventRequest.Execute().Items);
+				
+			return results;
+		}
 		
 		public List<Appointment> GetAppointmentsInRange()
 		{
@@ -72,9 +72,9 @@ namespace Marble.Google
 		}
 		
 		public void DeleteCalendarEntry(string calenderId, string eventId)
-        {
+		{
 			service.Events.Delete(calenderId, eventId).Execute();
-        }		
+		}		
 		
 		public void AddEntry(Event googleEvent)
 		{
