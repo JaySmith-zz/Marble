@@ -11,14 +11,12 @@ namespace Marble
     /// </summary>
     public partial class FormSettings : Form
     {
-        readonly GoogleClient googleClient;
-        readonly GoogleCalendarService calendarService;
+        private GoogleClient googleClient;
+        private GoogleCalendarService calendarService;
 
         public FormSettings()
         {
             InitializeComponent();
-            googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
-            calendarService = new GoogleCalendarService(googleClient);
         }
 
         void FormSettingsLoad(object sender, EventArgs e)
@@ -73,11 +71,13 @@ namespace Marble
 
         void GetCalendars()
         {
+            googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
+            calendarService = new GoogleCalendarService(googleClient);
+            
             buttonGetCalendars.Enabled = false;
             comboBoxCalendars.Enabled = false;
 
-            GoogleCalendarService newCalendarService = new GoogleCalendarService(googleClient);
-            var calendars = newCalendarService.GetCalendars();
+            var calendars = calendarService.GetCalendars();
 
             comboBoxCalendars.Items.Clear();
             foreach (var item in calendars)
