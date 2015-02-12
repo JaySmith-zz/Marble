@@ -18,8 +18,7 @@ namespace Marble
 		private System.Windows.Forms.GroupBox groupBoxGoogleCalendar;
 		private System.Windows.Forms.Button buttonOk;
 		private System.Windows.Forms.GroupBox groupBoxOptions;
-		private System.Windows.Forms.Button buttonGetCalendars;
-		private System.Windows.Forms.ComboBox comboBoxCalendars;
+        private System.Windows.Forms.Button buttonGetCalendars;
 		private System.Windows.Forms.Label labelCalendar;
 		private System.Windows.Forms.CheckBox checkBoxSyncEveryHour;
 		private System.Windows.Forms.TextBox textBoxMinuteOffset;
@@ -65,11 +64,11 @@ namespace Marble
             this.checkBoxSyncEveryHour = new System.Windows.Forms.CheckBox();
             this.textBoxMinuteOffset = new System.Windows.Forms.TextBox();
             this.buttonGetCalendars = new System.Windows.Forms.Button();
-            this.comboBoxCalendars = new System.Windows.Forms.ComboBox();
             this.labelCalendar = new System.Windows.Forms.Label();
             this.buttonOk = new System.Windows.Forms.Button();
             this.groupBoxOptions = new System.Windows.Forms.GroupBox();
             this.checkBoxStartWithWindows = new System.Windows.Forms.CheckBox();
+            this.comboBoxCalendars = new System.Windows.Forms.ComboBox();
             this.groupBoxGoogleCalendar.SuspendLayout();
             this.groupBoxOptions.SuspendLayout();
             this.SuspendLayout();
@@ -186,15 +185,6 @@ namespace Marble
             this.buttonGetCalendars.UseVisualStyleBackColor = true;
             this.buttonGetCalendars.Click += new System.EventHandler(this.ButtonGetCalendarsClick);
             // 
-            // comboBoxCalendars
-            // 
-            this.comboBoxCalendars.FormattingEnabled = true;
-            this.comboBoxCalendars.Location = new System.Drawing.Point(71, 60);
-            this.comboBoxCalendars.Name = "comboBoxCalendars";
-            this.comboBoxCalendars.Size = new System.Drawing.Size(297, 21);
-            this.comboBoxCalendars.TabIndex = 1;
-            this.comboBoxCalendars.SelectedIndexChanged += new System.EventHandler(this.ComboBoxCalendarSelectedIndexChange);
-            // 
             // labelCalendar
             // 
             this.labelCalendar.Location = new System.Drawing.Point(8, 63);
@@ -232,6 +222,16 @@ namespace Marble
             this.checkBoxStartWithWindows.Text = "Start with Windows";
             this.checkBoxStartWithWindows.UseVisualStyleBackColor = true;
             // 
+            // comboBoxCalendars
+            // 
+            this.comboBoxCalendars.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCalendars.FormattingEnabled = true;
+            this.comboBoxCalendars.Location = new System.Drawing.Point(71, 60);
+            this.comboBoxCalendars.Name = "comboBoxCalendars";
+            this.comboBoxCalendars.Size = new System.Drawing.Size(297, 21);
+            this.comboBoxCalendars.TabIndex = 1;
+            this.comboBoxCalendars.SelectedIndexChanged += new System.EventHandler(this.ComboBoxCalendarSelectedIndexChange);
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -254,5 +254,7 @@ namespace Marble
             this.ResumeLayout(false);
 
 		}
+
+        private System.Windows.Forms.ComboBox comboBoxCalendars;
 	}
 }

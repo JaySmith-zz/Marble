@@ -1,12 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: smithjay
- * Date: 12/31/2014
- * Time: 8:52 AM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
+﻿using System;
 using System.Reflection;
 
 namespace Marble
@@ -137,6 +129,7 @@ namespace Marble
 		public static void Save()
 		{
 			Properties.Settings.Default.Save();
+            Properties.Settings.Default.Reload();
 		}
 		
 		public static string Description
@@ -186,6 +179,21 @@ namespace Marble
 				return assemblyInfo.Company;
 			}
 		}
+
+        public static DateTime CalendarRangeMinDate
+        {
+            get
+            {
+               return Convert.ToDateTime(DateTime.Now.AddDays(-Settings.CalendarDaysInThePast).ToShortDateString());
+            }
+        }
+        public static DateTime CalendarRangeMaxDate
+        {
+            get
+            {
+                return Convert.ToDateTime(DateTime.Now.AddDays(+Settings.CalendarDaysInTheFuture + 1).ToShortDateString());
+            }
+        }
 		
 	}
 }
