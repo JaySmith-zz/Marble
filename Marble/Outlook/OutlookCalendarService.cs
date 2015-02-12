@@ -13,8 +13,6 @@ namespace Marble.Outlook
     public class OutlookCalendarService
     {
         public MAPIFolder outlookCalendar;
-        static DateTime min = Convert.ToDateTime(DateTime.Now.AddDays(-Settings.CalendarDaysInThePast).ToShortDateString());
-        static DateTime max = Convert.ToDateTime(DateTime.Now.AddDays(+Settings.CalendarDaysInTheFuture + 1).ToShortDateString());
 
         public OutlookCalendarService()
         {
@@ -44,7 +42,7 @@ namespace Marble.Outlook
 
             if (OutlookItems != null)
             {
-                string filter = "[Start] >= '" + min.ToString("g") + "' AND [End] <= '" + max.ToString("g") + "'";
+                string filter = "[Start] >= '" + Settings.CalendarRangeMinDate.ToString("g") + "' AND [End] <= '" + Settings.CalendarRangeMaxDate.ToString("g") + "'";
                 var filteredAppoinments = OutlookItems.Restrict(filter);
 
                 foreach (_AppointmentItem ai in filteredAppoinments)
@@ -109,9 +107,9 @@ namespace Marble.Outlook
         static void CreateDailyOccurences(List<Appointment> result, _AppointmentItem ai, RecurrencePattern pattern)
         {
             DateTime incrementDate = ai.Start;
-            while (incrementDate <= max && incrementDate <= pattern.PatternEndDate)
+            while (incrementDate <= Settings.CalendarRangeMaxDate && incrementDate <= pattern.PatternEndDate)
             {
-                if (incrementDate >= min)
+                if (incrementDate >= Settings.CalendarRangeMinDate)
                 {
                     result.Add(GetOutlookAppointment(ai, incrementDate));
                 }
@@ -123,8 +121,8 @@ namespace Marble.Outlook
         {
             int interval = pattern.Interval == 0 ? 1 : pattern.Interval;
             int weekCount = interval;
-            DateTime incrementDate = min;
-            while (incrementDate <= max && incrementDate <= pattern.PatternEndDate)
+            DateTime incrementDate = Settings.CalendarRangeMinDate;
+            while (incrementDate <= Settings.CalendarRangeMaxDate && incrementDate <= pattern.PatternEndDate)
             {
                 if (daysOfWeekList.Contains(incrementDate.DayOfWeek) && (weekCount % interval) == 0)
                 {
@@ -138,9 +136,9 @@ namespace Marble.Outlook
         static void CreateMonthlyOccurences(List<Appointment> result, _AppointmentItem ai, RecurrencePattern pattern, List<DayOfWeek> daysOfWeekList)
         {
             DateTime incrementDate = GetIncrementDate(pattern, pattern.PatternStartDate);
-            while (incrementDate <= max)
+            while (incrementDate <= Settings.CalendarRangeMaxDate)
             {
-                if (incrementDate >= min && incrementDate <= pattern.PatternEndDate)
+                if (incrementDate >= Settings.CalendarRangeMinDate && incrementDate <= pattern.PatternEndDate)
                 {
                     result.Add(GetOutlookAppointment(ai, incrementDate));
                 }
