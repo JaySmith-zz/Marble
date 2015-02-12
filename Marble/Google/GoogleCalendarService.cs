@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
-
 using Marble.Data;
 
 namespace Marble.Google
@@ -22,9 +20,9 @@ namespace Marble.Google
 		
 		public List<GoogleCalendarInfo> GetCalendars()
 		{
-			var calendars = service.CalendarList.List().Execute().Items.Where(x => x.AccessRole == "owner");		
-			
-			var items = new List<GoogleCalendarInfo>();
+			var calendars = service.CalendarList.List().Execute().Items.Where(x => x.AccessRole == "owner");
+
+            var items = new List<GoogleCalendarInfo>();
 			foreach (var calendar in calendars) {
 				items.Add( new GoogleCalendarInfo(calendar));
 			}
@@ -42,8 +40,8 @@ namespace Marble.Google
 			
 			var eventRequest = service.Events.List(Settings.CalendarAccount);
 			
-			eventRequest.TimeMin = DateTime.Now.AddDays(-Settings.CalendarDaysInThePast);
-			eventRequest.TimeMax = DateTime.Now.AddDays(+Settings.CalendarDaysInTheFuture + 1);
+			eventRequest.TimeMin = Settings.CalendarRangeMinDate;
+            eventRequest.TimeMax = Settings.CalendarRangeMaxDate;
 
 			results.AddRange(eventRequest.Execute().Items);
 				

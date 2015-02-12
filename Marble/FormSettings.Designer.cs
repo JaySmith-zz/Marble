@@ -18,8 +18,7 @@ namespace Marble
 		private System.Windows.Forms.GroupBox groupBoxGoogleCalendar;
 		private System.Windows.Forms.Button buttonOk;
 		private System.Windows.Forms.GroupBox groupBoxOptions;
-		private System.Windows.Forms.Button buttonGetCalendars;
-		private System.Windows.Forms.ComboBox comboBoxCalendars;
+        private System.Windows.Forms.Button buttonGetCalendars;
 		private System.Windows.Forms.Label labelCalendar;
 		private System.Windows.Forms.CheckBox checkBoxSyncEveryHour;
 		private System.Windows.Forms.TextBox textBoxMinuteOffset;
@@ -116,9 +115,9 @@ namespace Marble
             // 
             this.buttonClearDataStore.Location = new System.Drawing.Point(374, 29);
             this.buttonClearDataStore.Name = "buttonClearDataStore";
-            this.buttonClearDataStore.Size = new System.Drawing.Size(85, 23);
+            this.buttonClearDataStore.Size = new System.Drawing.Size(101, 23);
             this.buttonClearDataStore.TabIndex = 10;
-            this.buttonClearDataStore.Text = "Clear";
+            this.buttonClearDataStore.Text = "Switch Account";
             this.buttonClearDataStore.UseVisualStyleBackColor = true;
             this.buttonClearDataStore.Click += new System.EventHandler(this.ButtonClearDataStoreClick);
             // 
@@ -180,7 +179,7 @@ namespace Marble
             // 
             this.buttonGetCalendars.Location = new System.Drawing.Point(374, 58);
             this.buttonGetCalendars.Name = "buttonGetCalendars";
-            this.buttonGetCalendars.Size = new System.Drawing.Size(85, 23);
+            this.buttonGetCalendars.Size = new System.Drawing.Size(101, 23);
             this.buttonGetCalendars.TabIndex = 2;
             this.buttonGetCalendars.Text = "Get Calendars";
             this.buttonGetCalendars.UseVisualStyleBackColor = true;
@@ -188,6 +187,7 @@ namespace Marble
             // 
             // comboBoxCalendars
             // 
+            this.comboBoxCalendars.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCalendars.FormattingEnabled = true;
             this.comboBoxCalendars.Location = new System.Drawing.Point(71, 60);
             this.comboBoxCalendars.Name = "comboBoxCalendars";
@@ -254,5 +254,7 @@ namespace Marble
             this.ResumeLayout(false);
 
 		}
+
+        private System.Windows.Forms.ComboBox comboBoxCalendars;
 	}
 }

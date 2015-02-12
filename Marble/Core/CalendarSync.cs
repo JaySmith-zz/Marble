@@ -156,13 +156,5 @@ namespace Marble
                 }
             }
 		}
-	
-		private IOutlookCalendarService GetOutlookCalendarService()
-		{
-			if (Settings.OutlookCalendarServiceProvider == "Interop")
-				return new OulookCalendarService_Introp();
-			
-			return new OutlookCalendarService();
-		}
 	}
 }

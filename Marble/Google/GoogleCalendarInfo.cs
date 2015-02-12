@@ -1,12 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: smithjay
- * Date: 12/31/2014
- * Time: 9:18 AM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
+﻿using System;
 using Google.Apis.Calendar.v3.Data;
 
 
@@ -19,6 +11,12 @@ namespace Marble.Google
 	{
 		public string Id;
 		public string Name;
+
+        public GoogleCalendarInfo(string id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
 		
 		public GoogleCalendarInfo(CalendarListEntry item)
 		{
