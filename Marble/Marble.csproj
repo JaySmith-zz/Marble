@@ -61,6 +61,9 @@
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Outlook">
+      <HintPath>..\..\..\..\Program Files %28x86%29\Microsoft Visual Studio 11.0\Visual Studio Tools for Office\PIA\Office14\Microsoft.Office.Interop.Outlook.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -157,6 +160,8 @@
     <Compile Include="Google\GoogleCalendarService.cs" />
     <Compile Include="Google\GoogleClient.cs" />
     <Compile Include="NotificationIcon.cs" />
+    <Compile Include="Outlook\IOutlookCalendarService.cs" />
+    <Compile Include="Outlook\OulookCalendarService_Introp.cs" />
     <Compile Include="Outlook\OutlookAppointment.cs" />
     <Compile Include="Outlook\OutlookCalendarService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

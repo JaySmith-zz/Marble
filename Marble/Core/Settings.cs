@@ -187,5 +187,13 @@ namespace Marble
 			}
 		}
 		
+		public static string OutlookCalendarServiceProvider
+		{
+			get
+			{
+				return Properties.Settings.Default.OutlookCalendarServiceProvider;
+			}
+		}
+		
 	}
 }

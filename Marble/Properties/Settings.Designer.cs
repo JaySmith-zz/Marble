@@ -116,6 +116,18 @@ namespace Marble.Properties {
 			}
 		}
 		
+		[global::System.Configuration.UserScopedSettingAttribute()]
+		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+		[global::System.Configuration.DefaultSettingValueAttribute("Interop")]
+		public string OutlookCalendarServiceProvider {
+			get {
+				return ((string)(this["OutlookCalendarServiceProvider"]));
+			}
+			set {
+				this["OutlookCalendarServiceProvider"] = value;
+			}
+		}
+		
 		[global::System.Configuration.ApplicationScopedSettingAttribute()]
 		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
 		[global::System.Configuration.DefaultSettingValueAttribute("https://www.googleapis.com/auth/calendar")]
