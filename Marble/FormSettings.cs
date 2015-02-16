@@ -28,7 +28,7 @@ namespace Marble
         {
             GetCalendars();
             labelSelectedAccountName.Text = Settings.CalendarAccount;
-            comboBoxCalendars.SelectedIndex = comboBoxCalendars.FindStringExact(Settings.CalendarId);
+            dropdownListCalendars.SelectedIndex = dropdownListCalendars.FindStringExact(Settings.CalendarId);
 
             checkBoxSyncEveryHour.Checked = Settings.SyncEveryHour;
             textBoxMinuteOffset.Text = Settings.SyncMinutesOffset.ToString();
@@ -45,7 +45,7 @@ namespace Marble
 
         void ButtonOkClick(object sender, EventArgs e)
         {
-            var selectedItem = (GoogleCalendarInfo)comboBoxCalendars.SelectedItem;
+            var selectedItem = (GoogleCalendarInfo)dropdownListCalendars.SelectedItem;
 
             Settings.CalendarAccount = selectedItem.Id;
             Settings.CalendarId = selectedItem.Name;
@@ -56,7 +56,7 @@ namespace Marble
             Settings.CalendarDaysInTheFuture = int.Parse(textBoxSyncDaysInFuture.Text);
 
             Settings.Save();
-
+            
             ConfigureWindowsStartUp();
 
             DialogResult = DialogResult.OK;
@@ -75,26 +75,26 @@ namespace Marble
             calendarService = new GoogleCalendarService(googleClient);
             
             buttonGetCalendars.Enabled = false;
-            comboBoxCalendars.Enabled = false;
+            dropdownListCalendars.Enabled = false;
 
             var calendars = calendarService.GetCalendars();
 
-            comboBoxCalendars.Items.Clear();
+            dropdownListCalendars.Items.Clear();
             foreach (var item in calendars)
             {
-                comboBoxCalendars.Items.Add(item);
+                dropdownListCalendars.Items.Add(item);
             }
 
-            comboBoxCalendars.SelectedIndex = -1;
+            dropdownListCalendars.SelectedIndex = -1;
             buttonGetCalendars.Enabled = true;
-            comboBoxCalendars.Enabled = true;
+            dropdownListCalendars.Enabled = true;
         }
 
         void ButtonClearDataStoreClick(object sender, EventArgs e)
         {
             googleClient.ClearDataStore();
-            comboBoxCalendars.Items.Clear();
-            comboBoxCalendars.Text = string.Empty;
+            dropdownListCalendars.Items.Clear();
+            dropdownListCalendars.Text = string.Empty;
             labelSelectedAccountName.Text = string.Empty;
             Settings.CalendarId = string.Empty;
             Settings.CalendarAccount = string.Empty;
@@ -103,14 +103,6 @@ namespace Marble
             googleClient.GetAuthorization();
 
             InitializeForm();
-        }
-
-        void ComboBoxCalendarSelectedIndexChange(object sender, EventArgs e)
-        {
-            var selectedItem = ((GoogleCalendarInfo)comboBoxCalendars.SelectedItem);
-            Settings.CalendarAccount = selectedItem.Id;
-            Settings.CalendarId = selectedItem.Name;
-            labelSelectedAccountName.Text = Settings.CalendarAccount;
         }
 
         void ConfigureWindowsStartUp()
@@ -129,5 +121,6 @@ namespace Marble
                 if (key != null) key.DeleteValue(Application.ProductName, false);
             }
         }
+
     }
 }
