@@ -61,7 +61,7 @@ namespace Marble
 		{
 			if (items.Count > 0)
             {
-                foreach (var item in items) googleCalendarService.DeleteCalendarEntry(Settings.CalendarAccount, item.Id);
+				foreach (var item in items) googleCalendarService.DeleteCalendarEntry(Settings.CalendarAccount, item.Id);
             }
 		}
 		

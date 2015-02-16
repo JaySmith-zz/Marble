@@ -71,7 +71,7 @@ namespace Marble.Google
 		
 		public void DeleteCalendarEntry(string calenderId, string eventId)
 		{
-			service.Events.Delete(calenderId, eventId).Execute();
+			string result = service.Events.Delete(calenderId, eventId).Execute();
 		}		
 		
 		public void AddEntry(Event googleEvent)
