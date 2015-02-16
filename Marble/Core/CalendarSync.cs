@@ -14,7 +14,7 @@ namespace Marble
 	/// </summary>
 	public class CalendarSync
 	{
-		readonly OutlookCalendarService outlookCalendarService;
+		readonly IOutlookCalendarService outlookCalendarService;
 		
 		readonly GoogleClient googleClient;
 		readonly GoogleCalendarService googleCalendarService;
@@ -24,7 +24,12 @@ namespace Marble
 			googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
 			googleCalendarService = new GoogleCalendarService(googleClient);
 			
-			outlookCalendarService = new OutlookCalendarService();
+			if ( Settings.OutlookCalendarServiceProvider == "Interop")
+			{
+				outlookCalendarService = new OulookCalendarService_Introp();
+			} else {
+				outlookCalendarService = new OutlookCalendarService();
+			}
 		}
 		
 		public void Sync()

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using NetOffice.OutlookApi;
 using NetOffice.OutlookApi.Enums;
 using Marble.Data;
-using System.Globalization;
 
-namespace Marble.Outlook
+namespace Marble
 {
     /// <summary>
     /// Description of OutlookClient.
     /// </summary>
-    public class OutlookCalendarService
+    public class OutlookCalendarService : IOutlookCalendarService
     {
         public MAPIFolder outlookCalendar;
 

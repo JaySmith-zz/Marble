@@ -25,7 +25,7 @@ using System.IO;
 [assembly: ComVisible(false)]
 
 // Following Symantic Version http://semver.org/
-[assembly: AssemblyVersion("0.0.1.7")]
+[assembly: AssemblyVersion("0.0.1.8")]
 
 public class AssemblyInfo
 {
