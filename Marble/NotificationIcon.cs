@@ -64,7 +64,8 @@ namespace Marble
 		[STAThread]
 		public static void Main(string[] args)
 		{
-			LogFactory.GetLoggerFor(typeof(NotificationIcon)).Information("Marble Started");
+			var logger = LogFactory.GetLoggerFor(typeof(NotificationIcon));
+			logger.Information("Marble Started");
 			
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
@@ -73,16 +74,25 @@ namespace Marble
 			// Please use a unique name for the mutex to prevent conflicts with other programs
 			using (Mutex mtx = new Mutex(true, "Marble", out isFirstInstance)) {
 				if (isFirstInstance) {
+					try
+					{
 					NotificationIcon notificationIcon = new NotificationIcon();
 					notificationIcon.notifyIcon.Visible = true;
 					Application.Run();
 					notificationIcon.notifyIcon.Dispose();
+					}
+					catch (Exception ex)
+					{
+						logger.Fatal("Unhandled Exception", ex);
+					}
 				} else {
 					// The application is already running
 					// TODO: change focus to existing application instance
+					logger.Information("Marble arleady running shutting down");
 					
 				}
 			} // releases the Mutex
+			logger.Information("Marble shutting down");
 		}
 
 		private void menuAboutClick(object sender, EventArgs e)
