@@ -35,7 +35,9 @@ namespace Marble
             checkBoxStartWithWindows.Checked = Settings.StartWithWindows;
             textBoxSyncDaysInPast.Text = Settings.CalendarDaysInThePast.ToString();
             textBoxSyncDaysInFuture.Text = Settings.CalendarDaysInTheFuture.ToString();
-
+            
+            comboBoxOutlookServiceProvider.DataSource = Settings.OutlookServiceProviders;
+            comboBoxOutlookServiceProvider.SelectedIndex = comboBoxOutlookServiceProvider.FindStringExact(Settings.OutlookCalendarServiceProvider);
         }
 
         void ButtonGetCalendarsClick(object sender, EventArgs e)
@@ -54,7 +56,8 @@ namespace Marble
             Settings.StartWithWindows = checkBoxStartWithWindows.Checked;
             Settings.CalendarDaysInThePast = int.Parse(textBoxSyncDaysInPast.Text);
             Settings.CalendarDaysInTheFuture = int.Parse(textBoxSyncDaysInFuture.Text);
-
+            Settings.OutlookCalendarServiceProvider = comboBoxOutlookServiceProvider.SelectedItem.ToString();
+            
             Settings.Save();
             
             ConfigureWindowsStartUp();

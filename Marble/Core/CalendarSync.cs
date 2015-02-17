@@ -24,7 +24,8 @@ namespace Marble
 			googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
 			googleCalendarService = new GoogleCalendarService(googleClient);
 			
-			if ( Settings.OutlookCalendarServiceProvider == "Interop")
+			var provider = (OutlookServiceProvider)Enum.Parse(typeof(OutlookServiceProvider), Settings.OutlookCalendarServiceProvider);
+			if ( provider == OutlookServiceProvider.Interop)
 			{
 				outlookCalendarService = new OulookCalendarService_Introp();
 			} else {

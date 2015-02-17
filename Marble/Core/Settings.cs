@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Marble
@@ -200,6 +202,18 @@ namespace Marble
 			get
 			{
 				return Properties.Settings.Default.OutlookCalendarServiceProvider;
+			}
+			set
+			{
+				Properties.Settings.Default.OutlookCalendarServiceProvider = value;
+			}
+		}
+		
+		public static List<string> OutlookServiceProviders
+		{
+			get 
+			{
+				return Enum.GetNames(typeof(OutlookServiceProvider)).ToList();
 			}
 		}
 		

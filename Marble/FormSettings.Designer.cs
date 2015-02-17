@@ -69,6 +69,7 @@ namespace Marble
 			this.buttonOk = new System.Windows.Forms.Button();
 			this.groupBoxOptions = new System.Windows.Forms.GroupBox();
 			this.checkBoxStartWithWindows = new System.Windows.Forms.CheckBox();
+			this.comboBoxOutlookServiceProvider = new System.Windows.Forms.ComboBox();
 			this.groupBoxGoogleCalendar.SuspendLayout();
 			this.groupBoxOptions.SuspendLayout();
 			this.SuspendLayout();
@@ -233,12 +234,22 @@ namespace Marble
 			this.checkBoxStartWithWindows.Text = "Start with Windows";
 			this.checkBoxStartWithWindows.UseVisualStyleBackColor = true;
 			// 
+			// comboBoxOutlookServiceProvider
+			// 
+			this.comboBoxOutlookServiceProvider.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxOutlookServiceProvider.FormattingEnabled = true;
+			this.comboBoxOutlookServiceProvider.Location = new System.Drawing.Point(21, 242);
+			this.comboBoxOutlookServiceProvider.Name = "comboBoxOutlookServiceProvider";
+			this.comboBoxOutlookServiceProvider.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxOutlookServiceProvider.TabIndex = 4;
+			// 
 			// FormSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(501, 274);
 			this.ControlBox = false;
+			this.Controls.Add(this.comboBoxOutlookServiceProvider);
 			this.Controls.Add(this.groupBoxOptions);
 			this.Controls.Add(this.buttonOk);
 			this.Controls.Add(this.groupBoxGoogleCalendar);
@@ -257,5 +268,6 @@ namespace Marble
 		}
 
         private System.Windows.Forms.ComboBox dropdownListCalendars;
+        private System.Windows.Forms.ComboBox comboBoxOutlookServiceProvider;
 	}
 }
