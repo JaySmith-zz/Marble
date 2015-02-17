@@ -1,12 +1,8 @@
-﻿#region Using directives
-
-using System;
+﻿using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.IO;
-
-
-#endregion
+using log4net.Config;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -19,6 +15,10 @@ using System.IO;
 [assembly: AssemblyCopyright("Copyright 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+
+// Configure log4net using the .config file
+//(ConfigFile = "Log.config", Watch = true)
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config", Watch = true)]
 
 // This sets the default COM visibility of types in the assembly to invisible.
 // If you need to expose a type to COM, use [ComVisible(true)] on that type.
