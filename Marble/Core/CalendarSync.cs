@@ -121,10 +121,10 @@ namespace Marble
                         googleEvent.Reminders.Overrides = new List<EventReminder> { reminder };
                     }
 
-                    var organizer = new Event.OrganizerData();
-                    organizer.DisplayName = item.Organizer;
-                    googleEvent.Organizer = organizer;
-                    
+//                    var organizer = new Event.OrganizerData();
+//                    organizer.DisplayName = item.Organizer;
+//                    googleEvent.Organizer = organizer;
+//                    
                     if (googleEvent.Attendees == null)
                     {
                     	googleEvent.Attendees = new List<EventAttendee>();
@@ -150,13 +150,13 @@ namespace Marble
 //                    	googleEvent.Attendees.Add(eventAttendee);
 //                    }
                     
-					var me = new EventAttendee();
-					me.Email = Settings.CalendarAccount;
-					me.DisplayName = Settings.CalendarAccount;
-					me.Organizer = false;
-					me.Self = true;
-					
-                    googleEvent.Attendees.Add(me);
+//					var me = new EventAttendee();
+//					me.Email = Settings.CalendarAccount;
+//					me.DisplayName = Settings.CalendarAccount;
+//					me.Organizer = false;
+//					me.Self = true;
+//					
+//                    googleEvent.Attendees.Add(me);
                     googleCalendarService.AddEntry(googleEvent);
                     
                 }
