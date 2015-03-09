@@ -46,9 +46,7 @@ namespace Marble
 		MenuItem[] InitializeMenu()
 		{
 			var menu = new MenuItem[] {
-				//new MenuItem("Sync All", menuSyncAllClick),
 				new MenuItem("Sync Calendar", menuSyncCalendarClick),
-				//new MenuItem("Sync Tasks", menuTasksClick),
 				new MenuItem("-"),
 				new MenuItem("Settings...", menuSettingsClick),
 				new MenuItem("About", menuAboutClick),
@@ -109,28 +107,16 @@ namespace Marble
 		{
 			new FormSettings().ShowDialog();
 		}
-		
-		private void menuSyncAllClick(object sender, EventArgs e)
-		{
-			var sync = new MarbleSync();
-			sync.SyncAll();
-		}
-		
+	
 		private void menuSyncCalendarClick(object sender, EventArgs e)
 		{
-			var sync = new MarbleSync();
-			sync.SyncCalendar();
+			Sync();
 		}
 		
-//		private void IconDoubleClick(object sender, EventArgs e)
-//		{
-//			MessageBox.Show("The icon was double clicked");
-//		}
-
 		private void Sync()
 		{
-			var sync = new MarbleSync();
-			sync.SyncCalendar();
+			var calendarSync = new CalendarSync();
+			calendarSync.Sync();
 		}
 	}
 }
