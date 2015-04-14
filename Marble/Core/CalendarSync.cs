@@ -163,5 +163,11 @@ namespace Marble
                 }
             }
 		}
+	
+		public void ClearAllRemoteItems()
+		{
+			List<Appointment> googleAppoinments = googleCalendarService.GetAppointmentsInRange();
+			RemoveOldCalendarEventsFromGoogleCalendar(googleAppoinments);
+		}
 	}
 }

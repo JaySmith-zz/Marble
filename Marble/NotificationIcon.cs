@@ -46,7 +46,8 @@ namespace Marble
 		MenuItem[] InitializeMenu()
 		{
 			var menu = new MenuItem[] {
-				new MenuItem("Sync Calendar", menuSyncCalendarClick),
+				new MenuItem("Sync", menuSyncCalendarClick),
+				new MenuItem("Sync", menuClearRemoteCalendarClick),
 				new MenuItem("-"),
 				new MenuItem("Settings...", menuSettingsClick),
 				new MenuItem("About", menuAboutClick),
@@ -113,6 +114,12 @@ namespace Marble
 			Sync();
 		}
 		
+		private void menuClearRemoteCalendarClick(object sender, EventArgs e)
+		{
+			var calenderSync = new CalendarSync();
+			calenderSync.ClearAllRemoteItems();
+		}
+				
 		private void Sync()
 		{
 			var calendarSync = new CalendarSync();
