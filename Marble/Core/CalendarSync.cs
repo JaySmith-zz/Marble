@@ -83,7 +83,8 @@ namespace Marble
                         End = new EventDateTime(),
                         Summary = item.Summary,
                         Location = item.Location,
-                        Description = item.Description
+                        Description = item.Description,
+                        Attendees = new List<EventAttendee>()
                     };
 
                     var currentTimeZone = TimeZone.CurrentTimeZone;
@@ -125,10 +126,10 @@ namespace Marble
 //                    organizer.DisplayName = item.Organizer;
 //                    googleEvent.Organizer = organizer;
 //                    
-                    if (googleEvent.Attendees == null)
-                    {
-                    	googleEvent.Attendees = new List<EventAttendee>();
-                    }
+//                    if (googleEvent.Attendees == null)
+//                    {
+//                    	googleEvent.Attendees = new List<EventAttendee>();
+//                    }
                     
 //                    foreach (var attendee in item.RequiredAttendees) {
 //                    	
