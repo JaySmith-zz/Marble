@@ -54,7 +54,6 @@ Section "MainSection" SEC01
   File /r ".\Marble\bin\Release\*"
   CreateDirectory "$SMPROGRAMS\Marble"
   CreateShortCut "$SMPROGRAMS\Marble\Marble.lnk" "$INSTDIR\Marble.exe"
-  ;CreateShortCut "$DESKTOP\Marble.lnk" "$INSTDIR\Marble.exe"
 SectionEnd
 
 Section -AdditionalIcons
