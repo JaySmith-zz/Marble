@@ -49,8 +49,10 @@ namespace Marble
 
             if (OutlookItems != null)
             {
-                DateTime min = DateTime.Now.AddDays(-Settings.CalendarDaysInThePast);
-                DateTime max = DateTime.Now.AddDays(+Settings.CalendarDaysInTheFuture + 1);
+                //DateTime min = DateTime.Now.AddDays(-Settings.CalendarDaysInThePast);
+                //DateTime max = DateTime.Now.AddDays(+Settings.CalendarDaysInTheFuture + 1);
+                var min = Settings.CalendarRangeMinDate;
+                var max = Settings.CalendarRangeMaxDate;
 
                 string filter = "[End] >= '" + min.ToString("g") + "' AND [Start] < '" + max.ToString("g") + "'";
 
