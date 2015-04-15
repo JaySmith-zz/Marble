@@ -47,7 +47,7 @@ namespace Marble
 		{
 			var menu = new MenuItem[] {
 				new MenuItem("Sync", menuSyncCalendarClick),
-				new MenuItem("Clear Remote Items", menuClearRemoteCalendarClick),
+				new MenuItem("Delete Remove Items In Range", menuClearRemoteCalendarClick),
 				new MenuItem("-"),
 				new MenuItem("Settings...", menuSettingsClick),
 				new MenuItem("About", menuAboutClick),

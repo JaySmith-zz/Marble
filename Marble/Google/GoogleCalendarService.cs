@@ -30,7 +30,7 @@ namespace Marble.Google
 			return items;
 		}
 		
-		List<Event> GetCalendarEntriesInRange()
+		List<Event> GetGoogleEventsInRange(DateTime startDate, DateTime endDate)
 		{
 			var results = new List<Event>();
 			if (string.IsNullOrEmpty(Settings.CalendarId)) 
@@ -40,8 +40,8 @@ namespace Marble.Google
 			
 			var eventRequest = service.Events.List(Settings.CalendarAccount);
 			
-			eventRequest.TimeMin = Settings.CalendarRangeMinDate;
-            eventRequest.TimeMax = Settings.CalendarRangeMaxDate;
+			eventRequest.TimeMin = startDate;
+            eventRequest.TimeMax = endDate;
 
 			results.AddRange(eventRequest.Execute().Items);
 				
@@ -50,23 +50,29 @@ namespace Marble.Google
 		
 		public List<Appointment> GetAppointmentsInRange()
 		{
-			var googleEvents = GetCalendarEntriesInRange();
+			var googleEvents = GetGoogleEventsInRange(Settings.CalendarRangeMinDate, Settings.CalendarRangeMaxDate);
 			
 			var appointments = new List<Appointment>();
 			foreach (var googleEvent in googleEvents) 
 			{
-				var appointment = new Appointment() {
+				var appointment = MapGoogleEventtoAppointment(googleEvent);
+				appointments.Add(appointment);
+			}
+			
+			return appointments;
+		}
+		
+		Appointment MapGoogleEventtoAppointment(Event googleEvent)
+		{
+			var appointment = new Appointment() {
 					Id = googleEvent.Id,
 					Start = (DateTime) googleEvent.Start.DateTime,
 					End = (DateTime) googleEvent.End.DateTime,
 					Summary = googleEvent.Summary,
 					Location = googleEvent.Location
 				};
-				
-				appointments.Add(appointment);
-			}
 			
-			return appointments;
+			return appointment;
 		}
 		
 		public void DeleteCalendarEntry(string calenderId, string eventId)
@@ -77,6 +83,31 @@ namespace Marble.Google
 		public void AddEntry(Event googleEvent)
 		{
 			var myEvent = service.Events.Insert(googleEvent, Settings.CalendarAccount).Execute();
+		}
+		
+		public void RemoveAllItemsInRange()
+		{
+			var minDate = Settings.CalendarRangeMinDate;
+			var maxDate = Settings.CalendarRangeMaxDate;
+			var currentMaxDate = minDate.AddDays(7);
+			
+			while (currentMaxDate <= maxDate)
+			{
+				List<Event> items = GetGoogleEventsInRange(minDate, currentMaxDate);
+						
+				if (items.Count > 0)
+            	{
+					foreach (var item in items) DeleteCalendarEntry(Settings.CalendarAccount, item.Id);
+            	}
+				
+				if (currentMaxDate == maxDate) break;
+				currentMaxDate = currentMaxDate.AddDays(7);
+				if (currentMaxDate > maxDate) 
+				{
+					var diffDays = (maxDate - currentMaxDate).TotalDays;
+					currentMaxDate = currentMaxDate.AddDays(diffDays);
+				}
+			}
 		}
 	}
 }
