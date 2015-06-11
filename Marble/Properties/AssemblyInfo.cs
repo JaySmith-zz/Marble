@@ -25,7 +25,7 @@ using log4net.Config;
 [assembly: ComVisible(false)]
 
 // Following Symantic Version http://semver.org/
-[assembly: AssemblyVersion("0.0.1.11")]
+[assembly: AssemblyVersion("0.0.1.12")]
 
 public class AssemblyInfo
 {

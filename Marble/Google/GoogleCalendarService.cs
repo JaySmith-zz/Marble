@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Windows.Forms.VisualStyles;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Marble.Data;
@@ -11,6 +12,8 @@ namespace Marble.Google
 	{	
 		readonly GoogleClient client;
 		readonly CalendarService service;
+		readonly Logger Logger = LogFactory.GetLoggerFor(typeof(GoogleCalendarService));
+			
 		
 		public GoogleCalendarService(GoogleClient googleClient)
 		{
@@ -64,13 +67,35 @@ namespace Marble.Google
 		
 		Appointment MapGoogleEventtoAppointment(Event googleEvent)
 		{
-			var appointment = new Appointment() {
-					Id = googleEvent.Id,
-					Start = (DateTime) googleEvent.Start.DateTime,
-					End = (DateTime) googleEvent.End.DateTime,
-					Summary = googleEvent.Summary,
-					Location = googleEvent.Location
-				};
+			var appointment = new Appointment();
+			
+			try
+			{
+				appointment.Id = googleEvent.Id;
+				
+				if (googleEvent.Start.DateTime == null)
+				{
+					appointment.IsAllDayEvent = true;
+					appointment.Start = DateTime.Parse(googleEvent.Start.Date);
+					appointment.End = DateTime.Parse(googleEvent.End.Date);
+				}
+				else 
+				{
+					appointment.IsAllDayEvent = false;
+					appointment.Start = (DateTime) googleEvent.Start.DateTime;
+					appointment.End = (DateTime) googleEvent.End.DateTime;
+				}
+				
+
+				appointment.Summary = googleEvent.Summary;
+				appointment.Location = string.IsNullOrEmpty(googleEvent.Location) ? "none" : googleEvent.Location;
+			}
+			catch(Exception ex)
+			{
+				Globals.HasError = true;
+				Globals.ErrorMessage = "An error occured while updated Google Calendar.  Please see the log file for more details.";
+				Logger.Fatal(ex.Message, ex);
+			}
 			
 			return appointment;
 		}

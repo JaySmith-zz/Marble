@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using System.Windows.Forms.VisualStyles;
+using System.Xml;
 using Google.Apis.Calendar.v3.Data;
+using Microsoft.SqlServer.Server;
 using Marble.Data;
 using Marble.Google;
 using Marble.Outlook;
@@ -41,8 +44,8 @@ namespace Marble
                 return;
             }
 			
-			List<Appointment> googleAppoinments = googleCalendarService.GetAppointmentsInRange();
 			List<Appointment> outlookAppoinments = outlookCalendarService.GetAppointmentsInRange();
+			List<Appointment> googleAppoinments = googleCalendarService.GetAppointmentsInRange();
 			
 			var comparer = new AppointmentComparer();
 			// Items in google that are not in outlook should be deleted
@@ -52,6 +55,11 @@ namespace Marble
 			// items in outlook that are not in google should be created
 			var googleItemsToAdd = outlookAppoinments.Except(googleAppoinments, comparer).ToList();
 			AddOutLookEventsToGoogleCalendar(googleItemsToAdd);
+			
+			if (Globals.HasError)
+			{
+				System.Windows.Forms.MessageBox.Show(Globals.ErrorMessage);
+			}
 		}
 		
 		string[] splitAttendees(string attendees)
@@ -79,14 +87,14 @@ namespace Marble
                 {
                     var googleEvent = new Event
                     {
-                        Start = new EventDateTime(),
-                        End = new EventDateTime(),
+                        //Start = new EventDateTime(),
+                        //End = new EventDateTime(),
                         Summary = item.Summary,
                         Location = item.Location,
                         Description = item.Description,
                         Attendees = new List<EventAttendee>()
                     };
-
+                    
                     var currentTimeZone = TimeZone.CurrentTimeZone;
                                   
                     var startDateTime = new DateTimeOffset(item.Start, currentTimeZone.GetUtcOffset(item.Start));
