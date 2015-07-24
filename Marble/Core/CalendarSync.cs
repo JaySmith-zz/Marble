@@ -48,12 +48,13 @@ namespace Marble
 			List<Appointment> googleAppoinments = googleCalendarService.GetAppointmentsInRange();
 			
 			var comparer = new AppointmentComparer();
-			// Items in google that are not in outlook should be deleted
 			var googleItemsToDelete = googleAppoinments.Except(outlookAppoinments, comparer).ToList();
+			var googleItemsToAdd = outlookAppoinments.Except(googleAppoinments, comparer).ToList();
+			
+			// Items in google that are not in outlook should be deleted
 			RemoveOldCalendarEventsFromGoogleCalendar(googleItemsToDelete);
 			
 			// items in outlook that are not in google should be created
-			var googleItemsToAdd = outlookAppoinments.Except(googleAppoinments, comparer).ToList();
 			AddOutLookEventsToGoogleCalendar(googleItemsToAdd);
 			
 			if (Globals.HasError)

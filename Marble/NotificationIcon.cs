@@ -15,18 +15,20 @@ namespace Marble
 		
 		public NotificationIcon()
 		{
+			notifyIcon = new NotifyIcon();
+			notificationMenu = new ContextMenu(InitializeMenu());
+			
+			var resources = new System.ComponentModel.ComponentResourceManager(typeof(NotificationIcon));
+			notifyIcon.Icon = (Icon)resources.GetObject("$this.Icon");
+			notifyIcon.ContextMenu = notificationMenu;
+			
+			//Sync();
+			
 			syncTimer = new System.Windows.Forms.Timer { Interval = 30000 };
 			syncTimer.Tick += syncTimerTick;
 			lastSyncTime = DateTime.Now;
 			syncTimer.Start();
-			
-			notifyIcon = new NotifyIcon();
-			notificationMenu = new ContextMenu(InitializeMenu());
-			
-			//notifyIcon.DoubleClick += IconDoubleClick;
-			var resources = new System.ComponentModel.ComponentResourceManager(typeof(NotificationIcon));
-			notifyIcon.Icon = (Icon)resources.GetObject("$this.Icon");
-			notifyIcon.ContextMenu = notificationMenu;
+						
 		}
 
 		void syncTimerTick(object sender, EventArgs e)

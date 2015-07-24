@@ -44,7 +44,7 @@ namespace Marble.Data
 			if (Object.ReferenceEquals(x, null) || Object.ReferenceEquals(y, null))
 			    return false;
 			
-			var isMatch = x.Start == y.Start && x.End == y.End && x.Summary == y.Summary && x.Location == y.Location;
+			var isMatch = x.Start == y.Start && x.End == y.End && x.Summary == y.Summary;// && x.Location == y.Location;
 			
 			return isMatch;
 		
@@ -58,10 +58,10 @@ namespace Marble.Data
 			int hashStart = appointment.Start == DateTime.MinValue ? 0 : appointment.Start.GetHashCode();
 			int hashEnd = appointment.End == DateTime.MinValue ? 0 : appointment.End.GetHashCode();
 			int hashSummary = appointment.Summary == null ? 0 : appointment.Summary.GetHashCode();
-			int hashLocation = appointment.Location == null ? 0 : appointment.Location.GetHashCode();
+			//int hashLocation = appointment.Location == null ? 0 : appointment.Location.GetHashCode();
 			
 			//Calculate the hash code for the product.
-			var returnValue = hashStart ^ hashEnd ^ hashSummary ^ hashLocation;
+			var returnValue = hashStart ^ hashEnd ^ hashSummary;// ^ hashLocation;
 			
 			return returnValue;
 

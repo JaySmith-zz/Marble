@@ -51,7 +51,7 @@ namespace Marble
             {
                 //DateTime min = DateTime.Now.AddDays(-Settings.CalendarDaysInThePast);
                 //DateTime max = DateTime.Now.AddDays(+Settings.CalendarDaysInTheFuture + 1);
-                var min = Settings.CalendarRangeMinDate;
+                var min = Settings.CalendarRangeMinDate.AddMinutes(1);
                 var max = Settings.CalendarRangeMaxDate;
 
                 string filter = "[End] >= '" + min.ToString("g") + "' AND [Start] < '" + max.ToString("g") + "'";
