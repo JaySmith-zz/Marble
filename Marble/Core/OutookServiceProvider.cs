@@ -10,5 +10,6 @@
 public enum OutlookServiceProvider
 {
 	Interop,
-	NetOffice
+	NetOffice,
+    Exchange
 }

@@ -216,6 +216,14 @@ namespace Marble
 				return Enum.GetNames(typeof(OutlookServiceProvider)).ToList();
 			}
 		}
+
+        public static string ExchangeEmailAddress
+        {
+            get
+            {
+                return Properties.Settings.Default.ExchangeEmail;
+            }
+        }
 		
 	}
 }
