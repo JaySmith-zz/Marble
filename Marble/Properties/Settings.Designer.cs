@@ -175,7 +175,7 @@ namespace Marble.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("jay.w.smith@tyson.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ExchangeEmail {
             get {
                 return ((string)(this["ExchangeEmail"]));

@@ -45,7 +45,7 @@
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="ExchangeEmail" Type="System.String" Scope="User">
-      <Value Profile="(Default)">jay.w.smith@tyson.com</Value>
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
