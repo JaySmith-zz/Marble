@@ -57,6 +57,7 @@ namespace Marble
             Settings.CalendarDaysInThePast = int.Parse(textBoxSyncDaysInPast.Text);
             Settings.CalendarDaysInTheFuture = int.Parse(textBoxSyncDaysInFuture.Text);
             Settings.OutlookCalendarServiceProvider = comboBoxOutlookServiceProvider.SelectedItem.ToString();
+            Settings.ExchangeEmailAddress = textBoxExchangeEmail.Text;
             
             Settings.Save();
             

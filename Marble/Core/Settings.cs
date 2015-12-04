@@ -223,6 +223,10 @@ namespace Marble
             {
                 return Properties.Settings.Default.ExchangeEmail;
             }
+            set
+            {
+                Properties.Settings.Default.ExchangeEmail = value;
+            }
         }
 		
 	}
