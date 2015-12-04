@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Marble"
-!define PRODUCT_VERSION "0.0.1.13"
+!define PRODUCT_VERSION "0.0.1.14"
 !define PRODUCT_PUBLISHER "Jay Smith"
 !define PRODUCT_WEB_SITE "https://github.com/JaySmith/Marble"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Marble.exe"
