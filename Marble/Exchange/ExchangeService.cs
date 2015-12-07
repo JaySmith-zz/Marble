@@ -23,9 +23,11 @@ namespace Marble.Exchange
             var calendar = CalendarFolder.Bind(service, WellKnownFolderName.Calendar);
 
             var view = new CalendarView(startDate, endDate);
-            view.PropertySet = new PropertySet(
-                AppointmentSchema.Subject, 
-                AppointmentSchema.Start, 
+            var propertySet = new PropertySet(
+                //AppointmentSchema.TextBody,
+                //AppointmentSchema.NormalizedBody,
+                AppointmentSchema.Subject,
+                AppointmentSchema.Start,
                 AppointmentSchema.End,
                 AppointmentSchema.IsAllDayEvent,
                 AppointmentSchema.Location,
@@ -36,12 +38,29 @@ namespace Marble.Exchange
                 AppointmentSchema.ReminderMinutesBeforeStart
                 );
 
+            view.PropertySet = propertySet;
+
             FindItemsResults<Appointment> appointments = calendar.FindAppointments(view);
+
+            var itemPropertySet = new PropertySet(
+                AppointmentSchema.TextBody,
+                AppointmentSchema.NormalizedBody,
+                AppointmentSchema.Subject,
+                AppointmentSchema.Start,
+                AppointmentSchema.End,
+                AppointmentSchema.IsAllDayEvent,
+                AppointmentSchema.Location,
+                AppointmentSchema.OptionalAttendees,
+                AppointmentSchema.RequiredAttendees,
+                AppointmentSchema.Organizer,
+                AppointmentSchema.IsReminderSet,
+                AppointmentSchema.ReminderMinutesBeforeStart
+                );
 
             var result = new List<Data.Appointment>();
             foreach (Appointment item in appointments)
             {
-                item.Load();
+                item.Load(itemPropertySet);
                 result.Add(GetOutlookAppointment(item));
             }
 
@@ -52,7 +71,7 @@ namespace Marble.Exchange
         {
             var newAppointment = new Data.Appointment
             {
-                Description = appointment.Body,
+                Description = appointment.TextBody,
                 Summary = appointment.Subject,
                 Start = appointment.Start,
                 End = appointment.End,
@@ -83,5 +102,10 @@ namespace Marble.Exchange
         {
             return url.ToLower().StartsWith("https://");
         }
+
+        /// <summary>
+        /// Remove HTML tags from string using char array.
+        /// </summary>
     }
+
 }

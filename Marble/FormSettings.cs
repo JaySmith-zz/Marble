@@ -38,6 +38,7 @@ namespace Marble
             
             comboBoxOutlookServiceProvider.DataSource = Settings.OutlookServiceProviders;
             comboBoxOutlookServiceProvider.SelectedIndex = comboBoxOutlookServiceProvider.FindStringExact(Settings.OutlookCalendarServiceProvider);
+            textBoxExchangeEmail.Text = Settings.ExchangeEmailAddress;
         }
 
         void ButtonGetCalendarsClick(object sender, EventArgs e)
