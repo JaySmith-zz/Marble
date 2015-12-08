@@ -49,7 +49,12 @@ namespace Marble
         void ButtonOkClick(object sender, EventArgs e)
         {
             var selectedItem = (GoogleCalendarInfo)dropdownListCalendars.SelectedItem;
+            
+            var googleCalendarValid = selectedItem != null;
+            var exchangeDataValid = (comboBoxOutlookServiceProvider.SelectedItem.ToString() == "Exchange") == !string.IsNullOrEmpty(textBoxExchangeEmail.Text);
 
+            if (googleCalendarValid && exchangeDataValid)
+            {
             Settings.CalendarAccount = selectedItem.Id;
             Settings.CalendarId = selectedItem.Name;
             Settings.SyncEveryHour = checkBoxSyncEveryHour.Checked;
@@ -66,8 +71,23 @@ namespace Marble
 
             DialogResult = DialogResult.OK;
             Close();
+            }
+            else 
+            {
+            	DisplayErrorMessage(googleCalendarValid, exchangeDataValid);	
+            }
         }
-
+        
+        void DisplayErrorMessage(bool googleValid, bool exchangeValid)
+        {
+        	var message = "Please address the following:";
+        	
+        	if (!googleValid) message += "\n\nGoogle Calendar must be seleced.";
+        	if (!exchangeValid) message += "\n\nExchange email required when using Exchange provider.";
+        	
+        	MessageBox.Show(message, "Invalid settings", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+        }
+        
         void ButtonCancelClick(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
