@@ -228,6 +228,18 @@ namespace Marble
                 Properties.Settings.Default.ExchangeEmail = value;
             }
         }
+        
+        public static bool ShowNotifications
+        {
+            get
+            {
+                return Properties.Settings.Default.ShowNotifications;
+            }
+            set
+            {
+                Properties.Settings.Default.ShowNotifications = value;
+            }
+        }
 		
 	}
 }

@@ -120,12 +120,26 @@ namespace Marble
 		{
 			var calenderSync = new CalendarSync();
 			calenderSync.ClearAllRemoteItems();
+			
+			if (!Settings.ShowNotifications) return;
+				
+			notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+			notifyIcon.BalloonTipTitle = "Mable Message";
+			notifyIcon.BalloonTipText = "Remote appointments removed";
+			notifyIcon.ShowBalloonTip(5000);
 		}
 				
 		private void Sync()
 		{
 			var calendarSync = new CalendarSync();
 			calendarSync.Sync();
+			
+			if (!Settings.ShowNotifications) return;
+			
+			notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+			notifyIcon.BalloonTipTitle = "Mable Message";
+			notifyIcon.BalloonTipText = "Calendar Sync Complete!";
+			notifyIcon.ShowBalloonTip(5000);
 		}
 	}
 }

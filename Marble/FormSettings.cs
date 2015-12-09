@@ -39,6 +39,7 @@ namespace Marble
             comboBoxOutlookServiceProvider.DataSource = Settings.OutlookServiceProviders;
             comboBoxOutlookServiceProvider.SelectedIndex = comboBoxOutlookServiceProvider.FindStringExact(Settings.OutlookCalendarServiceProvider);
             textBoxExchangeEmail.Text = Settings.ExchangeEmailAddress;
+            checkBoxShowNotifications.Checked = Settings.ShowNotifications;
         }
 
         void ButtonGetCalendarsClick(object sender, EventArgs e)
@@ -64,6 +65,7 @@ namespace Marble
             Settings.CalendarDaysInTheFuture = int.Parse(textBoxSyncDaysInFuture.Text);
             Settings.OutlookCalendarServiceProvider = comboBoxOutlookServiceProvider.SelectedItem.ToString();
             Settings.ExchangeEmailAddress = textBoxExchangeEmail.Text;
+            Settings.ShowNotifications = checkBoxShowNotifications.Checked;
             
             Settings.Save();
             
