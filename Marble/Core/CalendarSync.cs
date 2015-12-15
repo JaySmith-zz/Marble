@@ -21,18 +21,19 @@ namespace Marble
 
         readonly GoogleClient googleClient;
         readonly GoogleCalendarService googleCalendarService;
+        readonly OutlookServiceProvider sourceCalendarProvider;
 
         public CalendarSync()
         {
             googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
             googleCalendarService = new GoogleCalendarService(googleClient);
 
-            var provider = (OutlookServiceProvider)Enum.Parse(typeof(OutlookServiceProvider), Settings.OutlookCalendarServiceProvider);
-            if (provider == OutlookServiceProvider.Interop)
+            sourceCalendarProvider = (OutlookServiceProvider)Enum.Parse(typeof(OutlookServiceProvider), Settings.OutlookCalendarServiceProvider);
+            if (sourceCalendarProvider == OutlookServiceProvider.Interop)
             {
                 outlookCalendarService = new OulookCalendarService_Introp();
             }
-            else if (provider == OutlookServiceProvider.Exchange)
+            else if (sourceCalendarProvider == OutlookServiceProvider.Exchange)
             {
                 outlookCalendarService = new Exchange.ExchangeService();
             }
@@ -44,11 +45,7 @@ namespace Marble
 
         public void Sync()
         {
-            if (Settings.CalendarId == "")
-            {
-                System.Windows.Forms.MessageBox.Show("You need to select a Google Calendar first on the 'Settings' tab.");
-                return;
-            }
+        	if (!ValidateSettings()) return;
 
             List<Appointment> outlookAppoinments = outlookCalendarService.GetAppointmentsInRange();
             List<Appointment> googleAppoinments = googleCalendarService.GetAppointmentsInRange();
@@ -69,6 +66,36 @@ namespace Marble
             }
         }
 
+        bool ValidateSettings()
+        {
+        	var valid = true;
+        	
+        	var alertMessages = new List<string>();
+            if (Settings.CalendarId == "")
+            {
+            	alertMessages.Add("Google Calendar not selected.");
+            }
+            
+            if ((sourceCalendarProvider == OutlookServiceProvider.Exchange) && 
+                (string.IsNullOrEmpty(Settings.ExchangeEmailAddress)))
+            {
+            	
+            	alertMessages.Add("You must provide your Exchange email address if selecting to connect directly to Exchange server."); 	
+            }
+            	
+            if (alertMessages.Count > 0)
+            {
+            	valid = false;
+            	var message = string.Empty;
+            	foreach (var alertMessage in alertMessages) {
+            		message += alertMessage + "\n";
+            	}
+            	System.Windows.Forms.MessageBox.Show(message, "Configuration Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Stop);
+            }
+            
+            return valid;
+        }
+        
         string[] splitAttendees(string attendees)
         {
             if (attendees == null) return new string[0];
