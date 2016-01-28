@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Windows.Forms.VisualStyles;
+using System.Threading;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Marble.Data;
@@ -110,28 +110,48 @@ namespace Marble.Google
 			var myEvent = service.Events.Insert(googleEvent, Settings.CalendarAccount).Execute();
 		}
 		
-		public void RemoveAllItemsInRange()
+		public int RemoveAllItemsInRange()
 		{
+			//TODO: Need to batch these in groups to avoid request limit
+			var batchSize = 10;
+			var batchWaitTime = 2000; //wait time between batches in miliseconds
+			var batchItems = new List<Event>();
+			
 			var minDate = Settings.CalendarRangeMinDate;
 			var maxDate = Settings.CalendarRangeMaxDate;
-			var currentMaxDate = minDate.AddDays(7);
-			
-			while (currentMaxDate <= maxDate)
-			{
-				List<Event> items = GetGoogleEventsInRange(minDate, currentMaxDate);
-						
-				if (items.Count > 0)
-            	{
-					foreach (var item in items) DeleteCalendarEntry(Settings.CalendarAccount, item.Id);
-            	}
-				
-				if (currentMaxDate == maxDate) break;
-				currentMaxDate = currentMaxDate.AddDays(7);
-				if (currentMaxDate > maxDate) 
+
+			List<Event> items = GetGoogleEventsInRange(minDate, maxDate);
+					
+			if (items.Count > 0)
+        	{
+				if (items.Count > batchSize)
 				{
-					var diffDays = (maxDate - currentMaxDate).TotalDays;
-					currentMaxDate = currentMaxDate.AddDays(diffDays);
+					foreach (var item in items)
+					{
+						// Build up batch of items
+						if (batchItems.Count <= batchSize) batchItems.Add(item);
+						if (batchItems.Count == batchSize)
+						{
+							DeleteCalendarEntries(batchItems);
+							batchItems.Clear();
+							Thread.Sleep(batchWaitTime);
+						}
+					}
+					if (batchItems.Count > 0) DeleteCalendarEntries(batchItems);
+				} 
+				else
+				{
+					DeleteCalendarEntries(items);
 				}
+        	}
+			
+			return items.Count;
+		}
+	
+		public void DeleteCalendarEntries(List<Event> items)
+		{
+			foreach (var item in items) {
+				DeleteCalendarEntry(Settings.CalendarAccount, item.Id);
 			}
 		}
 	}

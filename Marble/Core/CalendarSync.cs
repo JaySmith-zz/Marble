@@ -43,9 +43,15 @@ namespace Marble
             }
         }
 
-        public void Sync()
+        public CalendarSyncInfo Sync()
         {
-        	if (!ValidateSettings()) return;
+        	var syncInfo = new CalendarSyncInfo();
+        	
+        	if (!ValidateSettings()) 
+        	{
+        		syncInfo.Status = CalendarSyncStatus.Skipped;
+        		return syncInfo;
+        	}
 
             List<Appointment> outlookAppoinments = outlookCalendarService.GetAppointmentsInRange();
             List<Appointment> googleAppoinments = googleCalendarService.GetAppointmentsInRange();
@@ -54,16 +60,24 @@ namespace Marble
             var googleItemsToDelete = googleAppoinments.Except(outlookAppoinments, comparer).ToList();
             var googleItemsToAdd = outlookAppoinments.Except(googleAppoinments, comparer).ToList();
 
+            syncInfo.ItemsRemovedCount = googleItemsToDelete.Count();
             // Items in google that are not in outlook should be deleted
             RemoveOldCalendarEventsFromGoogleCalendar(googleItemsToDelete);
 
+            syncInfo.ItemsAddCount = googleItemsToAdd.Count();
             // items in outlook that are not in google should be created
             AddOutLookEventsToGoogleCalendar(googleItemsToAdd);
 
+            syncInfo.Status = CalendarSyncStatus.Success;
+            syncInfo.Text = "Synchronization complete.";
             if (Globals.HasError)
             {
-                System.Windows.Forms.MessageBox.Show(Globals.ErrorMessage);
+            	syncInfo.Status = CalendarSyncStatus.Failed;
+            	syncInfo.Text = Globals.ErrorMessage;
+                //system.Windows.Forms.MessageBox.Show(Globals.ErrorMessage);
             }
+
+            return syncInfo;
         }
 
         bool ValidateSettings()
@@ -101,7 +115,7 @@ namespace Marble
             if (attendees == null) return new string[0];
             string[] tmp1 = attendees.Split(';');
             for (int i = 0; i < tmp1.Length; i++) tmp1[i] = tmp1[i].Trim();
-            //return String.Join(Environment.NewLine, tmp1);
+            
             return tmp1;
         }
 
@@ -121,8 +135,6 @@ namespace Marble
                 {
                     var googleEvent = new Event
                     {
-                        //Start = new EventDateTime(),
-                        //End = new EventDateTime(),
                         Summary = item.Summary,
                         Location = item.Location,
                         Description = item.Description,
@@ -133,7 +145,7 @@ namespace Marble
 
                     var startDateTime = new DateTimeOffset(item.Start, currentTimeZone.GetUtcOffset(item.Start));
                     var startDate = new EventDateTime();
-                    //startDate.DateTime = startDateTime.ToString("o");
+                    
                     if (item.IsAllDayEvent)
                     {
                         startDate.Date = startDateTime.ToString("yyy-MM-dd");
@@ -148,7 +160,7 @@ namespace Marble
 
                     var endDateTime = new DateTimeOffset(item.End, currentTimeZone.GetUtcOffset(item.End));
                     var endDate = new EventDateTime();
-                    //endDate.Date = item.IsAllDayEvent ? item.End.ToString("yyyy-MM-dd") : item.End.ToString();
+                    
                     if (item.IsAllDayEvent)
                     {
                         endDate.Date = endDateTime.ToString("yyy-MM-dd");
@@ -157,7 +169,7 @@ namespace Marble
                     {
                         endDate.DateTime = endDateTime.DateTime;
                     }
-                    //endDate.Date = endDateTime.ToString("o");
+                    
                     googleEvent.End = endDate;
 
                     //consider the reminder set in Outlook
@@ -174,9 +186,20 @@ namespace Marble
             }
         }
 
-        public void ClearAllRemoteItems()
+        public CalendarSyncInfo ClearAllRemoteItems()
         {
-            googleCalendarService.RemoveAllItemsInRange();
+        	var syncInfo = new CalendarSyncInfo();
+        	syncInfo.Text = "Deleted remote items in range.";
+        	syncInfo.Status = CalendarSyncStatus.Success;
+        	
+        	try {
+        		syncInfo.ItemsRemovedCount = googleCalendarService.RemoveAllItemsInRange();	
+        	} catch (Exception ex) {
+        		syncInfo.Status = CalendarSyncStatus.Failed;
+        		syncInfo.Text = "Error removing remote items";
+        	}
+        	
+        	return syncInfo;
 
         }
     }

@@ -49,7 +49,7 @@ namespace Marble
 		{
 			var menu = new MenuItem[] {
 				new MenuItem("Sync Now", menuSyncCalendarClick),
-				new MenuItem("Delete Remove Items In Range", menuClearRemoteCalendarClick),
+				new MenuItem("Delete Remote Items In Range", menuClearRemoteCalendarClick),
 				new MenuItem("-"),
 				new MenuItem("Settings...", menuSettingsClick),
 				new MenuItem("About", menuAboutClick),
@@ -119,26 +119,26 @@ namespace Marble
 		private void menuClearRemoteCalendarClick(object sender, EventArgs e)
 		{
 			var calenderSync = new CalendarSync();
-			calenderSync.ClearAllRemoteItems();
-			
-			if (!Settings.ShowNotifications) return;
-				
-			notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
-			notifyIcon.BalloonTipTitle = "Mable Message";
-			notifyIcon.BalloonTipText = "Remote appointments removed";
-			notifyIcon.ShowBalloonTip(5000);
+			var syncInfo = calenderSync.ClearAllRemoteItems();
+			DisplayBalloonTip(syncInfo);
 		}
 				
 		private void Sync()
 		{
 			var calendarSync = new CalendarSync();
-			calendarSync.Sync();
+			var syncInfo = calendarSync.Sync();
+			DisplayBalloonTip(syncInfo);
+		}
+		
+		private void DisplayBalloonTip(CalendarSyncInfo syncInfo)
+		{
+			if (!Settings.ShowNotifications || syncInfo.Status == CalendarSyncStatus.Skipped) return;
 			
-			if (!Settings.ShowNotifications) return;
-			
-			notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
-			notifyIcon.BalloonTipTitle = "Mable Message";
-			notifyIcon.BalloonTipText = "Calendar Sync Complete!";
+			if (syncInfo.Status == CalendarSyncStatus.Success) notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+			if (syncInfo.Status == CalendarSyncStatus.Failed) notifyIcon.BalloonTipIcon = ToolTipIcon.Error;
+			notifyIcon.BalloonTipTitle = "Marble Status";
+			notifyIcon.BalloonTipText = string.Format("{0}\nCalendar Sync Complete!\n {1} added, {2} removed", 
+			                                          syncInfo.Text, syncInfo.ItemsAddCount, syncInfo.ItemsRemovedCount);
 			notifyIcon.ShowBalloonTip(5000);
 		}
 	}
