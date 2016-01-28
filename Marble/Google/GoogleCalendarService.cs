@@ -113,8 +113,8 @@ namespace Marble.Google
 		public int RemoveAllItemsInRange()
 		{
 			//TODO: Need to batch these in groups to avoid request limit
-			var batchSize = 10;
-			var batchWaitTime = 2000; //wait time between batches in miliseconds
+			var batchSize = 100;
+			var batchWaitTime = 3000; //wait time between batches in miliseconds
 			var batchItems = new List<Event>();
 			
 			var minDate = Settings.CalendarRangeMinDate;
