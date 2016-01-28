@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Exchange.WebServices.Data;
+using System.Globalization;
 
-using Marble.Properties;
 
 namespace Marble.Exchange
 {
@@ -100,12 +99,7 @@ namespace Marble.Exchange
 
         private bool RedirectionCallback(string url)
         {
-            return url.ToLower().StartsWith("https://");
+            return url.ToLower().StartsWith("https://", StringComparison.CurrentCultureIgnoreCase);
         }
-
-        /// <summary>
-        /// Remove HTML tags from string using char array.
-        /// </summary>
     }
-
 }
