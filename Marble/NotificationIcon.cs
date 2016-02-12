@@ -22,27 +22,42 @@ namespace Marble
 			notifyIcon.Icon = (Icon)resources.GetObject("$this.Icon");
 			notifyIcon.ContextMenu = notificationMenu;
 			
-			//Sync();
-			
-			syncTimer = new System.Windows.Forms.Timer { Interval = 30000 };
+			syncTimer = new System.Windows.Forms.Timer { Interval = 60000 };
+			SetupTimer();
+		}
+		
+		void SetupTimer()
+		{
+			if (syncTimer.Enabled) syncTimer.Stop();
+	
 			syncTimer.Tick += syncTimerTick;
+					
 			lastSyncTime = DateTime.Now;
 			syncTimer.Start();
-						
 		}
 
 		void syncTimerTick(object sender, EventArgs e)
-		{
-			if (!Settings.SyncEveryHour) return;
-            DateTime newtime = DateTime.Now;
-            if (newtime.Minute != lastSyncTime.Minute)
-            {
-                lastSyncTime = newtime;
-                if (newtime.Minute == Settings.SyncMinutesOffset)
-                {
-                	Sync();
-                }
-            }
+		{	
+			DateTime newtime = DateTime.Now;
+			
+			if (Settings.SyncFrequencyType == SyncFrequencyType.EveryHour)
+			{
+	            if (newtime.Minute != lastSyncTime.Minute)
+	            {
+	                lastSyncTime = newtime;
+	                if (newtime.Minute == Settings.SyncHourlyMinutesOffset)
+	                {
+	                	Sync();
+	                }
+	            }
+			} else {
+				var minutesSinceLastSync = (newtime - lastSyncTime).Minutes;
+				if (minutesSinceLastSync == Settings.SyncEveryNMinutes)
+				{
+					lastSyncTime = newtime;
+					Sync();
+				}
+			}
 		}
 		
 		MenuItem[] InitializeMenu()

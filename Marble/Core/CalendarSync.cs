@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using System.Windows.Forms.VisualStyles;
-using System.Xml;
 using Google.Apis.Calendar.v3.Data;
-using Microsoft.SqlServer.Server;
 using Marble.Data;
 using Marble.Google;
-using Marble.Outlook;
 
 namespace Marble
 {
@@ -45,6 +41,8 @@ namespace Marble
 
         public CalendarSyncInfo Sync()
         {
+        	//ClearAllRemoteItems();
+        	
         	var syncInfo = new CalendarSyncInfo();
         	
         	if (!ValidateSettings()) 
@@ -57,16 +55,16 @@ namespace Marble
             List<Appointment> googleAppoinments = googleCalendarService.GetAppointmentsInRange();
 
             var comparer = new AppointmentComparer();
+
             var googleItemsToDelete = googleAppoinments.Except(outlookAppoinments, comparer).ToList();
-            var googleItemsToAdd = outlookAppoinments.Except(googleAppoinments, comparer).ToList();
-
             syncInfo.ItemsRemovedCount = googleItemsToDelete.Count();
-            // Items in google that are not in outlook should be deleted
-            RemoveOldCalendarEventsFromGoogleCalendar(googleItemsToDelete);
+            RemoveOldCalendarEventsFromGoogleCalendar(googleAppoinments);
+            //RemoveOldCalendarEventsFromGoogleCalendar(googleItemsToDelete);
 
+            var googleItemsToAdd = outlookAppoinments.Except(googleAppoinments, comparer).ToList();
             syncInfo.ItemsAddCount = googleItemsToAdd.Count();
-            // items in outlook that are not in google should be created
-            AddOutLookEventsToGoogleCalendar(googleItemsToAdd);
+            //AddOutLookEventsToGoogleCalendar(googleItemsToAdd);
+            AddOutLookEventsToGoogleCalendar(outlookAppoinments);
 
             syncInfo.Status = CalendarSyncStatus.Success;
             syncInfo.Text = "Synchronization complete.";
@@ -74,7 +72,6 @@ namespace Marble
             {
             	syncInfo.Status = CalendarSyncStatus.Failed;
             	syncInfo.Text = Globals.ErrorMessage;
-                //system.Windows.Forms.MessageBox.Show(Globals.ErrorMessage);
             }
 
             return syncInfo;
@@ -194,7 +191,7 @@ namespace Marble
         	
         	try {
         		syncInfo.ItemsRemovedCount = googleCalendarService.RemoveAllItemsInRange();	
-        	} catch (Exception ex) {
+        	} catch (Exception) {
         		syncInfo.Status = CalendarSyncStatus.Failed;
         		syncInfo.Text = "Error removing remote items";
         	}

@@ -154,6 +154,7 @@
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\OutookServiceProvider.cs" />
     <Compile Include="Core\Settings.cs" />
+    <Compile Include="Core\SyncFrequencyType.cs" />
     <Compile Include="Data\Appointment.cs" />
     <Compile Include="Exchange\ExchangeService.cs" />
     <Compile Include="FormAbout.cs">

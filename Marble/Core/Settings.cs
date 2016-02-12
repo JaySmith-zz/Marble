@@ -110,13 +110,33 @@ namespace Marble
 			set { Properties.Settings.Default.CalendarDaysInTheFuture = value; }
 		}
 
-		public static bool SyncEveryHour		
+//		public static bool SyncEveryHour		
+//		{
+//			get { return Properties.Settings.Default.SyncEveryHour;  }
+//			set { Properties.Settings.Default.SyncEveryHour = value; }
+//		}
+		
+		public static SyncFrequencyType SyncFrequencyType	
 		{
-			get { return Properties.Settings.Default.SyncEveryHour;  }
-			set { Properties.Settings.Default.SyncEveryHour = value; }
+			get 
+			{
+				var enumReturn = (SyncFrequencyType)Enum.Parse(typeof(SyncFrequencyType), Properties.Settings.Default.SyncFrequencyType);
+				return (SyncFrequencyType)Enum.Parse(typeof(SyncFrequencyType), Properties.Settings.Default.SyncFrequencyType);;  
+			}
+			set 
+			{ 
+				var newValue = value.ToString();
+				Properties.Settings.Default.SyncFrequencyType = value.ToString();
+			}
 		}
 		
-		public static int SyncMinutesOffset		
+		public static int SyncEveryNMinutes
+		{
+			get { return Properties.Settings.Default.SyncEveryNMinutes;  }
+			set { Properties.Settings.Default.SyncEveryNMinutes = value; }
+		}
+		
+		public static int SyncHourlyMinutesOffset		
 		{
 			get { return Properties.Settings.Default.SyncMinutesOffset;  }
 			set { Properties.Settings.Default.SyncMinutesOffset = value; }

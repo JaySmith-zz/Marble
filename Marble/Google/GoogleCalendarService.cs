@@ -45,6 +45,8 @@ namespace Marble.Google
 			
 			eventRequest.TimeMin = startDate;
             eventRequest.TimeMax = endDate;
+            //eventRequest.ShowDeleted = true;
+            eventRequest.MaxResults = 2500;
 
 			results.AddRange(eventRequest.Execute().Items);
 				
@@ -113,8 +115,8 @@ namespace Marble.Google
 		public int RemoveAllItemsInRange()
 		{
 			//TODO: Need to batch these in groups to avoid request limit
-			var batchSize = 100;
-			var batchWaitTime = 3000; //wait time between batches in miliseconds
+			const int batchSize = 100;
+			const int batchWaitTime = 3000; //wait time between batches in miliseconds
 			var batchItems = new List<Event>();
 			
 			var minDate = Settings.CalendarRangeMinDate;
@@ -124,25 +126,26 @@ namespace Marble.Google
 					
 			if (items.Count > 0)
         	{
-				if (items.Count > batchSize)
-				{
-					foreach (var item in items)
-					{
-						// Build up batch of items
-						if (batchItems.Count <= batchSize) batchItems.Add(item);
-						if (batchItems.Count == batchSize)
-						{
-							DeleteCalendarEntries(batchItems);
-							batchItems.Clear();
-							Thread.Sleep(batchWaitTime);
-						}
-					}
-					if (batchItems.Count > 0) DeleteCalendarEntries(batchItems);
-				} 
-				else
-				{
-					DeleteCalendarEntries(items);
-				}
+				DeleteCalendarEntries(items);
+//				if (items.Count > batchSize)
+//				{
+//					foreach (var item in items)
+//					{
+//						// Build up batch of items
+//						if (batchItems.Count <= batchSize) batchItems.Add(item);
+//						if (batchItems.Count == batchSize)
+//						{
+//							DeleteCalendarEntries(batchItems);
+//							batchItems.Clear();
+//							Thread.Sleep(batchWaitTime);
+//						}
+//					}
+//					if (batchItems.Count > 0) DeleteCalendarEntries(batchItems);
+//				} 
+//				else
+//				{
+//					DeleteCalendarEntries(items);
+//				}
         	}
 			
 			return items.Count;

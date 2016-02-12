@@ -29,9 +29,13 @@ namespace Marble
             GetCalendars();
             labelSelectedAccountName.Text = Settings.CalendarAccount;
             dropdownListCalendars.SelectedIndex = dropdownListCalendars.FindStringExact(Settings.CalendarId);
-
-            checkBoxSyncEveryHour.Checked = Settings.SyncEveryHour;
-            textBoxMinuteOffset.Text = Settings.SyncMinutesOffset.ToString();
+                     
+            radioButtonSyncEveryHour.Checked = (Settings.SyncFrequencyType == SyncFrequencyType.EveryHour);     
+            radioButtonSyncEveryNMinutes.Checked = (Settings.SyncFrequencyType == SyncFrequencyType.EveryNMinutes);
+            
+            textBoxMinuteOffset.Text = Settings.SyncEveryNMinutes.ToString();
+            
+            textBoxHourlyOffset.Text = Settings.SyncHourlyMinutesOffset.ToString();
             checkBoxStartWithWindows.Checked = Settings.StartWithWindows;
             textBoxSyncDaysInPast.Text = Settings.CalendarDaysInThePast.ToString();
             textBoxSyncDaysInFuture.Text = Settings.CalendarDaysInTheFuture.ToString();
@@ -58,8 +62,19 @@ namespace Marble
             {
             Settings.CalendarAccount = selectedItem.Id;
             Settings.CalendarId = selectedItem.Name;
-            Settings.SyncEveryHour = checkBoxSyncEveryHour.Checked;
-            Settings.SyncMinutesOffset = int.Parse(textBoxMinuteOffset.Text);
+            
+            if (radioButtonSyncEveryHour.Checked)
+            {
+            	Settings.SyncFrequencyType = SyncFrequencyType.EveryHour;
+            }
+            if (radioButtonSyncEveryNMinutes.Checked)
+            {
+            	Settings.SyncFrequencyType = SyncFrequencyType.EveryNMinutes;
+            }
+            
+            
+            Settings.SyncHourlyMinutesOffset = int.Parse(textBoxHourlyOffset.Text);
+            Settings.SyncEveryNMinutes = int.Parse(textBoxMinuteOffset.Text);
             Settings.StartWithWindows = checkBoxStartWithWindows.Checked;
             Settings.CalendarDaysInThePast = int.Parse(textBoxSyncDaysInPast.Text);
             Settings.CalendarDaysInTheFuture = int.Parse(textBoxSyncDaysInFuture.Text);

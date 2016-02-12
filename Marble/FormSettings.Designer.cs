@@ -20,7 +20,6 @@ namespace Marble
 		private System.Windows.Forms.GroupBox groupBoxOptions;
         private System.Windows.Forms.Button buttonGetCalendars;
 		private System.Windows.Forms.Label labelCalendar;
-		private System.Windows.Forms.CheckBox checkBoxSyncEveryHour;
 		private System.Windows.Forms.TextBox textBoxMinuteOffset;
 		private System.Windows.Forms.TextBox textBoxSyncDaysInFuture;
 		private System.Windows.Forms.TextBox textBoxSyncDaysInPast;
@@ -54,6 +53,12 @@ namespace Marble
 		{
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.groupBoxGoogleCalendar = new System.Windows.Forms.GroupBox();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.textBoxHourlyOffset = new System.Windows.Forms.TextBox();
+			this.radioButtonSyncEveryHour = new System.Windows.Forms.RadioButton();
+			this.radioButtonSyncEveryNMinutes = new System.Windows.Forms.RadioButton();
+			this.label4 = new System.Windows.Forms.Label();
 			this.textBoxSyncDaysInFuture = new System.Windows.Forms.TextBox();
 			this.buttonClearDataStore = new System.Windows.Forms.Button();
 			this.textBoxSyncDaysInPast = new System.Windows.Forms.TextBox();
@@ -61,18 +66,17 @@ namespace Marble
 			this.label2 = new System.Windows.Forms.Label();
 			this.labelSelectedAccount = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
-			this.checkBoxSyncEveryHour = new System.Windows.Forms.CheckBox();
 			this.textBoxMinuteOffset = new System.Windows.Forms.TextBox();
 			this.buttonGetCalendars = new System.Windows.Forms.Button();
 			this.dropdownListCalendars = new System.Windows.Forms.ComboBox();
 			this.labelCalendar = new System.Windows.Forms.Label();
 			this.buttonOk = new System.Windows.Forms.Button();
 			this.groupBoxOptions = new System.Windows.Forms.GroupBox();
+			this.checkBoxShowNotifications = new System.Windows.Forms.CheckBox();
+			this.comboBoxOutlookServiceProvider = new System.Windows.Forms.ComboBox();
 			this.textBoxExchangeEmail = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.checkBoxStartWithWindows = new System.Windows.Forms.CheckBox();
-			this.comboBoxOutlookServiceProvider = new System.Windows.Forms.ComboBox();
-			this.checkBoxShowNotifications = new System.Windows.Forms.CheckBox();
 			this.groupBoxGoogleCalendar.SuspendLayout();
 			this.groupBoxOptions.SuspendLayout();
 			this.SuspendLayout();
@@ -89,6 +93,12 @@ namespace Marble
 			// 
 			// groupBoxGoogleCalendar
 			// 
+			this.groupBoxGoogleCalendar.Controls.Add(this.label6);
+			this.groupBoxGoogleCalendar.Controls.Add(this.label5);
+			this.groupBoxGoogleCalendar.Controls.Add(this.textBoxHourlyOffset);
+			this.groupBoxGoogleCalendar.Controls.Add(this.radioButtonSyncEveryHour);
+			this.groupBoxGoogleCalendar.Controls.Add(this.radioButtonSyncEveryNMinutes);
+			this.groupBoxGoogleCalendar.Controls.Add(this.label4);
 			this.groupBoxGoogleCalendar.Controls.Add(this.textBoxSyncDaysInFuture);
 			this.groupBoxGoogleCalendar.Controls.Add(this.buttonClearDataStore);
 			this.groupBoxGoogleCalendar.Controls.Add(this.textBoxSyncDaysInPast);
@@ -96,21 +106,74 @@ namespace Marble
 			this.groupBoxGoogleCalendar.Controls.Add(this.label2);
 			this.groupBoxGoogleCalendar.Controls.Add(this.labelSelectedAccount);
 			this.groupBoxGoogleCalendar.Controls.Add(this.label1);
-			this.groupBoxGoogleCalendar.Controls.Add(this.checkBoxSyncEveryHour);
 			this.groupBoxGoogleCalendar.Controls.Add(this.textBoxMinuteOffset);
 			this.groupBoxGoogleCalendar.Controls.Add(this.buttonGetCalendars);
 			this.groupBoxGoogleCalendar.Controls.Add(this.dropdownListCalendars);
 			this.groupBoxGoogleCalendar.Controls.Add(this.labelCalendar);
 			this.groupBoxGoogleCalendar.Location = new System.Drawing.Point(13, 13);
 			this.groupBoxGoogleCalendar.Name = "groupBoxGoogleCalendar";
-			this.groupBoxGoogleCalendar.Size = new System.Drawing.Size(481, 164);
+			this.groupBoxGoogleCalendar.Size = new System.Drawing.Size(481, 213);
 			this.groupBoxGoogleCalendar.TabIndex = 1;
 			this.groupBoxGoogleCalendar.TabStop = false;
 			this.groupBoxGoogleCalendar.Text = "Google Calendar";
 			// 
+			// label6
+			// 
+			this.label6.Location = new System.Drawing.Point(175, 116);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(72, 23);
+			this.label6.TabIndex = 16;
+			this.label6.Text = "Minutes Offset";
+			this.label6.Visible = false;
+			// 
+			// label5
+			// 
+			this.label5.Location = new System.Drawing.Point(175, 93);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(72, 23);
+			this.label5.TabIndex = 14;
+			this.label5.Text = "Minutes";
+			this.label5.Visible = false;
+			// 
+			// textBoxHourlyOffset
+			// 
+			this.textBoxHourlyOffset.Location = new System.Drawing.Point(253, 113);
+			this.textBoxHourlyOffset.Name = "textBoxHourlyOffset";
+			this.textBoxHourlyOffset.Size = new System.Drawing.Size(35, 20);
+			this.textBoxHourlyOffset.TabIndex = 15;
+			// 
+			// radioButtonSyncEveryHour
+			// 
+			this.radioButtonSyncEveryHour.Location = new System.Drawing.Point(9, 110);
+			this.radioButtonSyncEveryHour.Name = "radioButtonSyncEveryHour";
+			this.radioButtonSyncEveryHour.Size = new System.Drawing.Size(142, 24);
+			this.radioButtonSyncEveryHour.TabIndex = 13;
+			this.radioButtonSyncEveryHour.TabStop = true;
+			this.radioButtonSyncEveryHour.Text = "Sync every hour";
+			this.radioButtonSyncEveryHour.UseVisualStyleBackColor = true;
+			// 
+			// radioButtonSyncEveryNMinutes
+			// 
+			this.radioButtonSyncEveryNMinutes.Location = new System.Drawing.Point(9, 87);
+			this.radioButtonSyncEveryNMinutes.Name = "radioButtonSyncEveryNMinutes";
+			this.radioButtonSyncEveryNMinutes.Size = new System.Drawing.Size(142, 24);
+			this.radioButtonSyncEveryNMinutes.TabIndex = 12;
+			this.radioButtonSyncEveryNMinutes.TabStop = true;
+			this.radioButtonSyncEveryNMinutes.Text = "Sync every minutes";
+			this.radioButtonSyncEveryNMinutes.UseVisualStyleBackColor = true;
+			// 
+			// label4
+			// 
+			this.label4.Location = new System.Drawing.Point(3, 152);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(103, 23);
+			this.label4.TabIndex = 11;
+			this.label4.Text = "Date Range";
+			this.label4.Visible = false;
+			// 
 			// textBoxSyncDaysInFuture
 			// 
-			this.textBoxSyncDaysInFuture.Location = new System.Drawing.Point(112, 134);
+			this.textBoxSyncDaysInFuture.Location = new System.Drawing.Point(279, 172);
 			this.textBoxSyncDaysInFuture.Name = "textBoxSyncDaysInFuture";
 			this.textBoxSyncDaysInFuture.Size = new System.Drawing.Size(39, 20);
 			this.textBoxSyncDaysInFuture.TabIndex = 3;
@@ -127,7 +190,7 @@ namespace Marble
 			// 
 			// textBoxSyncDaysInPast
 			// 
-			this.textBoxSyncDaysInPast.Location = new System.Drawing.Point(112, 108);
+			this.textBoxSyncDaysInPast.Location = new System.Drawing.Point(109, 172);
 			this.textBoxSyncDaysInPast.Name = "textBoxSyncDaysInPast";
 			this.textBoxSyncDaysInPast.Size = new System.Drawing.Size(39, 20);
 			this.textBoxSyncDaysInPast.TabIndex = 2;
@@ -142,7 +205,7 @@ namespace Marble
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(8, 137);
+			this.label2.Location = new System.Drawing.Point(175, 175);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(100, 23);
 			this.label2.TabIndex = 1;
@@ -159,24 +222,15 @@ namespace Marble
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(6, 111);
+			this.label1.Location = new System.Drawing.Point(3, 175);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(88, 23);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Days in the past";
 			// 
-			// checkBoxSyncEveryHour
-			// 
-			this.checkBoxSyncEveryHour.Location = new System.Drawing.Point(8, 84);
-			this.checkBoxSyncEveryHour.Name = "checkBoxSyncEveryHour";
-			this.checkBoxSyncEveryHour.Size = new System.Drawing.Size(229, 24);
-			this.checkBoxSyncEveryHour.TabIndex = 3;
-			this.checkBoxSyncEveryHour.Text = "Sync every hour at these Minutes Offset(s)";
-			this.checkBoxSyncEveryHour.UseVisualStyleBackColor = true;
-			// 
 			// textBoxMinuteOffset
 			// 
-			this.textBoxMinuteOffset.Location = new System.Drawing.Point(243, 86);
+			this.textBoxMinuteOffset.Location = new System.Drawing.Point(253, 91);
 			this.textBoxMinuteOffset.Name = "textBoxMinuteOffset";
 			this.textBoxMinuteOffset.Size = new System.Drawing.Size(35, 20);
 			this.textBoxMinuteOffset.TabIndex = 4;
@@ -225,23 +279,41 @@ namespace Marble
 			this.groupBoxOptions.Controls.Add(this.textBoxExchangeEmail);
 			this.groupBoxOptions.Controls.Add(this.label3);
 			this.groupBoxOptions.Controls.Add(this.checkBoxStartWithWindows);
-			this.groupBoxOptions.Location = new System.Drawing.Point(12, 183);
+			this.groupBoxOptions.Location = new System.Drawing.Point(12, 237);
 			this.groupBoxOptions.Name = "groupBoxOptions";
-			this.groupBoxOptions.Size = new System.Drawing.Size(482, 154);
+			this.groupBoxOptions.Size = new System.Drawing.Size(482, 83);
 			this.groupBoxOptions.TabIndex = 3;
 			this.groupBoxOptions.TabStop = false;
 			this.groupBoxOptions.Text = "Options";
 			// 
+			// checkBoxShowNotifications
+			// 
+			this.checkBoxShowNotifications.Location = new System.Drawing.Point(140, 19);
+			this.checkBoxShowNotifications.Name = "checkBoxShowNotifications";
+			this.checkBoxShowNotifications.Size = new System.Drawing.Size(229, 24);
+			this.checkBoxShowNotifications.TabIndex = 7;
+			this.checkBoxShowNotifications.Text = "Show Notifications";
+			this.checkBoxShowNotifications.UseVisualStyleBackColor = true;
+			// 
+			// comboBoxOutlookServiceProvider
+			// 
+			this.comboBoxOutlookServiceProvider.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxOutlookServiceProvider.FormattingEnabled = true;
+			this.comboBoxOutlookServiceProvider.Location = new System.Drawing.Point(10, 49);
+			this.comboBoxOutlookServiceProvider.Name = "comboBoxOutlookServiceProvider";
+			this.comboBoxOutlookServiceProvider.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxOutlookServiceProvider.TabIndex = 4;
+			// 
 			// textBoxExchangeEmail
 			// 
-			this.textBoxExchangeEmail.Location = new System.Drawing.Point(240, 127);
+			this.textBoxExchangeEmail.Location = new System.Drawing.Point(244, 49);
 			this.textBoxExchangeEmail.Name = "textBoxExchangeEmail";
 			this.textBoxExchangeEmail.Size = new System.Drawing.Size(224, 20);
 			this.textBoxExchangeEmail.TabIndex = 6;
 			// 
 			// label3
 			// 
-			this.label3.Location = new System.Drawing.Point(133, 130);
+			this.label3.Location = new System.Drawing.Point(137, 52);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(88, 23);
 			this.label3.TabIndex = 5;
@@ -255,24 +327,6 @@ namespace Marble
 			this.checkBoxStartWithWindows.TabIndex = 4;
 			this.checkBoxStartWithWindows.Text = "Start with Windows";
 			this.checkBoxStartWithWindows.UseVisualStyleBackColor = true;
-			// 
-			// comboBoxOutlookServiceProvider
-			// 
-			this.comboBoxOutlookServiceProvider.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxOutlookServiceProvider.FormattingEnabled = true;
-			this.comboBoxOutlookServiceProvider.Location = new System.Drawing.Point(6, 127);
-			this.comboBoxOutlookServiceProvider.Name = "comboBoxOutlookServiceProvider";
-			this.comboBoxOutlookServiceProvider.Size = new System.Drawing.Size(121, 21);
-			this.comboBoxOutlookServiceProvider.TabIndex = 4;
-			// 
-			// checkBoxShowNotifications
-			// 
-			this.checkBoxShowNotifications.Location = new System.Drawing.Point(6, 40);
-			this.checkBoxShowNotifications.Name = "checkBoxShowNotifications";
-			this.checkBoxShowNotifications.Size = new System.Drawing.Size(229, 24);
-			this.checkBoxShowNotifications.TabIndex = 7;
-			this.checkBoxShowNotifications.Text = "Show Notifications";
-			this.checkBoxShowNotifications.UseVisualStyleBackColor = true;
 			// 
 			// FormSettings
 			// 
@@ -303,5 +357,11 @@ namespace Marble
         private System.Windows.Forms.TextBox textBoxExchangeEmail;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox checkBoxShowNotifications;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBoxHourlyOffset;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.RadioButton radioButtonSyncEveryHour;
+        private System.Windows.Forms.RadioButton radioButtonSyncEveryNMinutes;
+        private System.Windows.Forms.Label label4;
 	}
 }
