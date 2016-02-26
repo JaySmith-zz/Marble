@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Google.Apis.Calendar.v3;
+
 using Google.Apis.Calendar.v3.Data;
 using Marble.Data;
 
