@@ -57,12 +57,14 @@ namespace Marble
             var comparer = new AppointmentComparer();
 
             var googleItemsToDelete = googleAppoinments.Except(outlookAppoinments, comparer).ToList();
-            syncInfo.ItemsRemovedCount = googleItemsToDelete.Count();
+            //syncInfo.ItemsRemovedCount = googleItemsToDelete.Count();
+            syncInfo.ItemsRemovedCount = googleAppoinments.Count();
             RemoveOldCalendarEventsFromGoogleCalendar(googleAppoinments);
             //RemoveOldCalendarEventsFromGoogleCalendar(googleItemsToDelete);
 
-            var googleItemsToAdd = outlookAppoinments.Except(googleAppoinments, comparer).ToList();
-            syncInfo.ItemsAddCount = googleItemsToAdd.Count();
+            //var googleItemsToAdd = outlookAppoinments.Except(googleAppoinments, comparer).ToList();
+            //syncInfo.ItemsAddCount = googleItemsToAdd.Count();
+            syncInfo.ItemsAddCount = googleAppoinments.Count();
             //AddOutLookEventsToGoogleCalendar(googleItemsToAdd);
             AddOutLookEventsToGoogleCalendar(outlookAppoinments);
 

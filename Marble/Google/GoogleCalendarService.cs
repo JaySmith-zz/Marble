@@ -44,10 +44,11 @@ namespace Marble.Google
 			
 			var eventRequest = service.Events.List(Settings.CalendarAccount);
 			
-			eventRequest.TimeMin = startDate;
-            eventRequest.TimeMax = endDate;
+			eventRequest.TimeMax = startDate;
+            eventRequest.TimeMin = endDate;
+            
             //eventRequest.ShowDeleted = true;
-            eventRequest.MaxResults = 2500;
+            //eventRequest.MaxResults = 2500;
 
 			results.AddRange(eventRequest.Execute().Items);
 				
