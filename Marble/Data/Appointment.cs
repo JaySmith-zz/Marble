@@ -28,6 +28,9 @@ namespace Marble.Data
 		public string Organizer { get; set; }	
 		public List<string> RequiredAttendees { get; set; }
 		public List<string> OptionalAttendees { get; set; }
+		
+		
+		public string GoogleId { get; set; }
 				
 	}
 	

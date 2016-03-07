@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace Marble
 {
@@ -259,6 +259,49 @@ namespace Marble
             {
                 Properties.Settings.Default.ShowNotifications = value;
             }
+        }
+        
+        public static string AppointmentCacheFileName
+        {
+        	get 
+        	{
+        		return Path.Combine(Environment.CurrentDirectory, Properties.Settings.Default.AppointmentCacheFileName);
+        	}
+        }
+        
+        public static bool IsValid
+        {
+        	 get
+        	 {
+        		
+	        	var valid = true;
+	        	
+	        	var alertMessages = new List<string>();
+	            if (Settings.CalendarId == "")
+	            {
+	            	alertMessages.Add("Google Calendar not selected.");
+	            }
+	            
+//	            if ((sourceCalendarProvider == OutlookServiceProvider.Exchange) && 
+//	                (string.IsNullOrEmpty(Settings.ExchangeEmailAddress)))
+//	            {
+//	            	
+//	            	alertMessages.Add("You must provide your Exchange email address if selecting to connect directly to Exchange server."); 	
+//	            }
+	            	
+	            if (alertMessages.Count > 0)
+	            {
+	            	valid = false;
+	            	var message = string.Empty;
+	            	foreach (var alertMessage in alertMessages) {
+	            		message += alertMessage + "\n";
+	            	}
+	            	System.Windows.Forms.MessageBox.Show(message, "Configuration Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Stop);
+	            }
+	            
+	            return valid;
+            
+        	 }
         }
 		
 	}

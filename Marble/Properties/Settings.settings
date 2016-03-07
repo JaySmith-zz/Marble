@@ -7,6 +7,9 @@
     <Setting Name="ApplicationName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Marble</Value>
     </Setting>
+    <Setting Name="AppointmentCacheFileName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MarbleAppointment.cache</Value>
+    </Setting>
     <Setting Name="CalendarAccount" Type="System.String" Scope="User" Roaming="false">
       <Value Profile="(Default)">tenanji@gmail.com</Value>
     </Setting>

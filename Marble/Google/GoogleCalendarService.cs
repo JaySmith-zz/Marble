@@ -114,6 +114,18 @@ namespace Marble.Google
 			var myEvent = service.Events.Insert(googleEvent, Settings.CalendarAccount).Execute();
 		}
 		
+		public Event AddEvent(Event googleEvent)
+		{
+			var myEvent = service.Events.Insert(googleEvent, Settings.CalendarAccount).Execute();
+			
+			return myEvent;
+		}
+		
+		public void RemoveEvent(string calenderId, string eventId)
+		{
+			string result = service.Events.Delete(calenderId, eventId).Execute();
+		}
+		
 		public int RemoveAllItemsInRange()
 		{
 			//TODO: Need to batch these in groups to avoid request limit

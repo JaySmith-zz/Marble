@@ -65,6 +65,7 @@ namespace Marble
 			var menu = new MenuItem[] {
 				new MenuItem("Sync Now", menuSyncCalendarClick),
 				new MenuItem("Delete Remote Items In Range", menuClearRemoteCalendarClick),
+				new MenuItem("Clear Cache", menuClearCache),
 				new MenuItem("-"),
 				new MenuItem("Settings...", menuSettingsClick),
 				new MenuItem("About", menuAboutClick),
@@ -131,16 +132,21 @@ namespace Marble
 			Sync();
 		}
 		
+		private void menuClearCache(object sender, EventArgs e)
+		{
+			new CalendarSyncCached().ClearCache();
+		}
+		
 		private void menuClearRemoteCalendarClick(object sender, EventArgs e)
 		{
-			var calenderSync = new CalendarSync();
-			var syncInfo = calenderSync.ClearAllRemoteItems();
-			DisplayBalloonTip(syncInfo);
+//			var syncInfo = calenderSync.ClearAllRemoteItems();
+			new CalendarSyncCached().RemoveEventsAndClearCache();
+			//DisplayBalloonTip(syncInfo);
 		}
 				
 		private void Sync()
 		{
-			var calendarSync = new CalendarSync();
+			var calendarSync = new CalendarSyncCached();
 			var syncInfo = calendarSync.Sync();
 			DisplayBalloonTip(syncInfo);
 		}
