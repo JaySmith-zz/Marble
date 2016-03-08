@@ -8,7 +8,6 @@
  */
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 
 using Google.Apis.Services;
@@ -23,14 +22,12 @@ namespace Marble.Google
 	public class GoogleClient
 	{
 		FileDataStore FileDataStore { get; set; }
-		//string ClientScope { get; set; }
 		
 		public BaseClientService.Initializer Initializer { get; set; }
 		
 		public GoogleClient(string dataStoreFolderName)
 		{
 			FileDataStore = new FileDataStore(dataStoreFolderName);
-			//ClientScope = clientScope;
 			GetAuthorization();
 		}		
 		public void GetAuthorization()

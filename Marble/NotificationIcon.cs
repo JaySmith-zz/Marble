@@ -3,18 +3,23 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
+using NLog;
+
 namespace Marble
 {
 	public sealed class NotificationIcon
 	{
-		private NotifyIcon notifyIcon;
-		private ContextMenu notificationMenu;
+		NotifyIcon notifyIcon;
+		ContextMenu notificationMenu;
 		
-		private DateTime lastSyncTime;
-		private System.Windows.Forms.Timer syncTimer;
+		DateTime lastSyncTime;
+		System.Windows.Forms.Timer syncTimer;
+		
+		static readonly Logger Logger;
 		
 		public NotificationIcon()
 		{
+			Logger = new LogManager.GetCurrentClassLogger();
 			notifyIcon = new NotifyIcon();
 			notificationMenu = new ContextMenu(InitializeMenu());
 			
@@ -81,9 +86,6 @@ namespace Marble
 		[STAThread]
 		public static void Main(string[] args)
 		{
-			var logger = LogFactory.GetLoggerFor(typeof(NotificationIcon));
-			logger.Information("Marble Started");
-			
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			
@@ -100,16 +102,17 @@ namespace Marble
 					}
 					catch (Exception ex)
 					{
-						logger.Fatal("Unhandled Exception", ex);
+						MessageBox.Show("Unhandled Exception");
 					}
 				} else {
 					// The application is already running
 					// TODO: change focus to existing application instance
 					logger.Information("Marble arleady running shutting down");
 					
+					
 				}
 			} // releases the Mutex
-			logger.Information("Marble shutting down");
+			//logger.Information("Marble shutting down");
 		}
 
 		private void menuAboutClick(object sender, EventArgs e)
