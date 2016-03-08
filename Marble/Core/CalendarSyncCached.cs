@@ -8,7 +8,6 @@
  */
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Marble.Data;
 using Marble.Google;
@@ -28,9 +27,12 @@ namespace Marble
 		
 		readonly GoogleClient googleClient;
         readonly GoogleCalendarService googleCalendarService;
+        readonly AppointmentCache cache;
 		        
 		public CalendarSyncCached()
 		{
+			cache = new AppointmentCache();
+			
 			googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
             googleCalendarService = new GoogleCalendarService(googleClient);
 			
@@ -59,23 +61,25 @@ namespace Marble
         		return syncInfo;
         	}
         	
-			// Get Cached 
-			
 			// Get Current appointments from outlook
 			List<Appointment> appointments = outlookCalendarService.GetAppointmentsInRange();
 			
 			// Load Items from Cache
-			var cachedItems = AppointmentSerialization.Read();
+			//var cachedItems = AppointmentSerialization.Read();
 			
 			var comparer = new AppointmentComparer();
 			
 			// Find all appointments in cache not in outlook, need to be removed
-			var toBeRemoved = cachedItems.Except(appointments, comparer).ToList();
+			var toBeRemoved = cache.Items.Except(appointments, comparer).ToList();
+			syncInfo.ItemsRemovedCount = toBeRemoved.Count;
 			RemoveEvents(toBeRemoved);
 			
 			// Find all appointments in outlook not in cache, need to be added
-			var notInCache = appointments.Except(cachedItems, comparer).ToList();
-			AddEvents(notInCache);
+			var toBeAdded = appointments.Except(cache.Items, comparer).ToList();
+			syncInfo.ItemsAddCount = toBeAdded.Count;
+			AddEvents(toBeAdded);
+			
+			cache.Save();
 			
 			return syncInfo;
 		}
@@ -90,8 +94,9 @@ namespace Marble
 					var newEvent = googleCalendarService.AddEvent(googleEvent);
 					
 					appointment.GoogleId = newEvent.Id;
+					cache.Add(appointment);
                 }
-                AppointmentSerialization.Save(appointments);
+                //AppointmentSerialization.Save(appointments);
             }
         }
 		
@@ -102,6 +107,7 @@ namespace Marble
                 foreach (Appointment appointment in appointments)
                 {
                 	googleCalendarService.RemoveEvent(Settings.CalendarAccount, appointment.GoogleId);
+                	cache.Remove(appointment);
                 }
             }
 		}
@@ -162,13 +168,12 @@ namespace Marble
 		{
 			var cachedItems = AppointmentSerialization.Read();
 			RemoveEvents(cachedItems);
-			ClearCache();
+			cache.Clear();
 		}
 		
 		public void ClearCache()
 		{
-			if (File.Exists(Settings.AppointmentCacheFileName))
-				File.Delete(Settings.AppointmentCacheFileName);
+			cache.Clear();
 		}
 	}
 }

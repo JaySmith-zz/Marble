@@ -46,5 +46,11 @@ namespace Marble.Data
 
             return items;
 		}
+		
+		public static void Clear()
+		{
+			if (File.Exists(Settings.AppointmentCacheFileName))
+				File.Delete(Settings.AppointmentCacheFileName);
+		}
 	}
 }
