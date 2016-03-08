@@ -15,11 +15,11 @@ namespace Marble
 		DateTime lastSyncTime;
 		System.Windows.Forms.Timer syncTimer;
 		
-		static readonly Logger Logger;
+		static Logger Logger;
 		
 		public NotificationIcon()
 		{
-			Logger = new LogManager.GetCurrentClassLogger();
+			Logger = LogManager.GetCurrentClassLogger();
 			notifyIcon = new NotifyIcon();
 			notificationMenu = new ContextMenu(InitializeMenu());
 			
@@ -107,7 +107,7 @@ namespace Marble
 				} else {
 					// The application is already running
 					// TODO: change focus to existing application instance
-					logger.Information("Marble arleady running shutting down");
+					Logger.Information("Marble arleady running shutting down");
 					
 					
 				}
