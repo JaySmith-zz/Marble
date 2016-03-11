@@ -37,6 +37,9 @@
     <Setting Name="ExchangeEmail" Type="System.String" Scope="User" Roaming="false">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="OnlyKeepAppointmentsInDateRange" Type="System.Boolean" Scope="User" Roaming="false">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="OutlookCalendarServiceProvider" Type="System.String" Scope="User" Roaming="false">
       <Value Profile="(Default)">Interop</Value>
     </Setting>

@@ -95,19 +95,19 @@ namespace Marble
 				if (isFirstInstance) {
 					try
 					{
-					NotificationIcon notificationIcon = new NotificationIcon();
+					var notificationIcon = new NotificationIcon();
 					notificationIcon.notifyIcon.Visible = true;
 					Application.Run();
 					notificationIcon.notifyIcon.Dispose();
 					}
 					catch (Exception ex)
 					{
-						MessageBox.Show("Unhandled Exception");
+						Logger.Error(ex);
 					}
 				} else {
 					// The application is already running
 					// TODO: change focus to existing application instance
-					Logger.Information("Marble arleady running shutting down");
+					Logger.Info("Marble arleady running shutting down");
 					
 					
 				}

@@ -44,6 +44,7 @@ namespace Marble
             comboBoxOutlookServiceProvider.SelectedIndex = comboBoxOutlookServiceProvider.FindStringExact(Settings.OutlookCalendarServiceProvider);
             textBoxExchangeEmail.Text = Settings.ExchangeEmailAddress;
             checkBoxShowNotifications.Checked = Settings.ShowNotifications;
+            checkBoxOnlyKeepAppointmentsInDateRange.Checked = Settings.OnlyKeepAppointmentsInDateRange;
         }
 
         void ButtonGetCalendarsClick(object sender, EventArgs e)
@@ -81,6 +82,8 @@ namespace Marble
             Settings.OutlookCalendarServiceProvider = comboBoxOutlookServiceProvider.SelectedItem.ToString();
             Settings.ExchangeEmailAddress = textBoxExchangeEmail.Text;
             Settings.ShowNotifications = checkBoxShowNotifications.Checked;
+            
+            Settings.OnlyKeepAppointmentsInDateRange = checkBoxOnlyKeepAppointmentsInDateRange.Checked;
             
             Settings.Save();
             

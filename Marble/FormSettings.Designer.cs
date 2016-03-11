@@ -53,6 +53,7 @@ namespace Marble
 		{
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.groupBoxGoogleCalendar = new System.Windows.Forms.GroupBox();
+			this.checkBoxOnlyKeepAppointmentsInDateRange = new System.Windows.Forms.CheckBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.textBoxHourlyOffset = new System.Windows.Forms.TextBox();
@@ -93,6 +94,7 @@ namespace Marble
 			// 
 			// groupBoxGoogleCalendar
 			// 
+			this.groupBoxGoogleCalendar.Controls.Add(this.checkBoxOnlyKeepAppointmentsInDateRange);
 			this.groupBoxGoogleCalendar.Controls.Add(this.label6);
 			this.groupBoxGoogleCalendar.Controls.Add(this.label5);
 			this.groupBoxGoogleCalendar.Controls.Add(this.textBoxHourlyOffset);
@@ -112,10 +114,19 @@ namespace Marble
 			this.groupBoxGoogleCalendar.Controls.Add(this.labelCalendar);
 			this.groupBoxGoogleCalendar.Location = new System.Drawing.Point(13, 13);
 			this.groupBoxGoogleCalendar.Name = "groupBoxGoogleCalendar";
-			this.groupBoxGoogleCalendar.Size = new System.Drawing.Size(481, 213);
+			this.groupBoxGoogleCalendar.Size = new System.Drawing.Size(481, 231);
 			this.groupBoxGoogleCalendar.TabIndex = 1;
 			this.groupBoxGoogleCalendar.TabStop = false;
 			this.groupBoxGoogleCalendar.Text = "Google Calendar";
+			// 
+			// checkBoxOnlyKeepAppointmentsInDateRange
+			// 
+			this.checkBoxOnlyKeepAppointmentsInDateRange.Location = new System.Drawing.Point(9, 202);
+			this.checkBoxOnlyKeepAppointmentsInDateRange.Name = "checkBoxOnlyKeepAppointmentsInDateRange";
+			this.checkBoxOnlyKeepAppointmentsInDateRange.Size = new System.Drawing.Size(309, 24);
+			this.checkBoxOnlyKeepAppointmentsInDateRange.TabIndex = 17;
+			this.checkBoxOnlyKeepAppointmentsInDateRange.Text = "Only keep appointments in date range";
+			this.checkBoxOnlyKeepAppointmentsInDateRange.UseVisualStyleBackColor = true;
 			// 
 			// label6
 			// 
@@ -279,7 +290,7 @@ namespace Marble
 			this.groupBoxOptions.Controls.Add(this.textBoxExchangeEmail);
 			this.groupBoxOptions.Controls.Add(this.label3);
 			this.groupBoxOptions.Controls.Add(this.checkBoxStartWithWindows);
-			this.groupBoxOptions.Location = new System.Drawing.Point(12, 237);
+			this.groupBoxOptions.Location = new System.Drawing.Point(12, 250);
 			this.groupBoxOptions.Name = "groupBoxOptions";
 			this.groupBoxOptions.Size = new System.Drawing.Size(482, 83);
 			this.groupBoxOptions.TabIndex = 3;
@@ -363,5 +374,6 @@ namespace Marble
         private System.Windows.Forms.RadioButton radioButtonSyncEveryHour;
         private System.Windows.Forms.RadioButton radioButtonSyncEveryNMinutes;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox checkBoxOnlyKeepAppointmentsInDateRange;
 	}
 }

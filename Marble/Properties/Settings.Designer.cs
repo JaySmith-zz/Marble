@@ -139,6 +139,18 @@ namespace Marble.Properties {
 		
 		[global::System.Configuration.UserScopedSettingAttribute()]
 		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+		[global::System.Configuration.DefaultSettingValueAttribute("False")]
+		public bool OnlyKeepAppointmentsInDateRange {
+			get {
+				return ((bool)(this["OnlyKeepAppointmentsInDateRange"]));
+			}
+			set {
+				this["OnlyKeepAppointmentsInDateRange"] = value;
+			}
+		}
+		
+		[global::System.Configuration.UserScopedSettingAttribute()]
+		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
 		[global::System.Configuration.DefaultSettingValueAttribute("Interop")]
 		public string OutlookCalendarServiceProvider {
 			get {

@@ -269,6 +269,18 @@ namespace Marble
         	}
         }
         
+        public static bool OnlyKeepAppointmentsInDateRange
+        {
+        	get
+        	{
+        		return Properties.Settings.Default.OnlyKeepAppointmentsInDateRange;
+        	}
+        	set
+        	{
+        		Properties.Settings.Default.OnlyKeepAppointmentsInDateRange = value;
+        	}
+        }
+        
         public static bool IsValid
         {
         	 get

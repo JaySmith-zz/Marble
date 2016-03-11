@@ -21,7 +21,6 @@ namespace Marble
 	/// </summary>
 	public class CalendarSyncCached
 	{
-		
 		readonly OutlookServiceProvider sourceCalendarProvider;
 		readonly IOutlookCalendarService outlookCalendarService;
 		
@@ -32,6 +31,11 @@ namespace Marble
 		public CalendarSyncCached()
 		{
 			cache = new AppointmentCache();
+			
+			if (!Settings.OnlyKeepAppointmentsInDateRange) 
+			{
+				RemoveAppointmentsBeforeStartDate();
+			}
 			
 			googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
             googleCalendarService = new GoogleCalendarService(googleClient);
@@ -63,10 +67,7 @@ namespace Marble
         	
 			// Get Current appointments from outlook
 			List<Appointment> appointments = outlookCalendarService.GetAppointmentsInRange();
-			
-			// Load Items from Cache
-			//var cachedItems = AppointmentSerialization.Read();
-			
+				
 			var comparer = new AppointmentComparer();
 			
 			// Find all appointments in cache not in outlook, need to be removed
@@ -174,6 +175,16 @@ namespace Marble
 		public void ClearCache()
 		{
 			cache.Clear();
+		}
+		
+		public void RemoveAppointmentsBeforeStartDate()
+		{
+			var items = cache.Items.Where(x => x.Start < Settings.CalendarRangeMinDate).ToList();
+			
+			foreach (var item in items) 
+			{
+				cache.Remove(item);
+			}
 		}
 	}
 }
