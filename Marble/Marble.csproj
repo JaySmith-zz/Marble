@@ -158,6 +158,7 @@
     <Compile Include="Core\SyncFrequencyType.cs" />
     <Compile Include="Data\Appointment.cs" />
     <Compile Include="Data\AppointmentCache.cs" />
+    <Compile Include="Data\AppointmentMapper.cs" />
     <Compile Include="Data\AppointmentSerialization.cs" />
     <Compile Include="Exchange\ExchangeService.cs" />
     <Compile Include="FormAbout.cs">
@@ -180,6 +181,7 @@
     <Compile Include="Outlook\OulookCalendarService_Introp.cs" />
     <Compile Include="Outlook\OutlookAppointment.cs" />
     <Compile Include="Outlook\OutlookCalendarService.cs" />
+    <Compile Include="Outlook\OutlookCalendarServiceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>

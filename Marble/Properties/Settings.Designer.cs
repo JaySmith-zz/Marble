@@ -34,7 +34,7 @@ namespace Marble.Properties {
 		
 		[global::System.Configuration.ApplicationScopedSettingAttribute()]
 		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-		[global::System.Configuration.DefaultSettingValueAttribute("MarbleAppointment.cache")]
+		[global::System.Configuration.DefaultSettingValueAttribute("MarbleAppointment__CALENDAR_.cache")]
 		public string AppointmentCacheFileName {
 			get {
 				return ((string)(this["AppointmentCacheFileName"]));

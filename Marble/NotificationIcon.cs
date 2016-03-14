@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 
 using NLog;
+using Marble.Data;
 
 namespace Marble
 {
@@ -137,7 +138,9 @@ namespace Marble
 		
 		private void menuClearCache(object sender, EventArgs e)
 		{
-			new CalendarSyncCached().ClearCache();
+			//var calendarSync = new CalendarSyncCached();
+			//calendarSync.ClearCache();
+			AppointmentSerialization.Clear();
 		}
 		
 		private void menuClearRemoteCalendarClick(object sender, EventArgs e)

@@ -265,8 +265,7 @@ namespace Marble
         {
         	get 
         	{
-        		//return Path.Combine(Environment.CurrentDirectory, Properties.Settings.Default.AppointmentCacheFileName);
-        		return Properties.Settings.Default.AppointmentCacheFileName;
+        		return Properties.Settings.Default.AppointmentCacheFileName.Replace("_CALENDAR_", Settings.CalendarId);
         	}
         }
         

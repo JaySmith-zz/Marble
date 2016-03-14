@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Marble.Data
 {
@@ -21,6 +22,8 @@ namespace Marble.Data
 		public AppointmentCache()
 		{
 			Items = AppointmentSerialization.Read();
+			
+			if (!Settings.OnlyKeepAppointmentsInDateRange) RemoveAppointmentsBeforeStartDate();
 		}
 		
 		/// <summary>
@@ -56,6 +59,16 @@ namespace Marble.Data
 		public void Clear()
 		{
 			AppointmentSerialization.Clear();
+		}
+		
+		void RemoveAppointmentsBeforeStartDate()
+		{
+			var items = Items.Where(x => x.Start < Settings.CalendarRangeMinDate).ToList();
+			
+			foreach (var item in items) 
+			{
+				Remove(item);
+			}
 		}
 	}
 }

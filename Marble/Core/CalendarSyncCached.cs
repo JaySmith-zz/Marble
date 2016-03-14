@@ -12,6 +12,8 @@ using System.Linq;
 using Marble.Data;
 using Marble.Google;
 
+using NLog;
+
 using Google.Apis.Calendar.v3.Data;
 
 namespace Marble
@@ -21,38 +23,23 @@ namespace Marble
 	/// </summary>
 	public class CalendarSyncCached
 	{
-		readonly OutlookServiceProvider sourceCalendarProvider;
 		readonly IOutlookCalendarService outlookCalendarService;
 		
 		readonly GoogleClient googleClient;
         readonly GoogleCalendarService googleCalendarService;
         readonly AppointmentCache cache;
+        
+        static Logger Logger;
 		        
 		public CalendarSyncCached()
 		{
-			cache = new AppointmentCache();
+			Logger = LogManager.GetCurrentClassLogger();
 			
-			if (!Settings.OnlyKeepAppointmentsInDateRange) 
-			{
-				RemoveAppointmentsBeforeStartDate();
-			}
+			cache = new AppointmentCache();
 			
 			googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
             googleCalendarService = new GoogleCalendarService(googleClient);
-			
-			sourceCalendarProvider = (OutlookServiceProvider)Enum.Parse(typeof(OutlookServiceProvider), Settings.OutlookCalendarServiceProvider);
-            if (sourceCalendarProvider == OutlookServiceProvider.Interop)
-            {
-                outlookCalendarService = new OulookCalendarService_Introp();
-            }
-            else if (sourceCalendarProvider == OutlookServiceProvider.Exchange)
-            {
-                outlookCalendarService = new Exchange.ExchangeService();
-            }
-            else
-            {
-                outlookCalendarService = new OutlookCalendarService();
-            }
+            outlookCalendarService = OutlookCalendarServiceFactory.Instance();
 		}
 		
 		public CalendarSyncInfo Sync()
@@ -85,107 +72,55 @@ namespace Marble
 			return syncInfo;
 		}
 		
-		private void AddEvents(List<Appointment> appointments)
+		void AddEvents(List<Appointment> appointments)
         {
-            if (appointments.Count > 0)
+            foreach (Appointment appointment in appointments)
             {
-                foreach (Appointment appointment in appointments)
-                {
-                	var googleEvent = MapToGoogleEvent(appointment);
-					var newEvent = googleCalendarService.AddEvent(googleEvent);
-					
-					appointment.GoogleId = newEvent.Id;
-					cache.Add(appointment);
-                }
-                //AppointmentSerialization.Save(appointments);
+            	var googleEvent = AppointmentMapper.MapToGoogleEvent(appointment);
+				var newEvent = googleCalendarService.AddEvent(googleEvent);
+				
+				appointment.GoogleId = newEvent.Id;
+				cache.Add(appointment);
             }
         }
+
+		void RemoveEvents(List<Appointment> appointments)
+		{
+			var toBeRemoved = new List<Appointment>();
+		    foreach (Appointment appointment in appointments)
+            {
+		    	try
+		    	{
+		    		googleCalendarService.RemoveEvent(Settings.CalendarAccount, appointment.GoogleId);
+            			
+		    	} 
+		    	catch (Exception ex)
+		    	{
+		    		Logger.Error(ex);
+		    	}
+		    	finally
+		    	{
+		    		toBeRemoved.Add(appointment);
+		    	}
+            }
+		    
+		    foreach (var appointment in toBeRemoved) 
+		    {
+		    	cache.Remove(appointment);
+		    }
+		}
 		
-		private void RemoveEvents(List<Appointment> appointments)
-		{
-			if (appointments.Count > 0)
-            {
-                foreach (Appointment appointment in appointments)
-                {
-                	googleCalendarService.RemoveEvent(Settings.CalendarAccount, appointment.GoogleId);
-                	cache.Remove(appointment);
-                }
-            }
-		}
-	
-		private static Event MapToGoogleEvent(Appointment appointment)
-		{
-			var googleEvent = new Event
-            {
-                Summary = appointment.Summary,
-                Location = appointment.Location,
-                Description = appointment.Description,
-                Attendees = new List<EventAttendee>()
-            };
-
-            var currentTimeZone = TimeZone.CurrentTimeZone;
-
-            var startDateTime = new DateTimeOffset(appointment.Start, currentTimeZone.GetUtcOffset(appointment.Start));
-            var startDate = new EventDateTime();
-            
-            if (appointment.IsAllDayEvent)
-            {
-                startDate.Date = startDateTime.ToString("yyy-MM-dd");
-            }
-            else
-            {
-                startDate.DateTime = startDateTime.DateTime;
-            }
-
-            //startDate.Date = item.IsAllDayEvent ? item.Start.ToString("yyyy-MM-dd") : item.Start.ToString();
-            googleEvent.Start = startDate;
-
-            var endDateTime = new DateTimeOffset(appointment.End, currentTimeZone.GetUtcOffset(appointment.End));
-            var endDate = new EventDateTime();
-            
-            if (appointment.IsAllDayEvent)
-            {
-                endDate.Date = endDateTime.ToString("yyy-MM-dd");
-            }
-            else
-            {
-                endDate.DateTime = endDateTime.DateTime;
-            }
-            
-            googleEvent.End = endDate;
-
-            //consider the reminder set in Outlook
-            if (appointment.IsReminderSet)
-            {
-                googleEvent.Reminders = new Event.RemindersData { UseDefault = false };
-                var reminder = new EventReminder { Method = "popup", Minutes = appointment.ReminderMinutesBeforeStart };
-                googleEvent.Reminders.Overrides = new List<EventReminder> { reminder };
-            }
-            
-            return googleEvent;
-		}
-	
 		public void RemoveEventsAndClearCache()
 		{
-			var cachedItems = AppointmentSerialization.Read();
-			RemoveEvents(cachedItems);
-			cache.Clear();
-		}
+			RemoveEvents(cache.Items);
+			ClearCache();
+		}	
 		
 		public void ClearCache()
 		{
 			cache.Clear();
 		}
-		
-		public void RemoveAppointmentsBeforeStartDate()
-		{
-			var items = cache.Items.Where(x => x.Start < Settings.CalendarRangeMinDate).ToList();
-			
-			foreach (var item in items) 
-			{
-				cache.Remove(item);
-			}
-		}
+	
 	}
 }
 		

@@ -32,7 +32,7 @@ namespace Marble.Data
 			
             // To write to a file, create a StreamWriter object.
             //var myWriter = new StreamWriter(Settings.AppointmentCacheFileName);
-            //var myWriter = new IsolatedStorageFileStream(Settings.AppointmentCacheFileName, FileMode.OpenOrCreate);
+            //var myWriter = new IsolatedStorageFileStream(Settings.AppointmentCacheFileName, FileMode.OpenOrCreate);         
             Stream myWriter = new IsolatedStorageFileStream(Settings.AppointmentCacheFileName, FileMode.OpenOrCreate, isoStoreFile);
             
             mySerializer.Serialize(myWriter, appoinments);
@@ -48,7 +48,7 @@ namespace Marble.Data
             // To read the file, create a FileStream.
             //var stream = new FileStream(Settings.AppointmentCacheFileName, FileMode.Open);
             Stream stream = new IsolatedStorageFileStream(Settings.AppointmentCacheFileName, FileMode.Open, isoStoreFile);
-            
+                    
             // Call the Deserialize method and cast to the object type.
             var items = (List<Appointment>)mySerializer.Deserialize(stream);
             
