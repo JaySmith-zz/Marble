@@ -70,8 +70,9 @@ namespace Marble
 		{
 			var menu = new MenuItem[] {
 				new MenuItem("Sync Now", menuSyncCalendarClick),
-				new MenuItem("Delete Remote Items In Range", menuClearRemoteCalendarClick),
+				new MenuItem("Clear Items and Cache", menuClearRemoteCalendarClick),
 				new MenuItem("Clear Cache", menuClearCache),
+				new MenuItem("Open Cache Location", menuOpenCacheLocation),
 				new MenuItem("-"),
 				new MenuItem("Settings...", menuSettingsClick),
 				new MenuItem("About", menuAboutClick),
@@ -134,6 +135,11 @@ namespace Marble
 		private void menuSyncCalendarClick(object sender, EventArgs e)
 		{
 			Sync();
+		}
+		
+		private void menuOpenCacheLocation(object sender, EventArgs e)
+		{
+			System.Diagnostics.Process.Start(AppointmentSerialization.AppointmentDataStorePath());
 		}
 		
 		private void menuClearCache(object sender, EventArgs e)

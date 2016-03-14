@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Xml.Serialization;
+using System.Reflection;
 
 namespace Marble.Data
 {
@@ -29,28 +30,23 @@ namespace Marble.Data
 		public static void Save(IEnumerable<Appointment> appoinments)
 		{
 			var mySerializer = new XmlSerializer(typeof(List<Appointment>));
-			
-            // To write to a file, create a StreamWriter object.
-            //var myWriter = new StreamWriter(Settings.AppointmentCacheFileName);
-            //var myWriter = new IsolatedStorageFileStream(Settings.AppointmentCacheFileName, FileMode.OpenOrCreate);         
-            Stream myWriter = new IsolatedStorageFileStream(Settings.AppointmentCacheFileName, FileMode.OpenOrCreate, isoStoreFile);
-            
-            mySerializer.Serialize(myWriter, appoinments);
-            myWriter.Close();
+       
+            var stream = new IsolatedStorageFileStream(Settings.AppointmentCacheFileName, FileMode.Create, FileAccess.ReadWrite, isoStoreFile);
+                    
+            mySerializer.Serialize(stream, appoinments);
+            stream.Close();
 		}
 		
 		public static List<Appointment> Read()
 		{
 			if (!isoStoreFile.FileExists(Settings.AppointmentCacheFileName)) return new List<Appointment>();
-			
-			var mySerializer = new XmlSerializer(typeof(List<Appointment>));
-            
-            // To read the file, create a FileStream.
-            //var stream = new FileStream(Settings.AppointmentCacheFileName, FileMode.Open);
-            Stream stream = new IsolatedStorageFileStream(Settings.AppointmentCacheFileName, FileMode.Open, isoStoreFile);
+
+            var stream = new IsolatedStorageFileStream(Settings.AppointmentCacheFileName, FileMode.Open, isoStoreFile);
+            string path = stream.GetType().GetField("m_FullPath", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(stream).ToString();
                     
             // Call the Deserialize method and cast to the object type.
-            var items = (List<Appointment>)mySerializer.Deserialize(stream);
+            var mySerializer = new XmlSerializer(typeof(List<Appointment>));
+            var items = mySerializer.Deserialize(stream) as List<Appointment>;
             
             stream.Close();
 
@@ -61,9 +57,15 @@ namespace Marble.Data
 		{
 			if (isoStoreFile.FileExists(Settings.AppointmentCacheFileName))
 			    isoStoreFile.DeleteFile(Settings.AppointmentCacheFileName);
-			
-			//if (File.Exists(Settings.AppointmentCacheFileName))
-			//	File.Delete(Settings.AppointmentCacheFileName);
+		}
+		
+		public static string AppointmentDataStorePath()
+		{
+			var stream = new IsolatedStorageFileStream(Settings.AppointmentCacheFileName, FileMode.Open, isoStoreFile);
+            string path = stream.GetType().GetField("m_FullPath", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(stream).ToString();
+            stream.Close();
+            
+            return Path.GetDirectoryName(path);
 		}
 	}
 }
