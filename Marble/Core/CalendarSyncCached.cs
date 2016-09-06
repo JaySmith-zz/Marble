@@ -14,8 +14,6 @@ using Marble.Google;
 
 using NLog;
 
-using Google.Apis.Calendar.v3.Data;
-
 namespace Marble
 {
 	/// <summary>
@@ -23,23 +21,22 @@ namespace Marble
 	/// </summary>
 	public class CalendarSyncCached
 	{
-		readonly IOutlookCalendarService outlookCalendarService;
-		
-		readonly GoogleClient googleClient;
-        readonly GoogleCalendarService googleCalendarService;
-        readonly AppointmentCache cache;
+		private readonly IOutlookCalendarService _outlookCalendarService;
+
+	    private readonly GoogleCalendarService _googleCalendarService;
+        private readonly AppointmentCache _cache;
         
-        static Logger Logger;
+        private static Logger _logger;
 		        
 		public CalendarSyncCached()
 		{
-			Logger = LogManager.GetCurrentClassLogger();
+		    _logger = LogManager.GetCurrentClassLogger();
 			
-			cache = new AppointmentCache();
+			_cache = new AppointmentCache();
 			
-			googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
-            googleCalendarService = new GoogleCalendarService(googleClient);
-            outlookCalendarService = OutlookCalendarServiceFactory.Instance();
+			var googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
+            _googleCalendarService = new GoogleCalendarService(googleClient);
+            _outlookCalendarService = OutlookCalendarServiceFactory.Instance();
 		}
 		
 		public CalendarSyncInfo Sync()
@@ -53,50 +50,49 @@ namespace Marble
         	}
         	
 			// Get Current appointments from outlook
-			List<Appointment> appointments = outlookCalendarService.GetAppointmentsInRange();
+			var appointments = _outlookCalendarService.GetAppointmentsInRange();
 				
 			var comparer = new AppointmentComparer();
 			
 			// Find all appointments in cache not in outlook, need to be removed
-			var toBeRemoved = cache.Items.Except(appointments, comparer).ToList();
+			var toBeRemoved = _cache.Items.Except(appointments, comparer).ToList();
 			syncInfo.ItemsRemovedCount = toBeRemoved.Count;
 			RemoveEvents(toBeRemoved);
 			
 			// Find all appointments in outlook not in cache, need to be added
-			var toBeAdded = appointments.Except(cache.Items, comparer).ToList();
+			var toBeAdded = appointments.Except(_cache.Items, comparer).ToList();
 			syncInfo.ItemsAddCount = toBeAdded.Count;
 			AddEvents(toBeAdded);
 			
-			cache.Save();
+			_cache.Save();
 			
 			return syncInfo;
 		}
-		
-		void AddEvents(List<Appointment> appointments)
+
+	    private void AddEvents(IEnumerable<Appointment> appointments)
         {
-            foreach (Appointment appointment in appointments)
+            foreach (var appointment in appointments)
             {
             	var googleEvent = AppointmentMapper.MapToGoogleEvent(appointment);
-				var newEvent = googleCalendarService.AddEvent(googleEvent);
+				var newEvent = _googleCalendarService.AddEvent(googleEvent);
 				
 				appointment.GoogleId = newEvent.Id;
-				cache.Add(appointment);
+				_cache.Add(appointment);
             }
         }
 
-		void RemoveEvents(List<Appointment> appointments)
+	    private void RemoveEvents(IEnumerable<Appointment> appointments)
 		{
 			var toBeRemoved = new List<Appointment>();
-		    foreach (Appointment appointment in appointments)
+		    foreach (var appointment in appointments)
             {
 		    	try
 		    	{
-		    		googleCalendarService.RemoveEvent(Settings.CalendarAccount, appointment.GoogleId);
-            			
+		    		_googleCalendarService.RemoveEvent(Settings.CalendarAccount, appointment.GoogleId);
 		    	} 
 		    	catch (Exception ex)
 		    	{
-		    		Logger.Error(ex);
+		    		_logger.Error(ex);
 		    	}
 		    	finally
 		    	{
@@ -106,19 +102,19 @@ namespace Marble
 		    
 		    foreach (var appointment in toBeRemoved) 
 		    {
-		    	cache.Remove(appointment);
+		    	_cache.Remove(appointment);
 		    }
 		}
 		
 		public void RemoveEventsAndClearCache()
 		{
-			RemoveEvents(cache.Items);
+			RemoveEvents(_cache.Items);
 			ClearCache();
 		}	
 		
 		public void ClearCache()
 		{
-			cache.Clear();
+			_cache.Clear();
 		}
 	
 	}

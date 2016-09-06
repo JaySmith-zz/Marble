@@ -20,15 +20,15 @@ using System.IO;
 [assembly: ComVisible(false)]
 
 // Following Symantic Version http://semver.org/
-[assembly: AssemblyVersion("0.0.2.0")]
+[assembly: AssemblyVersion("0.0.2.1")]
 
 public class AssemblyInfo
 {
-	readonly Assembly assembly;
+	readonly Assembly _assembly;
 	
 	public AssemblyInfo()
 	{
-		assembly = Assembly.GetEntryAssembly();
+		_assembly = Assembly.GetEntryAssembly();
 	}
 	
 	/// <summary>
@@ -38,7 +38,7 @@ public class AssemblyInfo
 	{
 		get {
 			return GetAttributeValue<AssemblyTitleAttribute>(a => a.Title, 
-				Path.GetFileNameWithoutExtension(assembly.CodeBase));
+				Path.GetFileNameWithoutExtension(_assembly.CodeBase));
 		}
 	}
 
@@ -49,7 +49,7 @@ public class AssemblyInfo
 	{
 		get {
 			string result = string.Empty;
-			Version version = assembly.GetName().Version;
+			Version version = _assembly.GetName().Version;
 			
 			return version.ToString();
 		}
@@ -90,7 +90,7 @@ public class AssemblyInfo
 
 	protected string GetAttributeValue<TAttr>(Func<TAttr, string> resolveFunc, string defaultResult = null) where TAttr : Attribute
 	{
-		object[] attributes = assembly.GetCustomAttributes(typeof(TAttr), false);
+		object[] attributes = _assembly.GetCustomAttributes(typeof(TAttr), false);
 		
 		if (attributes.Length > 0)
 			return resolveFunc((TAttr)attributes[0]);

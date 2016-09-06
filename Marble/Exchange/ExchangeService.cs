@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Exchange.WebServices.Data;
-using System.Globalization;
-
 
 namespace Marble.Exchange
 {
@@ -14,9 +11,8 @@ namespace Marble.Exchange
             var startDate = Settings.CalendarRangeMinDate.AddMinutes(1);
             var endDate = Settings.CalendarRangeMaxDate;
 
-            var service = new Microsoft.Exchange.WebServices.Data.ExchangeService();
+            var service = new Microsoft.Exchange.WebServices.Data.ExchangeService {UseDefaultCredentials = true};
 
-            service.UseDefaultCredentials = true;
             service.AutodiscoverUrl(Settings.ExchangeEmailAddress, RedirectionCallback);
 
             var calendar = CalendarFolder.Bind(service, WellKnownFolderName.Calendar);
@@ -25,7 +21,7 @@ namespace Marble.Exchange
             var propertySet = new PropertySet(
                 //AppointmentSchema.TextBody,
                 //AppointmentSchema.NormalizedBody,
-                AppointmentSchema.Subject,
+                ItemSchema.Subject,
                 AppointmentSchema.Start,
                 AppointmentSchema.End,
                 AppointmentSchema.IsAllDayEvent,
@@ -33,8 +29,8 @@ namespace Marble.Exchange
                 //AppointmentSchema.OptionalAttendees,
                 //AppointmentSchema.RequiredAttendees,
                 AppointmentSchema.Organizer,
-                AppointmentSchema.IsReminderSet,
-                AppointmentSchema.ReminderMinutesBeforeStart
+                ItemSchema.IsReminderSet,
+                ItemSchema.ReminderMinutesBeforeStart
                 );
 
             view.PropertySet = propertySet;
@@ -42,9 +38,9 @@ namespace Marble.Exchange
             FindItemsResults<Appointment> appointments = calendar.FindAppointments(view);
 
             var itemPropertySet = new PropertySet(
-                AppointmentSchema.TextBody,
-                AppointmentSchema.NormalizedBody,
-                AppointmentSchema.Subject,
+                ItemSchema.TextBody,
+                ItemSchema.NormalizedBody,
+                ItemSchema.Subject,
                 AppointmentSchema.Start,
                 AppointmentSchema.End,
                 AppointmentSchema.IsAllDayEvent,
@@ -52,12 +48,12 @@ namespace Marble.Exchange
                 AppointmentSchema.OptionalAttendees,
                 AppointmentSchema.RequiredAttendees,
                 AppointmentSchema.Organizer,
-                AppointmentSchema.IsReminderSet,
-                AppointmentSchema.ReminderMinutesBeforeStart
+                ItemSchema.IsReminderSet,
+                ItemSchema.ReminderMinutesBeforeStart
                 );
 
             var result = new List<Data.Appointment>();
-            foreach (Appointment item in appointments)
+            foreach (var item in appointments)
             {
                 item.Load(itemPropertySet);
                 result.Add(GetOutlookAppointment(item));
@@ -66,7 +62,7 @@ namespace Marble.Exchange
             return result;
         }
 
-        static Data.Appointment GetOutlookAppointment(Appointment appointment)
+        private static Data.Appointment GetOutlookAppointment(Appointment appointment)
         {
             var newAppointment = new Data.Appointment
             {
@@ -85,7 +81,7 @@ namespace Marble.Exchange
             return newAppointment;
         }
 
-        static List<string> GetAttendees(AttendeeCollection attendees)
+        private static List<string> GetAttendees(AttendeeCollection attendees)
         {
             var attendeeList = new List<string>();
 
@@ -97,7 +93,7 @@ namespace Marble.Exchange
             return attendeeList;
         }
 
-        private bool RedirectionCallback(string url)
+        private static bool RedirectionCallback(string url)
         {
             return url.ToLower().StartsWith("https://", StringComparison.CurrentCultureIgnoreCase);
         }
