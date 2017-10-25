@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-
 using NLog;
 using Marble.Data;
 
@@ -10,16 +9,16 @@ namespace Marble
 {
 	public sealed class NotificationIcon
 	{
-	    readonly NotifyIcon _notifyIcon;
+		readonly NotifyIcon _notifyIcon;
 
-	    DateTime _lastSyncTime;
-	    public readonly System.Windows.Forms.Timer SyncTimer;
+		DateTime _lastSyncTime;
+		public readonly System.Windows.Forms.Timer SyncTimer;
 
-	    public static Logger Logger;
+		public static Logger Logger;
 		
 		public NotificationIcon()
 		{
-		    Logger = LogManager.GetCurrentClassLogger();
+			Logger = LogManager.GetCurrentClassLogger();
 			_notifyIcon = new NotifyIcon();
 			var notificationMenu = new ContextMenu(InitializeMenu());
 			
@@ -31,7 +30,7 @@ namespace Marble
 			SetupTimer();
 		}
 
-	    private void SetupTimer()
+		private void SetupTimer()
 		{
 			if (SyncTimer.Enabled) SyncTimer.Stop();
 	
@@ -41,27 +40,27 @@ namespace Marble
 			SyncTimer.Start();
 		}
 
-	    public void SyncTimerTick(object sender, EventArgs e)
+		public void SyncTimerTick(object sender, EventArgs e)
 		{	
 			var newtime = DateTime.Now;
 			
 			if (Settings.SyncFrequencyType == SyncFrequencyType.EveryHour)
 			{
-			    if (newtime.Minute == _lastSyncTime.Minute) return;
-			    _lastSyncTime = newtime;
-			    if (newtime.Minute == Settings.SyncHourlyMinutesOffset)
-			    {
-			        Sync();
-			    }
+				if (newtime.Minute == _lastSyncTime.Minute) return;
+				_lastSyncTime = newtime;
+				if (newtime.Minute == Settings.SyncHourlyMinutesOffset)
+				{
+					Sync();
+				}
 			} else {
 				var minutesSinceLastSync = (newtime - _lastSyncTime).Minutes;
-			    if (minutesSinceLastSync != Settings.SyncEveryNMinutes) return;
-			    _lastSyncTime = newtime;
-			    Sync();
+				if (minutesSinceLastSync != Settings.SyncEveryNMinutes) return;
+				_lastSyncTime = newtime;
+				Sync();
 			}
 		}
 
-	    private MenuItem[] InitializeMenu()
+		private MenuItem[] InitializeMenu()
 		{
 			var menu = new[] {
 				new MenuItem("Sync Now", MenuSyncCalendarClick),
@@ -85,29 +84,31 @@ namespace Marble
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			
-			bool isFirstInstance;
+
 			// Please use a unique name for the mutex to prevent conflicts with other programs
-			using (new Mutex(true, "5CD5D07B-6285-48BF-BE5D-027C4EC8C8E3", out isFirstInstance))
+			using (new Mutex(true, "5CD5D07B-6285-48BF-BE5D-027C4EC8C8E3", out bool isFirstInstance))
 			{
-			    if (isFirstInstance) {
-			        try
-			        {
-			            var notificationIcon = new NotificationIcon();
-			            notificationIcon._notifyIcon.Visible = true;
-			            Application.Run();
-			            notificationIcon._notifyIcon.Dispose();
-			        }
-			        catch (Exception ex)
-			        {
-			            Logger.Error(ex);
-			        }
-			    } else {
-			        // The application is already running
-			        Logger.Info("Marble arleady running shutting down");
-			    }
+				if (isFirstInstance)
+				{
+					try
+					{
+						var notificationIcon = new NotificationIcon();
+						notificationIcon._notifyIcon.Visible = true;
+						Application.Run();
+						notificationIcon._notifyIcon.Dispose();
+					}
+					catch (Exception ex)
+					{
+						Logger.Error(ex);
+					}
+				}
+				else
+				{
+					// The application is already running
+					Logger.Info("Marble arleady running shutting down");
+				}
 			} // releases the Mutex
-			//logger.Information("Marble shutting down");
+			  //logger.Information("Marble shutting down");
 		}
 
 		private static void MenuAboutClick(object sender, EventArgs e)
@@ -130,7 +131,7 @@ namespace Marble
 			Sync();
 		}
 
-	    public void MenuOpenCacheLocation(object sender, EventArgs e)
+		public void MenuOpenCacheLocation(object sender, EventArgs e)
 		{
 			System.Diagnostics.Process.Start(AppointmentSerialization.AppointmentDataStorePath());
 		}
@@ -142,7 +143,7 @@ namespace Marble
 			AppointmentSerialization.Clear();
 		}
 
-	    public void MenuClearRemoteCalendarClick(object sender, EventArgs e)
+		public void MenuClearRemoteCalendarClick(object sender, EventArgs e)
 		{
 //			var syncInfo = calenderSync.ClearAllRemoteItems();
 			new CalendarSyncCached().RemoveEventsAndClearCache();
@@ -164,7 +165,7 @@ namespace Marble
 			if (syncInfo.Status == CalendarSyncStatus.Failed) _notifyIcon.BalloonTipIcon = ToolTipIcon.Error;
 			_notifyIcon.BalloonTipTitle = "Marble Status";
 			_notifyIcon.BalloonTipText = string.Format("{0}\nCalendar Sync Complete!\n {1} added, {2} removed", 
-			                                          syncInfo.Text, syncInfo.ItemsAddCount, syncInfo.ItemsRemovedCount);
+													  syncInfo.Text, syncInfo.ItemsAddCount, syncInfo.ItemsRemovedCount);
 			_notifyIcon.ShowBalloonTip(5000);
 		}
 	}

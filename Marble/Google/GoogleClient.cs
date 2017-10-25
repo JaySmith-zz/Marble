@@ -33,20 +33,22 @@ namespace Marble.Google
 		public void GetAuthorization()
 		{
 			UserCredential credential;
-			
-			var scopes = new List<string>();
-			scopes.Add(Settings.ScopeCalendar);
-			
+
+			var scopes = new List<string>
+			{
+				Settings.ScopeCalendar
+			};
+
 			var clientSecrets = new ClientSecrets() { ClientId = Settings.ClientId, ClientSecret = Settings.ClientSecret };
 			
 			credential = GoogleWebAuthorizationBroker
-	        	.AuthorizeAsync(
-	            	clientSecrets,
-	            	scopes, 
-	            	"user", 
-	            	CancellationToken.None,
-	            	FileDataStore
-	           ).Result;
+				.AuthorizeAsync(
+					clientSecrets,
+					scopes, 
+					"user", 
+					CancellationToken.None,
+					FileDataStore
+			   ).Result;
 
 			Initializer = new BaseClientService.Initializer{
 				HttpClientInitializer = credential,

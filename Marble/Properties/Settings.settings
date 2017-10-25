@@ -1,8 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<SettingsFile CurrentProfile="(Default)" GeneratedClassNamespace="Marble.Properties" GeneratedClassName="Settings" xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Marble.Properties" GeneratedClassName="Settings">
+  <Profiles />
   <Settings>
     <Setting Name="ApplicationName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Marble</Value>
@@ -10,16 +8,16 @@
     <Setting Name="AppointmentCacheFileName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">MarbleAppointment__CALENDAR_.cache</Value>
     </Setting>
-    <Setting Name="CalendarAccount" Type="System.String" Scope="User" Roaming="false">
+    <Setting Name="CalendarAccount" Type="System.String" Scope="User">
       <Value Profile="(Default)">tenanji@gmail.com</Value>
     </Setting>
-    <Setting Name="CalendarDaysInPast" Type="System.Int32" Scope="User" Roaming="false">
+    <Setting Name="CalendarDaysInPast" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="CalendarDaysInTheFuture" Type="System.Int32" Scope="User" Roaming="false">
+    <Setting Name="CalendarDaysInTheFuture" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">7</Value>
     </Setting>
-    <Setting Name="CalendarId" Type="System.String" Scope="User" Roaming="false">
+    <Setting Name="CalendarId" Type="System.String" Scope="User">
       <Value Profile="(Default)">Work</Value>
     </Setting>
     <Setting Name="ClientId" Type="System.String" Scope="Application">
@@ -34,35 +32,35 @@
     <Setting Name="DataStoreFolderNameTasks" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Marble.Tasks.Auth.Store</Value>
     </Setting>
-    <Setting Name="ExchangeEmail" Type="System.String" Scope="User" Roaming="false">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="OnlyKeepAppointmentsInDateRange" Type="System.Boolean" Scope="User" Roaming="false">
+    <Setting Name="OnlyKeepAppointmentsInDateRange" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="OutlookCalendarServiceProvider" Type="System.String" Scope="User" Roaming="false">
+    <Setting Name="OutlookCalendarServiceProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)">Interop</Value>
     </Setting>
     <Setting Name="ScopeCalendar" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://www.googleapis.com/auth/calendar</Value>
     </Setting>
-    <Setting Name="ShowNotifications" Type="System.Boolean" Scope="User" Roaming="false">
+    <Setting Name="ShowNotifications" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="StartWithWindows" Type="System.Boolean" Scope="User" Roaming="false">
+    <Setting Name="StartWithWindows" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="SyncEveryHour" Type="System.Boolean" Scope="User" Roaming="false">
+    <Setting Name="SyncEveryHour" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="SyncEveryNMinutes" Type="System.Int32" Scope="User" Roaming="false">
+    <Setting Name="SyncEveryNMinutes" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
-    <Setting Name="SyncFrequencyType" Type="System.String" Scope="User" Roaming="false">
+    <Setting Name="SyncFrequencyType" Type="System.String" Scope="User">
       <Value Profile="(Default)">EveryHour</Value>
     </Setting>
-    <Setting Name="SyncMinutesOffset" Type="System.Int32" Scope="User" Roaming="false">
+    <Setting Name="SyncMinutesOffset" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="ExchangeEmail" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
