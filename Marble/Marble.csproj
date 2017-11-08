@@ -167,13 +167,12 @@
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Google\GoogleCalendarInfo.cs" />
-    <Compile Include="Google\GoogleCalendarService.cs" />
+    <Compile Include="Google\CalendarServiceGoogle.cs" />
     <Compile Include="Google\GoogleClient.cs" />
     <Compile Include="NotificationIcon.cs" />
-    <Compile Include="Outlook\IOutlookCalendarService.cs" />
-    <Compile Include="Outlook\OulookCalendarService_Introp.cs" />
+    <Compile Include="Outlook\ICalendarService.cs" />
+    <Compile Include="Outlook\CalendarServiceOutlook.cs" />
     <Compile Include="Outlook\OutlookAppointment.cs" />
-    <Compile Include="Outlook\OutlookCalendarService.cs" />
     <Compile Include="Outlook\OutlookCalendarServiceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
