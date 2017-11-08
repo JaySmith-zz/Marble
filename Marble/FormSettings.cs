@@ -12,7 +12,7 @@ namespace Marble
     public partial class FormSettings : Form
     {
         private GoogleClient googleClient;
-        private GoogleCalendarService calendarService;
+        private CalendarServiceGoogle calendarService;
 
         public FormSettings()
         {
@@ -117,7 +117,7 @@ namespace Marble
         void GetCalendars()
         {
             googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
-            calendarService = new GoogleCalendarService(googleClient);
+            calendarService = new CalendarServiceGoogle(googleClient);
             
             buttonGetCalendars.Enabled = false;
             dropdownListCalendars.Enabled = false;

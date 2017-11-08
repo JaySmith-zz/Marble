@@ -78,10 +78,6 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
-    <Reference Include="NetOffice">
-      <HintPath>..\packages\NetOffice.Core.1.7.2.0\lib\net40\NetOffice.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -150,9 +146,6 @@
     <Compile Include="Core\CalendarSyncCached.cs" />
     <Compile Include="Core\CalendarSyncInfo.cs" />
     <Compile Include="Core\CalendarSyncStatus.cs" />
-    <Compile Include="Core\Globals.cs" />
-    <Compile Include="Core\LogFactory.cs" />
-    <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\OutookServiceProvider.cs" />
     <Compile Include="Core\Settings.cs" />
     <Compile Include="Core\SyncFrequencyType.cs" />

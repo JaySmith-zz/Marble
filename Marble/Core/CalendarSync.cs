@@ -13,21 +13,21 @@
 //    /// </summary>
 //    public class CalendarSync
 //    {
-//        readonly IOutlookCalendarService outlookCalendarService;
+//        readonly ICalendarService outlookCalendarService;
 //
 //        readonly GoogleClient googleClient;
-//        readonly GoogleCalendarService googleCalendarService;
+//        readonly CalendarServiceGoogle googleCalendarService;
 //        readonly OutlookServiceProvider sourceCalendarProvider;
 //
 //        public CalendarSync()
 //        {
 //            googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
-//            googleCalendarService = new GoogleCalendarService(googleClient);
+//            googleCalendarService = new CalendarServiceGoogle(googleClient);
 //
 //            sourceCalendarProvider = (OutlookServiceProvider)Enum.Parse(typeof(OutlookServiceProvider), Settings.OutlookCalendarServiceProvider);
-//            if (sourceCalendarProvider == OutlookServiceProvider.Interop)
+//            if (sourceCalendarProvider == OutlookServiceProvider.Outlook)
 //            {
-//                outlookCalendarService = new OulookCalendarService_Introp();
+//                outlookCalendarService = new CalendarServiceOutlook();
 //            }
 //            else if (sourceCalendarProvider == OutlookServiceProvider.Exchange)
 //            {

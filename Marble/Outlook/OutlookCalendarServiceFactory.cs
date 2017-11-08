@@ -11,30 +11,26 @@ using System;
 namespace Marble
 {
 	/// <summary>
-	/// Description of OutlookCalendarServiceFactory.
+	/// Description of CalendarServiceFactory.
 	/// </summary>
-	public static class OutlookCalendarServiceFactory
+	public static class CalendarServiceFactory
 	{
 
-		public static IOutlookCalendarService Instance()
+		public static ICalendarService Instance()
 		{
-			IOutlookCalendarService service = null;
+			ICalendarService service = null;
 			var sourceCalendarProvider = (OutlookServiceProvider)Enum.Parse(typeof(OutlookServiceProvider), Settings.OutlookCalendarServiceProvider);
 			
-			if (sourceCalendarProvider == OutlookServiceProvider.Interop)
-            {
-                service = new OulookCalendarService_Introp();
-            }
-            else if (sourceCalendarProvider == OutlookServiceProvider.Exchange)
-            {
-                service = new Exchange.ExchangeService();
-            }
-            else
-            {
-                service = new OutlookCalendarService();
-            }
-            
-            return service;
+			if (sourceCalendarProvider == OutlookServiceProvider.Outlook)
+			{
+				service = new CalendarServiceOutlook();
+			}
+			else if (sourceCalendarProvider == OutlookServiceProvider.Exchange)
+			{
+				service = new Exchange.ExchangeService();
+			}
+			
+			return service;
 		}
 	}
 }

@@ -36,7 +36,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="OutlookCalendarServiceProvider" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Interop</Value>
+      <Value Profile="(Default)">Outlook</Value>
     </Setting>
     <Setting Name="ScopeCalendar" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://www.googleapis.com/auth/calendar</Value>

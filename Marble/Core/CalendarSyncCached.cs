@@ -22,9 +22,9 @@ namespace Marble
     /// </summary>
     public class CalendarSyncCached
     {
-        private readonly IOutlookCalendarService _outlookCalendarService;
+        private readonly ICalendarService _outlookCalendarService;
 
-        private readonly GoogleCalendarService _googleCalendarService;
+        private readonly CalendarServiceGoogle _googleCalendarService;
         private readonly AppointmentCache _cache;
 
         private static Logger _logger;
@@ -36,8 +36,8 @@ namespace Marble
             _cache = new AppointmentCache();
 
             var googleClient = new GoogleClient(Settings.DataStoreFolderNameCalendar);
-            _googleCalendarService = new GoogleCalendarService(googleClient);
-            _outlookCalendarService = OutlookCalendarServiceFactory.Instance();
+            _googleCalendarService = new CalendarServiceGoogle(googleClient);
+            _outlookCalendarService = CalendarServiceFactory.Instance();
         }
 
         public CalendarSyncInfo Sync()

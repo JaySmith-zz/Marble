@@ -4,7 +4,7 @@ using Microsoft.Exchange.WebServices.Data;
 
 namespace Marble.Exchange
 {
-    public class ExchangeService : IOutlookCalendarService
+    public class ExchangeService : ICalendarService
     {
         public List<Data.Appointment> GetAppointmentsInRange()
         {
