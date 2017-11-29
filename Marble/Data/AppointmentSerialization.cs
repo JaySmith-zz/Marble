@@ -16,7 +16,7 @@ using System.Reflection;
 namespace Marble.Data
 {
 	/// <summary>
-	/// Description of AppointmentSerialization.
+	/// Description of AppointmentSerialization.a
 	/// </summary>
 	public static class AppointmentSerialization
 	{
