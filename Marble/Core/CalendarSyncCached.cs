@@ -29,6 +29,13 @@ namespace Marble
 
         private static Logger _logger;
 
+        public CalendarSyncCached(ICalendarService calendarServiceOutlook, CalendarServiceGoogle calendarServiceGoogle, AppointmentCache appointmentCache)
+        {
+            _outlookCalendarService = calendarServiceOutlook;
+            _googleCalendarService = calendarServiceGoogle;
+            _cache = appointmentCache;
+        }
+
         public CalendarSyncCached()
         {
             _logger = LogManager.GetCurrentClassLogger();

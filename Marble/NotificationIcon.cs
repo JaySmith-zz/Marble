@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 using NLog;
 using Marble.Data;
@@ -9,22 +8,23 @@ namespace Marble
 {
 	public sealed class NotificationIcon
 	{
-		readonly NotifyIcon _notifyIcon;
+		//readonly NotifyIcon _notifyIcon;
 
 		DateTime _lastSyncTime;
 		public readonly System.Windows.Forms.Timer SyncTimer;
+		public NotifyIcon NotifyIcon { get; set; }
 
 		public static Logger Logger;
 		
 		public NotificationIcon()
 		{
 			Logger = LogManager.GetCurrentClassLogger();
-			_notifyIcon = new NotifyIcon();
+			NotifyIcon = new NotifyIcon();
 			var notificationMenu = new ContextMenu(InitializeMenu());
 			
 			var resources = new System.ComponentModel.ComponentResourceManager(typeof(NotificationIcon));
-			_notifyIcon.Icon = (Icon)resources.GetObject("$this.Icon");
-			_notifyIcon.ContextMenu = notificationMenu;
+			NotifyIcon.Icon = (Icon)resources.GetObject("$this.Icon");
+			NotifyIcon.ContextMenu = notificationMenu;
 			
 			SyncTimer = new System.Windows.Forms.Timer { Interval = 60000 };
 			SetupTimer();
@@ -77,39 +77,39 @@ namespace Marble
 			return menu;
 		}
 		
-		/// <summary>Program entry point.</summary>
-		/// <param name="args">Command Line Arguments</param>
-		[STAThread]
-		public static void Main(string[] args)
-		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
+		///// <summary>Program entry point.</summary>
+		///// <param name="args">Command Line Arguments</param>
+		//[STAThread]
+		//public static void Main(string[] args)
+		//{
+		//	Application.EnableVisualStyles();
+		//	Application.SetCompatibleTextRenderingDefault(false);
 
-			// Please use a unique name for the mutex to prevent conflicts with other programs
-			using (new Mutex(true, "5CD5D07B-6285-48BF-BE5D-027C4EC8C8E3", out bool isFirstInstance))
-			{
-				if (isFirstInstance)
-				{
-					try
-					{
-						var notificationIcon = new NotificationIcon();
-						notificationIcon._notifyIcon.Visible = true;
-						Application.Run();
-						notificationIcon._notifyIcon.Dispose();
-					}
-					catch (Exception ex)
-					{
-						Logger.Error(ex);
-					}
-				}
-				else
-				{
-					// The application is already running
-					Logger.Info("Marble arleady running shutting down");
-				}
-			} // releases the Mutex
-			  //logger.Information("Marble shutting down");
-		}
+		//	// Please use a unique name for the mutex to prevent conflicts with other programs
+		//	using (new Mutex(true, "5CD5D07B-6285-48BF-BE5D-027C4EC8C8E3", out bool isFirstInstance))
+		//	{
+		//		if (isFirstInstance)
+		//		{
+		//			try
+		//			{
+		//				var notificationIcon = new NotificationIcon();
+		//				notificationIcon.NotifyIcon.Visible = true;
+		//				Application.Run();
+		//				notificationIcon.NotifyIcon.Dispose();
+		//			}
+		//			catch (Exception ex)
+		//			{
+		//				Logger.Error(ex);
+		//			}
+		//		}
+		//		else
+		//		{
+		//			// The application is already running
+		//			Logger.Info("Marble arleady running shutting down");
+		//		}
+		//	} // releases the Mutex
+		//	  //logger.Information("Marble shutting down");
+		//}
 
 		private static void MenuAboutClick(object sender, EventArgs e)
 		{
@@ -161,12 +161,12 @@ namespace Marble
 		{
 			if (!Settings.ShowNotifications || syncInfo.Status == CalendarSyncStatus.Skipped) return;
 			
-			if (syncInfo.Status == CalendarSyncStatus.Success) _notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
-			if (syncInfo.Status == CalendarSyncStatus.Failed) _notifyIcon.BalloonTipIcon = ToolTipIcon.Error;
-			_notifyIcon.BalloonTipTitle = "Marble Status";
-			_notifyIcon.BalloonTipText = string.Format("{0}\nCalendar Sync Complete!\n {1} added, {2} removed", 
+			if (syncInfo.Status == CalendarSyncStatus.Success) NotifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+			if (syncInfo.Status == CalendarSyncStatus.Failed) NotifyIcon.BalloonTipIcon = ToolTipIcon.Error;
+			NotifyIcon.BalloonTipTitle = "Marble Status";
+			NotifyIcon.BalloonTipText = string.Format("{0}\nCalendar Sync Complete!\n {1} added, {2} removed", 
 													  syncInfo.Text, syncInfo.ItemsAddCount, syncInfo.ItemsRemovedCount);
-			_notifyIcon.ShowBalloonTip(5000);
+			NotifyIcon.ShowBalloonTip(5000);
 		}
 	}
 }
