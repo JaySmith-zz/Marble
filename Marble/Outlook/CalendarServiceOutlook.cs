@@ -8,9 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
-using Microsoft.Office.Interop.Outlook;
 
 using Marble.Data;
+using System.Diagnostics;
+using Microsoft.Office.Interop.Outlook;
 
 namespace Marble
 {
@@ -20,7 +21,7 @@ namespace Marble
 	public class CalendarServiceOutlook : ICalendarService
 	{
 		public MAPIFolder outlookCalendar;
-		
+
 		public CalendarServiceOutlook()
 		{
 			var oApp = new Application();

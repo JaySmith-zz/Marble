@@ -49,9 +49,8 @@ namespace Marble
 
         public CalendarSyncInfo Sync()
         {
-
             var isOutlookRunning = IsOutlookClientRunning();
-
+            
             var syncInfo = new CalendarSyncInfo();
 
             if (!Settings.IsValid)
